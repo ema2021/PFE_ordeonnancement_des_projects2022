@@ -2,23 +2,28 @@ import Image from "next/image";
 import Link from "next/link";
 const Navabar = () => {
 	return (
-		<nav className="flex items-center justify-between  px-8">
+		<nav className="flex items-center justify-between px-2">
 			<Link href="/" alt="Home" className="" passHref={true}>
-				<div className="flex">
-					<Image
-						src="/logo.png"
-						alt="Log Bezier Ordonnancer projects"
-						width={300}
-						height={80}
-						className=" bg-white drop-shadow"
-					/>
+				<div className=" flex">
+					{" "}
+					<div className="relative h-12 w-28">
+						<Image
+							src="/logo.png"
+							// height={200}
+							// width={200}
+							layout="fill"
+							alt="Azddine Elmoumny Image"
+							// objectFit="cover"
+							className=""
+						/>
+					</div>
 				</div>
 			</Link>
-			<div className="flex gap-4">
-				<button className="rounded border-2 border-blue-600 px-8 py-2 text-blue-600">
+			<div className="space-x-2">
+				<button className="rounded  px-2  py-1 font-medium text-blue-600 hover:bg-gray-200">
 					Login
 				</button>
-				<button className="rounded bg-blue-600 px-8 py-2 text-white">
+				<button className="rounded border-2 border-[#1053EB]  bg-[#1053EB] px-2 py-1 py-1 font-semibold  text-white shadow-blue-500 transition  ease-in hover:border-2 hover:bg-white hover:text-[#1053EB] hover:shadow">
 					Sign up
 				</button>
 			</div>

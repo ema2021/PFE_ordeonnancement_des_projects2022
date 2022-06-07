@@ -8,7 +8,7 @@ export default function Document() {
 				<link rel="manifest" href="/manifest.json" />
 				<link rel="apple-touch-icon" href="/Personnal Logo.png" />
 			</Head>
-			<body className="mx-auto w-4/5">
+			<body className="">
 				<Main className="" />
 				<NextScript />
 				<Footer />

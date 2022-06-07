@@ -1,27 +1,9 @@
 import Image from "next/image";
 export default function Hero() {
 	return (
-		<>
-			<section className="grid grid-cols-2 gap-8">
-				<div className=" flex flex-col items-start justify-center gap-6   px-16 py-4">
-					<h1 className="w-2/3 text-3xl font-extrabold">
-						Get a your projects planned and scheduled for{" "}
-						<span className="text-[#1053EB]">free, forever.</span>
-					</h1>
-					<p className="mr-8">
-						Bezier give amazing project planner and scheduling with
-						very easy and intuitive steps
-					</p>
-					<div className=" mx-8 grid w-full gap-1">
-						<button className="rounded-full  border-2 border-[#1053EB] bg-[#1053EB] py-2 text-3xl font-bold text-white shadow shadow-blue-500  transition ease-in hover:border-2 hover:bg-white hover:text-[#1053EB]">
-							Get Started
-						</button>
-						<button className="text-xl text-blue-500">
-							Learn more
-						</button>
-					</div>
-				</div>
-				<div className="p-2 drop-shadow-2xl">
+		<div className="">
+			<section className="space-y-8">
+				<div className=" bg-lime-300 drop-shadow-2xl">
 					<Image
 						src="/2.png"
 						alt="Log Bezier Ordonnancer projects"
@@ -29,6 +11,24 @@ export default function Hero() {
 						height={616}
 						className="  drop-shadow"
 					/>
+				</div>
+				<div className="grid gap-4 bg-gray-200 px-4 py-4">
+					<h1 className="text-3xl font-extrabold ">
+						Get a your projects planned and scheduled for{" "}
+						<span className="text-[#1053EB]">free, forever.</span>
+					</h1>
+					<p className="">
+						Bezier give amazing project planner and scheduling with
+						very easy and intuitive steps
+					</p>
+					<div className="grid gap-2">
+						<button className="rounded-full  border-2 border-[#1053EB] bg-[#1053EB] py-1 text-2xl font-bold text-white shadow shadow-blue-500  transition ease-in hover:border-2 hover:bg-white hover:text-[#1053EB]">
+							Get Started
+						</button>
+						<button className="text-xl font-semibold text-blue-500 hover:text-gray-600">
+							Learn more
+						</button>
+					</div>
 				</div>
 			</section>
 			<section className="grid grid-cols-2 gap-8">
@@ -74,6 +74,6 @@ export default function Hero() {
 					</p>
 				</div>
 			</section>
-		</>
+		</div>
 	);
 }
