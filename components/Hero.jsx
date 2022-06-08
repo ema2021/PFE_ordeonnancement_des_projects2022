@@ -1,23 +1,23 @@
 import Image from "next/image";
 export default function Hero() {
 	return (
-		<div className="space-y-8">
-			<section className="grid gap-8">
-				<div className="  drop-shadow-2xl">
+		<div className="space-y-12">
+			<section className="lg: grid gap-8  lg:grid-cols-2 ">
+				<div className="  drop-shadow-2xl lg:order-last">
 					<Image
 						src="/2.png"
-						alt="Log Bezier Ordonnancer projects"
+						alt=" Bezier Ordonnancer projects"
 						width={800}
 						height={616}
 						className="  drop-shadow"
 					/>
 				</div>
-				<div className="grid gap-4  px-4 py-4">
-					<h1 className="text-center text-4xl font-extrabold ">
-						Get a your projects planned and scheduled for{" "}
+				<div className="grid gap-6  px-4 py-4">
+					<h1 className="text-center text-4xl font-extrabold uppercase sm:text-5xl md:text-left ">
+						Get your projects planned and scheduled for{" "}
 						<span className="text-[#1053EB]">free, forever.</span>
 					</h1>
-					<p className="">
+					<p className="text-xl sm:text-2xl">
 						Bezier give amazing project planner and scheduling with
 						very easy and intuitive steps
 					</p>
@@ -31,22 +31,22 @@ export default function Hero() {
 					</div>
 				</div>
 			</section>
-			<section className="grid  gap-8">
-				<div className="p-2  drop-shadow-2xl">
+			<section className="grid  gap-8  lg:grid-cols-2 ">
+				<div className="p-2   drop-shadow-2xl">
 					<Image
 						src="/1.png"
 						alt="Log Bezier Ordonnancer projects"
 						width={800}
 						height={616}
-						className=" shadow-md shadow-[#1053EB]"
+						className=""
 					/>
 				</div>
-				<div className="gap-8  space-y-8  px-4 py-4">
+				<div className="flex flex-col justify-center space-y-8  px-6 py-4">
 					<h1 className=" text-center text-4xl font-extrabold">
 						Switch between gantt chart, Pert graph, or calendar
 						views
 					</h1>
-					<button className=" mx-auto flex items-center   gap-2 rounded-full border-2 border-[#1053EB] py-2  px-4 text-xl font-medium text-[#1053EB] shadow shadow-blue-500 transition ease-in hover:border-2 hover:bg-[#1053EB]  hover:text-white">
+					<button className=" mx-auto flex items-center   gap-2 rounded-full border-2 border-[#1053EB] py-3   px-4 text-xl font-medium text-[#1053EB] shadow shadow-blue-500 transition ease-in hover:border-2 hover:bg-[#1053EB]  hover:text-white">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							className="h-6 w-6"
@@ -68,8 +68,8 @@ export default function Hero() {
 						</svg>
 						Launch Project
 					</button>
-					<p className="">
-						Bezier give amazing project planner and scheduling with
+					<p className="text-xl sm:text-2xl">
+						Bezier gives amazing project planner and scheduling with
 						very easy and intuitive steps
 					</p>
 				</div>
