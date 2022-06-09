@@ -25,7 +25,7 @@ export default function Hero() {
 						<button className="rounded-full  border-2 border-[#1053EB] bg-[#1053EB] py-2 text-3xl font-bold text-white shadow shadow-blue-500  transition ease-in hover:border-2 hover:bg-white hover:text-[#1053EB]">
 							Get Started
 						</button>
-						<button className="text-xl font-semibold text-blue-500 hover:text-gray-600">
+						<button className="text-xl font-semibold text-blue-500 outline-none hover:text-gray-600">
 							Learn more
 						</button>
 					</div>

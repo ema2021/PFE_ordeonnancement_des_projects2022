@@ -5,7 +5,7 @@ export default function Dashboard() {
 			<div className="group ">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
-					className="h-6 w-6 group-hover:hidden"
+					className="m-4 h-8 w-8 group-hover:hidden"
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke="currentColor"
