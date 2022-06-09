@@ -154,7 +154,7 @@ const Playground2 = () => {
 			</nav>
 			<div className="w-full ">
 				<div className="flex w-full items-center  justify-between  gap-2  py-2 px-2 md:px-8">
-					<div className=" ">
+					<div className="w-full md:w-3/5 md:pl-32 ">
 						<div className="">
 							<form
 								action=""
