@@ -24,7 +24,7 @@ const Layout = ({ children }) => {
 			<aside
 				className={` absolute ${
 					!open && " hidden"
-				}   z-10 flex h-screen w-full   flex-col items-center gap-40 bg-black px-4 pt-16 pb-32 text-white  sm:w-auto md:relative md:z-0 md:flex  md:w-2/5`}
+				}   z-10 flex  h-full w-full flex-col items-center  gap-40 bg-black px-4 pt-16 pb-12 text-white sm:w-auto   md:relative md:z-0 md:flex md:h-screen   `}
 			>
 				<button
 					className="absolute right-3 top-3 font-bold text-white  md:hidden"
@@ -60,7 +60,7 @@ const Layout = ({ children }) => {
 						</h2>
 					</div>
 				</div>
-				<div className="flex h-full w-full flex-col  justify-between   ">
+				<div className="flex  h-full w-full flex-col justify-between rounded-md bg-slate-400/10 px-2 py-4 md:py-12 ">
 					<div className="flex flex-col">
 						{dashlinks.map((dash) => {
 							return (
@@ -72,7 +72,7 @@ const Layout = ({ children }) => {
 							);
 						})}
 					</div>
-					<div className="flex flex-col">
+					<div className=" flex flex-col">
 						<Linkdash text="Setting" />
 						<Linkdash
 							text="Logout"
@@ -84,7 +84,7 @@ const Layout = ({ children }) => {
 			{/* main content */}
 			<div className="w-full">
 				{/* Header */}
-				<header className="flex  items-center justify-between gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:px-12">
+				<header className="  flex items-center justify-between gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:px-12">
 					<button
 						className="flex h-8 w-8 items-center justify-center md:hidden"
 						onClick={() => setOpen(true)}
