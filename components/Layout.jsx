@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
 				}  xs:w-2/4 z-10 flex h-screen w-full flex-col justify-between bg-slate-900 px-12 py-32 text-white md:relative md:z-0 md:flex md:w-2/5 lg:w-1/4`}
 			>
 				<button
-					className="absolute right-2 top-2 font-bold text-slate-700 md:hidden"
+					className="absolute right-3 top-3 font-bold text-white  md:hidden"
 					onClick={() => setOpen(false)}
 				>
 					<svg
@@ -71,7 +71,7 @@ const Layout = ({ children }) => {
 				</div>
 			</aside>
 			<div className="w-full">
-				<header className="flex items-center justify-between gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:px-12">
+				<header className="flex  items-center justify-between gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:px-12">
 					<button
 						className="flex h-8 w-8 items-center justify-center md:hidden"
 						onClick={() => setOpen(true)}
@@ -79,7 +79,7 @@ const Layout = ({ children }) => {
 						<MenuIcon />
 					</button>
 					<form action="" className=" w-full md:w-3/4 ">
-						<div className="flex items-center rounded-lg border-[1px] border-gray-500 bg-white px-2 py-1">
+						<div className="  flex h-9 items-center rounded-lg border-[1px] border-gray-400 bg-white px-2">
 							<input
 								type="text"
 								className="h-8 w-full border-none bg-transparent text-gray-600 focus:border-none focus:outline-none"
