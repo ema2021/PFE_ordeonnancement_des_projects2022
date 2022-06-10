@@ -20,10 +20,11 @@ const Layout = ({ children }) => {
 	const [open, setOpen] = useState(false);
 	return (
 		<div className="flex">
+			{/* The sidebar menu */}
 			<aside
 				className={` absolute ${
 					!open && " hidden"
-				}  xs:w-2/4 z-10 flex h-screen w-full flex-col justify-between bg-black px-12 py-32 text-white  md:relative md:z-0 md:flex md:w-2/5  lg:w-1/4`}
+				}   z-10 flex h-screen w-full   flex-col items-center gap-40 bg-black px-4 pt-16 pb-32 text-white  sm:w-auto md:relative md:z-0 md:flex  md:w-2/5`}
 			>
 				<button
 					className="absolute right-3 top-3 font-bold text-white  md:hidden"
@@ -44,39 +45,45 @@ const Layout = ({ children }) => {
 						/>
 					</svg>
 				</button>
-				<div className="flex items-center ">
-					<div className="relative h-16 w-16 text-white ">
-						<Image
-							src="/bezier.svg"
-							layout="fill"
-							alt=""
-							className="text-white"
+				<div className="flex justify-center rounded-full bg-gradient-to-r from-cyan-400 via-blue-900 pl-0.5 pb-0.5 shadow-md shadow-purple-900">
+					<div className="flex  items-center rounded-full  bg-black to-purple-800 ">
+						<div className="relative h-16 w-16  text-white ">
+							<Image
+								src="/bezier.svg"
+								layout="fill"
+								alt=""
+								className="text-white"
+							/>
+						</div>
+						<h2 className="bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 bg-clip-text font-sans text-4xl font-bold text-white text-transparent md:text-5xl">
+							Bezier
+						</h2>
+					</div>
+				</div>
+				<div className="flex h-full w-full flex-col  justify-between   ">
+					<div className="flex flex-col">
+						{dashlinks.map((dash) => {
+							return (
+								<Linkdash
+									text={dash.text}
+									key={dash.image}
+									spanColor="text-2xl"
+								/>
+							);
+						})}
+					</div>
+					<div className="flex flex-col">
+						<Linkdash text="Setting" />
+						<Linkdash
+							text="Logout"
+							spanColor="text-red-900 font-bold"
 						/>
 					</div>
-					<h2 className="bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 bg-clip-text font-sans text-6xl font-bold text-white text-transparent">
-						Bezier
-					</h2>
-				</div>
-				<div className="flex flex-col">
-					{dashlinks.map((dash) => {
-						return (
-							<Linkdash
-								text={dash.text}
-								key={dash.image}
-								spanColor="text-2xl"
-							/>
-						);
-					})}
-				</div>
-				<div className="flex flex-col">
-					<Linkdash text="Setting" />
-					<Linkdash
-						text="Logout"
-						spanColor="text-red-900 font-bold"
-					/>
 				</div>
 			</aside>
+			{/* main content */}
 			<div className="w-full">
+				{/* Header */}
 				<header className="flex  items-center justify-between gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:px-12">
 					<button
 						className="flex h-8 w-8 items-center justify-center md:hidden"
@@ -84,11 +91,12 @@ const Layout = ({ children }) => {
 					>
 						<MenuIcon />
 					</button>
+					{/* Search bar */}
 					<form action="" className=" w-full md:w-3/4 ">
 						<div className="  flex h-9 items-center rounded-lg border-[1px] border-gray-400 bg-white px-2">
 							<input
 								type="text"
-								className="h-8 w-full border-none bg-transparent text-gray-600 focus:border-none focus:outline-none"
+								className="h-8 w-full border-none bg-transparent text-gray-600 focus:border-none focus:outline-none "
 								placeholder="Search projects,tasks here ..."
 							/>
 							<button className="flex h-6 w-6 items-center justify-center bg-transparent text-gray-500">
@@ -96,6 +104,7 @@ const Layout = ({ children }) => {
 							</button>
 						</div>
 					</form>
+					{/* User Icon */}
 					<div>
 						<div className="flex w-full items-center gap-1">
 							<div className="relative h-8 w-8 rounded-full bg-white">
@@ -107,6 +116,7 @@ const Layout = ({ children }) => {
 						</div>
 					</div>
 				</header>
+				{/* Main contnet of the dashboard */}
 				<main className="">{children}</main>
 			</div>
 		</div>

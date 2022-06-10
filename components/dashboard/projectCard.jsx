@@ -1,6 +1,6 @@
 const ProjectCard = ({ percent = 35 }) => {
 	return (
-		<div className="flex  justify-between gap-1 rounded-lg border-2 py-2 px-4 text-gray-700 hover:bg-blue-100">
+		<div className="flex  justify-between gap-1 rounded-lg border-2 border-cyan-500 py-3 px-4 text-gray-700 hover:bg-blue-100">
 			<h2 className="w-60 max-w-prose sm:w-80 md:w-full">
 				Projetcs Title here Lorem ipsum dolor sit amet, qui minim labore
 			</h2>
@@ -9,7 +9,7 @@ const ProjectCard = ({ percent = 35 }) => {
 
 				<div className=" w-full rounded-full bg-gray-300 ">
 					<div
-						className={` rounded-full bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 p-[1px] text-center text-xs font-medium leading-none text-blue-100`}
+						className={`  rounded-full bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 p-0.5 text-center text-xs font-medium leading-none text-blue-100`}
 						style={{ width: percent + "%" }}
 					>
 						{" "}
