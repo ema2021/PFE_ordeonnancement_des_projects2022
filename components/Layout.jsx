@@ -23,7 +23,7 @@ const Layout = ({ children }) => {
 			<aside
 				className={` absolute ${
 					!open && " hidden"
-				}  xs:w-2/4 z-10 flex h-screen w-full flex-col bg-blue-700 px-12 md:relative md:z-0 md:flex md:w-2/5 lg:w-1/4`}
+				}  xs:w-2/4 z-10 flex h-screen w-full flex-col justify-between bg-slate-900 px-12 py-32 text-white md:relative md:z-0 md:flex md:w-2/5 lg:w-1/4`}
 			>
 				<button
 					className="absolute right-2 top-2 font-bold text-slate-700 md:hidden"
@@ -57,25 +57,32 @@ const Layout = ({ children }) => {
 						Bezier
 					</h2>
 				</div>
-				<div>
+				<div className="flex flex-col">
 					{dashlinks.map((dash) => {
 						return <Linkdash text={dash.text} key={dash.image} />;
 					})}
 				</div>
+				<div className="flex flex-col">
+					<Linkdash text="Setting" />
+					<Linkdash
+						text="Logout"
+						spanColor="text-red-900 font-bold"
+					/>
+				</div>
 			</aside>
 			<div className="w-full">
-				<header className="flex items-center justify-between gap-2 bg-blue-600 py-1 px-2 text-white">
+				<header className="flex items-center justify-between gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:px-12">
 					<button
 						className="flex h-8 w-8 items-center justify-center md:hidden"
 						onClick={() => setOpen(true)}
 					>
 						<MenuIcon />
 					</button>
-					<form action="" className=" w-full md:w-3/4 lg:w-2/4">
-						<div className="flex  rounded-xl border-2 border-gray-500 bg-white px-2 py-1">
+					<form action="" className=" w-full md:w-3/4 ">
+						<div className="flex items-center rounded-lg border-[1px] border-gray-500 bg-white px-2 py-1">
 							<input
 								type="text"
-								className="h-6 w-full border-none bg-transparent text-gray-600 focus:border-none focus:outline-none"
+								className="h-8 w-full border-none bg-transparent text-gray-600 focus:border-none focus:outline-none"
 								placeholder="Search projects,tasks here ..."
 							/>
 							<button className="flex h-6 w-6 items-center justify-center bg-transparent text-gray-500">
@@ -94,7 +101,7 @@ const Layout = ({ children }) => {
 						</div>
 					</div>
 				</header>
-				<main className="bg-indigo-300">{children}</main>
+				<main className="">{children}</main>
 			</div>
 		</div>
 	);
