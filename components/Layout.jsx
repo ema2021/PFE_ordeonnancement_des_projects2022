@@ -23,7 +23,7 @@ const Layout = ({ children }) => {
 			<aside
 				className={` absolute ${
 					!open && " hidden"
-				}  xs:w-2/4 z-10 flex h-screen w-full flex-col justify-between bg-slate-900 px-12 py-32 text-white md:relative md:z-0 md:flex md:w-2/5 lg:w-1/4`}
+				}  xs:w-2/4 z-10 flex h-screen w-full flex-col justify-between bg-black px-12 py-32 text-white  md:relative md:z-0 md:flex md:w-2/5  lg:w-1/4`}
 			>
 				<button
 					className="absolute right-3 top-3 font-bold text-white  md:hidden"
@@ -44,8 +44,8 @@ const Layout = ({ children }) => {
 						/>
 					</svg>
 				</button>
-				<div className="flex items-center">
-					<div className="relative h-16 w-16 text-white">
+				<div className="flex items-center ">
+					<div className="relative h-16 w-16 text-white ">
 						<Image
 							src="/bezier.svg"
 							layout="fill"
@@ -53,13 +53,19 @@ const Layout = ({ children }) => {
 							className="text-white"
 						/>
 					</div>
-					<h2 className="font-sans text-6xl font-bold text-white">
+					<h2 className="bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 bg-clip-text font-sans text-6xl font-bold text-white text-transparent">
 						Bezier
 					</h2>
 				</div>
 				<div className="flex flex-col">
 					{dashlinks.map((dash) => {
-						return <Linkdash text={dash.text} key={dash.image} />;
+						return (
+							<Linkdash
+								text={dash.text}
+								key={dash.image}
+								spanColor="text-2xl"
+							/>
+						);
 					})}
 				</div>
 				<div className="flex flex-col">

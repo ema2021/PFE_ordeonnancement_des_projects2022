@@ -18,7 +18,7 @@ const index = () => {
 							Complete
 						</BzButton>
 					</div>
-					<BzButton className="h-10 w-10  rounded-full bg-blue-600 text-white hover:bg-blue-800 sm:w-auto">
+					<BzButton className="h-10 w-10  rounded-full bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 text-white hover:bg-blue-800 sm:w-auto">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
@@ -34,11 +34,11 @@ const index = () => {
 					</BzButton>
 				</div>
 				<div className="grid gap-2 ">
-					<ProjectCard />
-					<ProjectCard />
-					<ProjectCard />
-					<ProjectCard />
-					<ProjectCard />
+					<ProjectCard percent={82} />
+					<ProjectCard percent={52} />
+					<ProjectCard percent={62} />
+					<ProjectCard percent={92} />
+					<ProjectCard percent={42} />
 				</div>
 			</div>
 		</Layout>

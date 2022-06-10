@@ -1,23 +1,25 @@
-const ProjectCard = () => {
+const ProjectCard = ({ percent = 35 }) => {
 	return (
 		<div className="flex  justify-between gap-1 rounded-lg border-2 py-2 px-4 text-gray-700 hover:bg-blue-100">
 			<h2 className="w-60 max-w-prose sm:w-80 md:w-full">
 				Projetcs Title here Lorem ipsum dolor sit amet, qui minim labore
 			</h2>
-			<div className="   hidden items-center space-x-2 px-2  pt-1 lg:flex ">
+			<div className="   hidden w-full items-center space-x-2  px-2 pt-1 lg:flex">
 				<span>11/12/22</span>
-				<progress
-					id="file"
-					value="32"
-					max="100"
-					className="h-2 rounded-full"
-				>
-					{" "}
-					32%{" "}
-				</progress>
+
+				<div className=" w-full rounded-full bg-gray-300 ">
+					<div
+						className={` rounded-full bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 p-[1px] text-center text-xs font-medium leading-none text-blue-100`}
+						style={{ width: percent + "%" }}
+					>
+						{" "}
+						{percent + "%"}
+					</div>
+				</div>
+
 				<span>11/01/23</span>
 			</div>
-			<button className="text-blue-700">
+			<button className="text-cyan-600">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					className="h-5 w-5"
