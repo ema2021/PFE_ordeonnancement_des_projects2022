@@ -64,7 +64,7 @@ const Layout = ({ children }) => {
 				</div>
 			</aside>
 			<div className="w-full">
-				<header className="flex items-center justify-between gap-2 bg-blue-100 py-1 px-2">
+				<header className="flex items-center justify-between gap-2 bg-blue-600 py-1 px-2 text-white">
 					<button
 						className="flex h-8 w-8 items-center justify-center md:hidden"
 						onClick={() => setOpen(true)}
@@ -72,10 +72,10 @@ const Layout = ({ children }) => {
 						<MenuIcon />
 					</button>
 					<form action="" className=" w-full md:w-3/4 lg:w-2/4">
-						<div className="flex  rounded-xl border-2 border-gray-300 px-2 py-1">
+						<div className="flex  rounded-xl border-2 border-gray-500 bg-white px-2 py-1">
 							<input
 								type="text"
-								className="h-6 w-full border-none bg-transparent focus:border-none focus:outline-none"
+								className="h-6 w-full border-none bg-transparent text-gray-600 focus:border-none focus:outline-none"
 								placeholder="Search projects,tasks here ..."
 							/>
 							<button className="flex h-6 w-6 items-center justify-center bg-transparent text-gray-500">
