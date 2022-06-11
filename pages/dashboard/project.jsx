@@ -23,8 +23,8 @@ const Project = () => {
 				</a>
 			</Link>
 
-			<div className="grid grid-cols-3  ">
-				<div className="col-span-2 grid gap-3">
+			<div className="grid md:grid-cols-3  ">
+				<div className="grid gap-3 md:col-span-2">
 					<h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl ">
 						Creer une Ligne de commande
 					</h1>
@@ -42,7 +42,7 @@ const Project = () => {
 							Monday, 12 January 2021
 						</h2>
 					</div>
-					<p className="px-2 py-2 leading-6">
+					<p className="px-4 py-2 leading-6 md:px-2">
 						Lorem ipsum dolor sit amet, officia excepteur ex fugiat
 						reprehenderit enim labore culpa sint ad nisi Lorem
 						pariatur mollit ex esse exercitation amet. Nisi
@@ -52,7 +52,7 @@ const Project = () => {
 						ea consectetur et est culpa et culpa duis.
 					</p>
 				</div>
-				<div className="flex items-start justify-center py-2">
+				<div className="flex h-full w-full items-center justify-center p-2  md:items-start">
 					<BzButton className="bg-blue-600 text-white">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
