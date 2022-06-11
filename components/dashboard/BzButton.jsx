@@ -8,7 +8,7 @@ const BzButton = ({
 }) => {
 	return (
 		<button
-			className={`${className} md:text-md  flex items-center justify-center gap-2 py-2 px-1   text-sm uppercase sm:px-2 md:px-4 lg:px-6`}
+			className={`${className} md:text-md  flex items-center justify-center gap-2 rounded py-2   px-1 text-sm font-semibold uppercase shadow-lg focus:ring-2 sm:px-2 md:px-4 lg:px-6`}
 			onClick={handleClick}
 		>
 			{children}

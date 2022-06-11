@@ -24,7 +24,7 @@ const Layout = ({ children }) => {
 			<aside
 				className={` ${
 					!open && " hidden"
-				}   absolute z-10 flex  h-screen w-full flex-col   items-center justify-between bg-black px-4 pt-16 pb-2   text-white sm:w-auto md:sticky md:top-0 md:z-0   md:flex`}
+				}   justify-between absolute z-10  flex h-screen w-full   flex-col items-center gap-4 bg-black px-4 pt-16   pb-2 text-white sm:w-auto md:sticky md:top-0  md:z-0  md:flex`}
 			>
 				<button
 					className="absolute right-3 top-3 font-bold text-white  md:hidden"
@@ -45,7 +45,7 @@ const Layout = ({ children }) => {
 						/>
 					</svg>
 				</button>
-				<div className="flex justify-center rounded-full bg-gradient-to-r from-cyan-400 via-blue-900 pl-0.5 pb-0.5 shadow-md shadow-purple-900">
+				<div className="flex justify-center rounded-full rounded-br-none bg-gradient-to-r from-cyan-400 via-blue-900 pl-0.5 pb-0.5 pr-4 shadow-md shadow-purple-900">
 					<div className="flex  items-center rounded-full  bg-black to-purple-800 ">
 						<div className="relative h-16 w-16  text-white ">
 							<Image
@@ -60,7 +60,7 @@ const Layout = ({ children }) => {
 						</h2>
 					</div>
 				</div>
-				<div className="flex  h-full w-full flex-col justify-between rounded-md bg-slate-400/10 px-2 py-4 md:py-12 ">
+				<div className="justify-between  flex h-full w-full flex-col rounded-md bg-slate-400/10 px-2 py-4 md:py-12 ">
 					<div className="flex flex-col">
 						{dashlinks.map((dash) => {
 							return (
@@ -84,7 +84,7 @@ const Layout = ({ children }) => {
 			{/* main content */}
 			<div className="w-full">
 				{/* Header */}
-				<header className="  sticky top-0 flex items-center justify-between gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:px-12">
+				<header className="  justify-between sticky top-0 flex items-center gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:px-12">
 					<button
 						className="flex h-8 w-8 items-center justify-center md:hidden"
 						onClick={() => setOpen(true)}
@@ -117,7 +117,9 @@ const Layout = ({ children }) => {
 					</div>
 				</header>
 				{/* Main contnet of the dashboard */}
-				<main className="">{children}</main>
+				<main className="px-2 pt-8 sm:px-3 md:px-6 lg:px-8 xl:px-12">
+					{children}
+				</main>
 			</div>
 		</div>
 	);

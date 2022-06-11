@@ -1,19 +1,20 @@
+import Link from "next/link";
 import Layout from "../../components/Layout";
 import ProjectCard from "../../components/dashboard/projectCard";
 import BzButton from "../../components/dashboard/BzButton";
 const index = () => {
 	return (
 		<div className="  items-center justify-center space-y-8 py-8 px-2 lg:px-10 xl:px-12">
-			<div className="flex justify-between gap-2">
+			<div className="justify-between flex gap-2">
 				<div className="grid h-10  grid-cols-3 divide-x-2 divide-cyan-500 rounded-md border-[1px] border-cyan-500 shadow-xl ">
-					<BzButton className="hover:bg-cyan-500 hover:text-white">
+					<BzButton className="rounded-r-none hover:bg-cyan-500 hover:text-white">
 						active
 					</BzButton>
-					<BzButton className="hover:bg-cyan-500 hover:text-white">
+					<BzButton className="rounded-none hover:bg-cyan-500 hover:text-white">
 						{" "}
 						hold
 					</BzButton>
-					<BzButton className="rounded-r-md hover:bg-cyan-500 hover:text-white">
+					<BzButton className="rounded-r-md rounded-l-none hover:bg-cyan-500 hover:text-white">
 						Complete
 					</BzButton>
 				</div>
@@ -33,11 +34,31 @@ const index = () => {
 				</BzButton>
 			</div>
 			<div className="grid gap-2 ">
-				<ProjectCard percent={82} />
-				<ProjectCard percent={52} />
-				<ProjectCard percent={62} />
-				<ProjectCard percent={92} />
-				<ProjectCard percent={42} />
+				<Link href="/dashboard/project">
+					<a>
+						<ProjectCard percent={82} />
+					</a>
+				</Link>
+				<Link href="/dashboard/project">
+					<a>
+						<ProjectCard percent={52} />
+					</a>
+				</Link>
+				<Link href="/dashboard/project">
+					<a>
+						<ProjectCard percent={62} />
+					</a>
+				</Link>
+				<Link href="/dashboard/project">
+					<a>
+						<ProjectCard percent={92} />
+					</a>
+				</Link>
+				<Link href="/dashboard/project">
+					<a>
+						<ProjectCard percent={42} />
+					</a>
+				</Link>
 			</div>
 		</div>
 	);
