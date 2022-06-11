@@ -22,9 +22,9 @@ const Layout = ({ children }) => {
 		<div className="flex">
 			{/* The sidebar menu */}
 			<aside
-				className={` absolute ${
+				className={` ${
 					!open && " hidden"
-				}   z-10 flex  h-full w-full flex-col items-center  gap-40 bg-black px-4 pt-16 pb-12 text-white sm:w-auto   md:relative md:z-0 md:flex md:h-screen   `}
+				}   absolute z-10 flex  h-screen w-full flex-col   items-center justify-between bg-black px-4 pt-16 pb-2   text-white sm:w-auto md:sticky md:top-0 md:z-0   md:flex`}
 			>
 				<button
 					className="absolute right-3 top-3 font-bold text-white  md:hidden"
@@ -84,7 +84,7 @@ const Layout = ({ children }) => {
 			{/* main content */}
 			<div className="w-full">
 				{/* Header */}
-				<header className="  flex items-center justify-between gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:px-12">
+				<header className="  sticky top-0 flex items-center justify-between gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:px-12">
 					<button
 						className="flex h-8 w-8 items-center justify-center md:hidden"
 						onClick={() => setOpen(true)}
@@ -93,7 +93,7 @@ const Layout = ({ children }) => {
 					</button>
 					{/* Search bar */}
 					<form action="" className=" w-full md:w-3/4 ">
-						<div className="  flex h-9 items-center rounded-lg border-[1px] border-gray-400 bg-white px-2">
+						<div className="  flex h-9 items-center rounded-xl border-[0.5px] border-gray-400 bg-white px-2 ring-cyan-500 focus-within:border-none focus-within:ring-2">
 							<input
 								type="text"
 								className="h-8 w-full border-none bg-transparent text-gray-600 focus:border-none focus:outline-none "
@@ -106,8 +106,8 @@ const Layout = ({ children }) => {
 					</form>
 					{/* User Icon */}
 					<div>
-						<div className="flex w-full items-center gap-1">
-							<div className="relative h-8 w-8 rounded-full bg-white">
+						<div className="flex  w-full items-center gap-1">
+							<div className="relative h-[40px] w-[60px] rounded-full bg-white">
 								<Image src="/bezier.svg" layout="fill" alt="" />
 							</div>
 							<span className="w-full text-xs md:text-sm">
