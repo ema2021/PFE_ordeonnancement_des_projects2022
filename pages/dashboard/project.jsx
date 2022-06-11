@@ -1,5 +1,6 @@
 import Link from "next/link";
 import BzButton from "../../components/dashboard/BzButton";
+import TaskComponent from "../../components/dashboard/taskComponent";
 const Project = () => {
 	return (
 		<div className="space-y-4">
@@ -25,8 +26,8 @@ const Project = () => {
 
 			<div className="grid md:grid-cols-3  ">
 				<div className="grid gap-3 md:col-span-2">
-					<h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl ">
-						Creer une Ligne de commande
+					<h1 className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl ">
+						Créer une Ligne de commande
 					</h1>
 					<div className=" flex w-full items-center gap-8   text-gray-700">
 						<h2>
@@ -70,6 +71,37 @@ const Project = () => {
 						</svg>
 						Add new Task
 					</BzButton>
+				</div>
+			</div>
+			<div className="grid gap-2 sm:grid-cols-3">
+				<div className="space-y-2 sm:col-span-2">
+					<TaskComponent state="active">
+						Lorem ipsum dolor sit amet, qui minim labore adipisicing
+						minim sint cillum sint consectetur cupidatat.
+					</TaskComponent>{" "}
+					<TaskComponent state="done" number="02">
+						Lorem ipsum dolor sit amet, qui minim labore adipisicing
+						minim sint cillum sint consectetur cupidatat.
+					</TaskComponent>{" "}
+					<TaskComponent state="next" number="03">
+						Lorem ipsum dolor sit amet, qui minim labore adipisicing
+						minim sint cillum sint consectetur cupidatat.
+					</TaskComponent>
+					<TaskComponent state="remain" number="03">
+						Lorem ipsum dolor sit amet, qui minim labore adipisicing
+						minim sint cillum sint consectetur cupidatat.
+					</TaskComponent>
+				</div>
+				<div className="flex  items-center justify-center ">
+					<div className="  flex flex-col items-center justify-center   gap-4 rounded-full   ">
+						<span className="font-semibold text-gray-500">
+							Completed
+						</span>
+						<span className="text-5xl font-bold">25 %</span>
+						<span className="font-bold text-cyan-600">
+							Progress
+						</span>
+					</div>
 				</div>
 			</div>
 		</div>

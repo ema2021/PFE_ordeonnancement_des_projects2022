@@ -84,7 +84,7 @@ const Layout = ({ children }) => {
 			{/* main content */}
 			<div className="w-full">
 				{/* Header */}
-				<header className="  justify-between sticky top-0 flex items-center gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:px-12">
+				<header className="  justify-between sticky top-0 flex items-center gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:justify-start md:px-12 lg:justify-between">
 					<button
 						className="flex h-8 w-8 items-center justify-center md:hidden"
 						onClick={() => setOpen(true)}
@@ -92,7 +92,7 @@ const Layout = ({ children }) => {
 						<MenuIcon />
 					</button>
 					{/* Search bar */}
-					<form action="" className=" w-full md:w-3/4 ">
+					<form action="" className=" w-full sm:w-2/4 md:w-full ">
 						<div className="  flex h-9 items-center rounded-xl border-[0.5px] border-gray-400 bg-white px-2 ring-cyan-500 focus-within:border-none focus-within:ring-2">
 							<input
 								type="text"
