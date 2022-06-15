@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }) {
 	const router = useRouter();
 	return (
 		<>
-			{router.pathname == "/" ? (
+			{router.pathname == "/" || router.pathname == "/account" ? (
 				<Component {...pageProps} />
 			) : (
 				<Layout>

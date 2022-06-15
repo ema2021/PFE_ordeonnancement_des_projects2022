@@ -13,6 +13,9 @@ const nextConfig = withPWA({
 	images: {
 		domains: ["unsplash.com"],
 	},
+	experimental: {
+		urlImports: ["https://unpkg.com/gojs@2.2.10/release/"],
+	},
 });
 
 module.exports = nextConfig;

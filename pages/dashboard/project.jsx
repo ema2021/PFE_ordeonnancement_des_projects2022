@@ -5,7 +5,7 @@ const Project = () => {
 	return (
 		<div className="space-y-4">
 			<Link href="/dashboard" passHref={true}>
-				<a className="flex w-24 items-center  gap-1 rounded bg-red-500 py-[4px] px-3 font-semibold text-white ring-red-600 hover:bg-red-600 focus:ring-2">
+				<a className="flex w-24 items-center  gap-1  px-3 py-1 font-semibold text-gray-700 hover:bg-cyan-100 ">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						className="h-6 w-6"
@@ -43,7 +43,7 @@ const Project = () => {
 							Monday, 12 January 2021
 						</h2>
 					</div>
-					<p className="px-4 py-2 leading-6 md:px-2">
+					<p className="px-4 py-2 leading-6 text-gray-800 md:px-2">
 						Lorem ipsum dolor sit amet, officia excepteur ex fugiat
 						reprehenderit enim labore culpa sint ad nisi Lorem
 						pariatur mollit ex esse exercitation amet. Nisi
@@ -93,12 +93,14 @@ const Project = () => {
 					</TaskComponent>
 				</div>
 				<div className="flex  items-center justify-center ">
-					<div className="  flex flex-col items-center justify-center   gap-4 rounded-full   ">
+					<div className="  justify-between flex h-full w-full flex-col items-center  gap-4    bg-blue-50 py-12   ">
 						<span className="font-semibold text-gray-500">
 							Completed
 						</span>
-						<span className="text-5xl font-bold">25 %</span>
-						<span className="font-bold text-cyan-600">
+						<span className="bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 bg-clip-text text-7xl font-bold text-transparent">
+							25 %
+						</span>
+						<span className="text-2xl font-bold text-purple-800">
 							Progress
 						</span>
 					</div>
