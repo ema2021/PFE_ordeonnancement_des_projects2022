@@ -27,7 +27,10 @@ function Layout({ children }) {
 	const [open, setOpen] = useState(false);
 	const { user, view, signOut } = useAuth();
 	const router = useRouter();
-	!user && router.push("/");
+	useEffect(()=>{
+		!user && router.push("/");
+	},[user,router])
+	
 	if (view === VIEWS.UPDATE_PASSWORD) {
 		return (
 			<Layout>
