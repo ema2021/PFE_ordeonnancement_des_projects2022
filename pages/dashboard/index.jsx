@@ -11,7 +11,7 @@ export default function Index() {
 	const router = useRouter();
 	useEffect(() => {
 		!user && router.push("/");
-	}, [router]);
+	}, [router, user]);
 
 	return (
 		<>

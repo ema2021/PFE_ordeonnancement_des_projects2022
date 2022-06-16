@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { MenuIcon, SearchIcon } from "@heroicons/react/solid";
 import Image from "next/image";
 import Linkdash from "./dashboard/Linkdash";
+import { Hidden } from "@mui/material";
 const dashlinks = [
 	{
 		image: "1.png",
@@ -27,20 +28,16 @@ function Layout({ children }) {
 	const [open, setOpen] = useState(false);
 	const { user, view, signOut } = useAuth();
 	const router = useRouter();
-	useEffect(()=>{
+	useEffect(() => {
 		!user && router.push("/");
-	},[user,router])
-	
+	}, [user, router]);
+
 	if (view === VIEWS.UPDATE_PASSWORD) {
-		return (
-			<Layout>
-				<Auth.UpdatePassword supabaseClient={supabase} />
-			</Layout>
-		);
+		return <Auth.UpdatePassword supabaseClient={supabase} />;
 	}
 	console.log(JSON.stringify(user));
 	return (
-		<div className="flex">
+		<div className={`flex ${user ? "" : "hidden"}`}>
 			{/* The sidebar menu */}
 			<aside
 				className={` ${
