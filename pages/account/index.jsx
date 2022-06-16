@@ -1,26 +1,31 @@
-import { useState, useEffect } from "react";
-import { supabase } from "../../utils/supabaseClient";
-import Auth from "../../components/Auth";
-import Account from "../../components/Account";
+import { Auth } from "@supabase/ui";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
+import Layout from "@/components/Layout";
+import { useAuth, VIEWS } from "@/lib/auth";
+import { supabase } from "@/lib/client";
 
 export default function Home() {
-	const [session, setSession] = useState(null);
+	const { user, view, signOut } = useAuth();
+	const router = useRouter();
 
-	useEffect(() => {
-		setSession(supabase.auth.session());
-
-		supabase.auth.onAuthStateChange((_event, session) => {
-			setSession(session);
-		});
-	}, []);
+	if (view === VIEWS.UPDATE_PASSWORD) {
+		return (
+			<div className="bg-red-200">
+				<Auth.UpdatePassword supabaseClient={supabase} />
+			</div>
+		);
+	}
+	user && router.push("/dashboard");
 
 	return (
-		<div className="flex  items-center justify-center h-screen">
-			{!session ? (
-				<Auth />
-			) : (
-				<Account key={session.user.id} session={session} />
+		<>
+			{!user && (
+				<div className="h-screen grid place-content-center">
+					<Auth view={view} supabaseClient={supabase} className="" />
+				</div>
 			)}
-		</div>
+		</>
 	);
 }

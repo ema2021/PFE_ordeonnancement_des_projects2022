@@ -1,4 +1,11 @@
-import { useState } from "react";
+import { Auth } from "@supabase/ui";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
+import { useAuth, VIEWS } from "@/lib/auth";
+import { supabase } from "@/lib/client";
+
+import { useState, useEffect } from "react";
 import { MenuIcon, SearchIcon } from "@heroicons/react/solid";
 import Image from "next/image";
 import Linkdash from "./dashboard/Linkdash";
@@ -16,8 +23,19 @@ const dashlinks = [
 		text: "Deadlines",
 	},
 ];
-const Layout = ({ children }) => {
+function Layout({ children }) {
 	const [open, setOpen] = useState(false);
+	const { user, view, signOut } = useAuth();
+	const router = useRouter();
+	!user && router.push("/");
+	if (view === VIEWS.UPDATE_PASSWORD) {
+		return (
+			<Layout>
+				<Auth.UpdatePassword supabaseClient={supabase} />
+			</Layout>
+		);
+	}
+	console.log(JSON.stringify(user));
 	return (
 		<div className="flex">
 			{/* The sidebar menu */}
@@ -72,12 +90,28 @@ const Layout = ({ children }) => {
 							);
 						})}
 					</div>
-					<div className=" flex flex-col">
+					<div className=" flex flex-col items-center justify-center gap-2">
 						<Linkdash text="Setting" />
-						<Linkdash
-							text="Logout"
-							spanColor="text-red-900 font-bold"
-						/>
+						<button
+							className="text-red-600 flex items-center gap-2"
+							onClick={signOut}
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								className="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+								strokeWidth={2}
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+								/>
+							</svg>{" "}
+							Log Out
+						</button>
 					</div>
 				</div>
 			</aside>
@@ -111,7 +145,9 @@ const Layout = ({ children }) => {
 								<Image src="/bezier.svg" layout="fill" alt="" />
 							</div>
 							<span className="w-full text-xs md:text-sm">
-								User Name
+								{user?.email
+									.replace(".", " ")
+									.replace("@gmail.com", "")}
 							</span>
 						</div>
 					</div>
@@ -123,6 +159,6 @@ const Layout = ({ children }) => {
 			</div>
 		</div>
 	);
-};
+}
 
 export default Layout;
