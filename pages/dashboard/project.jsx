@@ -30,18 +30,18 @@ const Project = () => {
 						Créer une Ligne de commande
 					</h1>
 					<div className=" flex w-full items-center gap-8   text-gray-700">
-						<h2>
+						<p>
 							<span className="font-semibold text-cyan-600">
 								starts :
 							</span>{" "}
 							Monday, 12 January 2021
-						</h2>
-						<h2>
+						</p>
+						<p>
 							<span className="font-semibold text-cyan-600">
 								Ends :
 							</span>{" "}
 							Monday, 12 January 2021
-						</h2>
+						</p>
 					</div>
 					<p className="px-4 py-2 leading-6 text-gray-800 md:px-2">
 						Lorem ipsum dolor sit amet, officia excepteur ex fugiat
@@ -74,7 +74,15 @@ const Project = () => {
 				</div>
 			</div>
 			<div className="grid gap-2 sm:grid-cols-3">
-				<div className="space-y-2 sm:col-span-2">
+				<div className="space-y-2 sm:col-span-2 flex flex-col justify-center">
+					<TaskComponent state="active">
+						Lorem ipsum dolor sit amet, qui minim labore adipisicing
+						minim sint cillum sint consectetur cupidatat.
+					</TaskComponent>
+					<TaskComponent state="active">
+						Lorem ipsum dolor sit amet, qui minim labore adipisicing
+						minim sint cillum sint consectetur cupidatat.
+					</TaskComponent>{" "}
 					<TaskComponent state="active">
 						Lorem ipsum dolor sit amet, qui minim labore adipisicing
 						minim sint cillum sint consectetur cupidatat.

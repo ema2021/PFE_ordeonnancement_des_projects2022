@@ -26,14 +26,15 @@
     .highlight {
         @apply ml-1 p-2 font-mono bg-gray-100 rounded-lg;
     }
+        
 }
 
 .sbui-input {
-    @apply custom-focus rounded focus:shadow-none !important;
+    @apply focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded focus:shadow-none !important;
 }
 
 .sbui-checkbox {
-    @apply custom-focus rounded focus:shadow-none !important;
+    @apply  rounded focus:shadow-none focus:ring-blue-500 accent-blue-500  !important;
 }
 
 .sbui-btn-primary {
@@ -42,4 +43,11 @@
 
 .sbui-typography-link {
     @apply custom-focus text-blue-500 font-bold rounded !important;
+
 }
+.sbui-typography-text{
+    @apply  p-2 rounded w-[300px] mx-auto;
+}
+/* .sbui-checkbox-container{
+    @apply bg-slate-100 !important;
+} */

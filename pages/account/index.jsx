@@ -22,8 +22,8 @@ export default function Home() {
 	return (
 		<>
 			{!user && (
-				<div className="h-screen grid place-content-center">
-					<Auth view={view} supabaseClient={supabase} className="" />
+				<div className="h-screen  px-4  grid place-content-center">
+					<Auth view={view} supabaseClient={supabase} className=""  />
 				</div>
 			)}
 		</>

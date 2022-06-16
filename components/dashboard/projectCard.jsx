@@ -1,9 +1,9 @@
 const ProjectCard = ({ percent = 35 }) => {
 	return (
 		<div className="flex  justify-between  rounded-lg border-2 border-cyan-500 py-2 px-2 text-gray-700 hover:bg-cyan-100">
-			<h2 className="max-w-prose  sm:w-80 md:w-full lg:p-4 lg:text-xl">
+			<p className="max-w-prose  sm:w-80 md:w-full lg:p-4 lg:text-xl">
 				Projetcs Title here Lorem ipsum dolor sit amet, qui minim labore
-			</h2>
+			</p>
 			<div className="  hidden w-full  items-center space-x-2 px-2  pt-1 sm:flex lg:text-lg ">
 				<span>11/12/22</span>
 
