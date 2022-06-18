@@ -11,10 +11,10 @@ import { supabase } from "@/lib/client";
 export default function Index({ data }) {
 	const { user, view, signOut } = useAuth();
 	const router = useRouter();
-	// console.log(user.id);
 	// console.log(data);
 	useEffect(() => {
 		!user && router.push("/");
+		// console.log(user?.id);
 	}, [router, user]);
 
 	return (
