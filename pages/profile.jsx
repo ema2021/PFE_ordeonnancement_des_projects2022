@@ -27,5 +27,10 @@ export async function getServerSideProps({ req, res }) {
 		return { props: {}, redirect: { destination: "/", permanent: false } };
 	}
 
-	return { props: { user } };
+	let { data: projets, error } = await supabase
+		.from("projets")
+		.select("*")
+		.eq("decideur_id", user.id);
+
+	return { props: { data: projets } };
 }

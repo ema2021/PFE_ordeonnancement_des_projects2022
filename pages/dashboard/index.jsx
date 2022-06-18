@@ -5,10 +5,13 @@ import ProjectCard from "@/components/dashboard/projectCard";
 import BzButton from "@/components/dashboard/BzButton";
 import { useAuth, VIEWS } from "@/lib/auth";
 import { supabase } from "@/lib/client";
+// import { getServerSideProps } from "pages/profile";
 
-export default function Index() {
+export default function Index({ data }) {
 	const { user, view, signOut } = useAuth();
 	const router = useRouter();
+	// console.log(user.id);
+	// console.log(data);
 	useEffect(() => {
 		!user && router.push("/");
 	}, [router, user]);
@@ -46,34 +49,43 @@ export default function Index() {
 						</BzButton>
 					</div>
 					<div className="grid gap-2 ">
-						<Link href="/dashboard/project">
-							<a>
-								<ProjectCard percent={82} />
-							</a>
-						</Link>
-						<Link href="/dashboard/project">
-							<a>
-								<ProjectCard percent={52} />
-							</a>
-						</Link>
-						<Link href="/dashboard/project">
-							<a>
-								<ProjectCard percent={62} />
-							</a>
-						</Link>
-						<Link href="/dashboard/project">
-							<a>
-								<ProjectCard percent={92} />
-							</a>
-						</Link>
-						<Link href="/dashboard/project">
-							<a>
-								<ProjectCard percent={42} />
-							</a>
-						</Link>
+						{data?.map((item) => {
+							return (
+								<Link href="/dashboard/project" key={item.id}>
+									<a>
+										<ProjectCard
+											percent={item.progress}
+											title={item.titre}
+										/>
+									</a>
+								</Link>
+							);
+						})}
+						{!data && <span>Error retrieving data</span>}
 					</div>
 				</div>
 			)}
 		</>
 	);
+}
+// const user = supabase.auth.api.getUserByCookie();
+
+// // console.log(user);
+// export async function getServerSideProps() {
+
+// }
+export async function getServerSideProps({ req }) {
+	const { user } = await supabase.auth.api.getUserByCookie(req);
+
+	if (!user) {
+		console.log("Please login.");
+		return { props: {}, redirect: { destination: "/", permanent: false } };
+	}
+
+	let { data: projets, error } = await supabase
+		.from("projets")
+		.select("*")
+		.eq("decideur_id", user.id);
+
+	return { props: { data: projets } };
 }
