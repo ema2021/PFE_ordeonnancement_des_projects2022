@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import ProjectCard from "@/components/dashboard/projectCard";
 import BzButton from "@/components/dashboard/BzButton";
+import AddIcon from "@mui/icons-material/Add";
 import { useAuth, VIEWS } from "@/lib/auth";
 import { supabase } from "@/lib/client";
 // import { getServerSideProps } from "pages/profile";
@@ -61,7 +62,22 @@ export default function Index({ data }) {
 								</Link>
 							);
 						})}
-						{!data && <span>Error retrieving data</span>}
+						{data.length == 0 && (
+							<div className="grid place-content-center py-32  gap-6 ">
+								<span className="text-2xl">
+									Vous n'avez pas de projet
+								</span>
+								<button className="flex items-center gap-1 bg-blue-600 py-2 px-4 rounded text-white font-semibold uppercase justify-center">
+									<AddIcon />
+									Creer projet
+								</button>
+							</div>
+						)}
+						{!data && (
+							<div className="bg-red-100 text-red-600  grid place-content-center py-2 ">
+								Erreur d'otenir les donnees de serveur
+							</div>
+						)}
 					</div>
 				</div>
 			)}
