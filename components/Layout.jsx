@@ -31,9 +31,9 @@ function Layout({ children }) {
 	const [open, setOpen] = useState(false);
 	const { user, view, signOut } = useAuth();
 	const router = useRouter();
-	useEffect(() => {
-		!user && router.push("/");
-	}, [user, router]);
+	// useEffect(() => {
+	// 	!user && router.push("/");
+	// }, [user, router]);
 
 	if (view === VIEWS.UPDATE_PASSWORD) {
 		return <Auth.UpdatePassword supabaseClient={supabase} />;

@@ -7,23 +7,40 @@ import { useAuth, VIEWS } from "@/lib/auth";
 import { supabase } from "@/lib/client";
 
 export default function Home() {
-	const { user, view, signOut } = useAuth();
+	const { user, view } = useAuth();
 	const router = useRouter();
 
 	if (view === VIEWS.UPDATE_PASSWORD) {
 		return (
-			<div className="bg-red-200">
+			<div className="">
 				<Auth.UpdatePassword supabaseClient={supabase} />
 			</div>
 		);
+	}
+	if (view == VIEWS.SIGN_UP) {
+		console.log("Sign Up");
 	}
 	user && router.push("/dashboard");
 
 	return (
 		<>
 			{!user && (
-				<div className="h-screen  px-4  grid place-content-center">
-					<Auth view={view} supabaseClient={supabase} className=""  />
+				<div className="grid  h-screen  place-content-center px-4">
+					<form
+						className={`${view == VIEWS.SIGN_UP ? "hidden" : ""}`}
+					>
+						<input
+							type="text"
+							name="name"
+							placeholder="Nom"
+							className="w-full  rounded border-2 py-2 px-2"
+						/>
+						<Auth
+							view={view}
+							supabaseClient={supabase}
+							className=""
+						/>
+					</form>
 				</div>
 			)}
 		</>

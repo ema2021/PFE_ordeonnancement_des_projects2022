@@ -1,7 +1,4 @@
 import { Html, Head, Main, NextScript } from "next/document";
-// import Image from "next/image";
-import Footer from "./Footer";
-import Layout from "../components/Layout";
 export default function Document() {
 	return (
 		<Html lang="en" className="">

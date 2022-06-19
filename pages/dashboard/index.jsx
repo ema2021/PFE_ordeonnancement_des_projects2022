@@ -21,7 +21,7 @@ export default function Index({ data }) {
 		<>
 			{user && (
 				<div className="  items-center justify-center space-y-8 py-8 px-2 lg:px-10 xl:px-12">
-					<div className="justify-between flex gap-2">
+					<div className="flex justify-between gap-2">
 						<div className="grid h-10  grid-cols-3 divide-x-2 divide-cyan-500 rounded-md border-[1px] border-cyan-500 shadow-xl ">
 							<BzButton className="rounded-r-none hover:bg-cyan-500 hover:text-white">
 								active
@@ -63,18 +63,18 @@ export default function Index({ data }) {
 							);
 						})}
 						{data.length == 0 && (
-							<div className="grid place-content-center py-32  gap-6 ">
+							<div className="grid place-content-center gap-6  py-32 ">
 								<span className="text-2xl">
 									Vous n'avez pas de projet
 								</span>
-								<button className="flex items-center gap-1 bg-blue-600 py-2 px-4 rounded text-white font-semibold uppercase justify-center">
+								<button className="flex items-center justify-center gap-1 rounded bg-blue-600 py-2 px-4 font-semibold uppercase text-white">
 									<AddIcon />
 									Creer projet
 								</button>
 							</div>
 						)}
 						{!data && (
-							<div className="bg-red-100 text-red-600  grid place-content-center py-2 ">
+							<div className="grid place-content-center  bg-red-100 py-2 text-red-600 ">
 								Erreur d'otenir les donnees de serveur
 							</div>
 						)}
@@ -93,15 +93,10 @@ export default function Index({ data }) {
 export async function getServerSideProps({ req }) {
 	const { user } = await supabase.auth.api.getUserByCookie(req);
 
-	if (!user) {
-		console.log("Please login.");
-		return { props: {}, redirect: { destination: "/", permanent: false } };
-	}
-
 	let { data: projets, error } = await supabase
 		.from("projets")
 		.select("*")
-		.eq("decideur_id", user.id);
+		.eq("decideur_id", user?.id);
 
 	return { props: { data: projets } };
 }

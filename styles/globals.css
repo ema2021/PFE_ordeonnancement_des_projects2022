@@ -51,3 +51,6 @@
 /* .sbui-checkbox-container{
     @apply bg-slate-100 !important;
 } */
+.sbui-space-col{
+    /* @apply bg-red-500 p-0; */
+}
