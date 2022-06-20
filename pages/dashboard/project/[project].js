@@ -7,14 +7,14 @@ import BzButton from "@/components/dashboard/BzButton";
 import { supabase } from "utils/supabaseClient";
 import { getProgress } from "@/lib/myfunctions";
 const ProjectPage = ({ projets, tache, error }) => {
-	// const { user } = useAuth();
+	const { user } = useAuth();
 	const router = useRouter();
 	const projectid = router.query.project;
 	useEffect(() => {
-		// !projets && router.push("/404");
+		!user && router.push("/");
 		// 	// alert(ctx.project);
 		// 	console.log(projectid);
-	}, [router, projets]);
+	}, [router, user]);
 	return (
 		<div className="h-full space-y-4  ">
 			<Link href="/dashboard" passHref={true}>

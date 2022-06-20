@@ -42,7 +42,7 @@ function Layout({ children }) {
 			<aside
 				className={` ${
 					!open && " hidden"
-				}   absolute  top-0 z-10 flex  h-screen w-full  flex-col  items-center justify-between gap-4   bg-black px-4 py-16 pt-16 pb-2 text-white  md:sticky md:z-0 md:flex md:w-auto lg:px-8 `}
+				}   min-h-auto  absolute top-0 z-10  flex h-screen  max-h-screen  w-full flex-col items-center   justify-between gap-4 bg-black px-4 py-16 pt-16  pb-2 text-white md:sticky md:z-0 md:flex md:w-auto lg:px-8`}
 			>
 				<button
 					className="absolute right-3 top-3 font-bold text-white  md:hidden"
