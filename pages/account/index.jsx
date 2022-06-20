@@ -26,7 +26,7 @@ export default function Home() {
 		<>
 			{!user && (
 				<div className="grid  h-screen  place-content-center px-4">
-					<form
+					{/* <form
 						className={`${view == VIEWS.SIGN_UP ? "hidden" : ""}`}
 					>
 						<input
@@ -34,13 +34,9 @@ export default function Home() {
 							name="name"
 							placeholder="Nom"
 							className="w-full  rounded border-2 py-2 px-2"
-						/>
-						<Auth
-							view={view}
-							supabaseClient={supabase}
-							className=""
-						/>
-					</form>
+						/> */}
+					<Auth view={view} supabaseClient={supabase} className="" />
+					{/* </form> */}
 				</div>
 			)}
 		</>

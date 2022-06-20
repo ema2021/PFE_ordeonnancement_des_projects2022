@@ -10,7 +10,7 @@ const ProjectCard = ({ percent = 35, title = "", description = "" }) => {
 				<div className=" w-full rounded-full bg-gray-300 ">
 					<div
 						className={`  lg:text-md rounded-full bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 p-0.5 text-center text-xs font-medium leading-none text-blue-100 lg:p-1`}
-						style={{ width: percent + "%" }}
+						style={{ width: `${10 + percent + "%"} ` }}
 					>
 						{" "}
 						{percent + "%"}

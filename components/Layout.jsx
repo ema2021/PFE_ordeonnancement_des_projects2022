@@ -1,30 +1,30 @@
-import { Auth } from "@supabase/ui";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { useAuth, VIEWS } from "@/lib/auth";
-import { supabase } from "@/lib/client";
 
 import { useState, useEffect } from "react";
 import { MenuIcon, SearchIcon } from "@heroicons/react/solid";
 import HomeIcon from "@mui/icons-material/Home";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import GroupIcon from "@mui/icons-material/Group";
 import Image from "next/image";
-import Linkdash from "./dashboard/Linkdash";
-import { Hidden } from "@mui/material";
 const dashlinks = [
 	{
 		image: "1.png",
 		text: "Projects",
+		href: "/dashboard",
 	},
 	{
 		image: "2.png",
-		text: "My tasks",
+		text: "Employes",
+		herf: "#",
 	},
 	{
 		image: "1.png",
-		text: "Deadlines",
+		text: "link",
+		herf: "#",
 	},
 ];
 function Layout({ children }) {
@@ -35,9 +35,6 @@ function Layout({ children }) {
 	// 	!user && router.push("/");
 	// }, [user, router]);
 
-	if (view === VIEWS.UPDATE_PASSWORD) {
-		return <Auth.UpdatePassword supabaseClient={supabase} />;
-	}
 	console.log(JSON.stringify(user));
 	return (
 		<div className={`flex ${user ? "" : "hidden"}`}>
@@ -45,7 +42,7 @@ function Layout({ children }) {
 			<aside
 				className={` ${
 					!open && " hidden"
-				}   justify-between  absolute top-0 z-10  flex h-screen  w-full  flex-col items-center gap-4   bg-black px-4 py-16 pt-16 pb-2 text-white  md:sticky md:z-0 md:flex md:w-auto lg:px-8 `}
+				}   absolute  top-0 z-10 flex  h-screen w-full  flex-col  items-center justify-between gap-4   bg-black px-4 py-16 pt-16 pb-2 text-white  md:sticky md:z-0 md:flex md:w-auto lg:px-8 `}
 			>
 				<button
 					className="absolute right-3 top-3 font-bold text-white  md:hidden"
@@ -81,8 +78,8 @@ function Layout({ children }) {
 						</h2>
 					</div>
 				</div>
-				<div className="justify-between  flex h-full w-full flex-col  rounded-md bg-slate-400/10 px-2   py-16 ">
-					<div className="grid gap-2 mx-auto ">
+				<div className="flex  h-full w-full flex-col justify-between  rounded-md bg-slate-400/10 px-2   py-16 ">
+					<div className="mx-auto grid gap-2 ">
 						<Link href="/dashboard" alt="" passHref={true}>
 							<a className=" flex items-center gap-2 text-lg">
 								<HomeIcon />
@@ -91,7 +88,7 @@ function Layout({ children }) {
 						</Link>
 						<Link href="/dashboard" alt="" passHref={true}>
 							<a className=" flex items-center gap-2 text-lg">
-								<HomeIcon />
+								<GroupIcon />
 								Employes
 							</a>
 						</Link>
@@ -102,7 +99,7 @@ function Layout({ children }) {
 							</a>
 						</Link>
 					</div>
-					<div className="grid gap-2 mx-auto">
+					<div className="mx-auto grid gap-2">
 						<Link href="/settings" passHref={true} alt="">
 							<a className="flex items-center gap-2">
 								<SettingsIcon />
@@ -110,7 +107,7 @@ function Layout({ children }) {
 							</a>
 						</Link>
 						<button
-							className="text-red-600 flex items-center gap-2"
+							className="flex items-center gap-2 text-red-600"
 							onClick={signOut}
 						>
 							<PowerSettingsNewIcon />
@@ -122,7 +119,7 @@ function Layout({ children }) {
 			{/* main content */}
 			<div className="w-full">
 				{/* Header */}
-				<header className="  justify-between sticky top-0 flex w-full items-center gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:justify-start md:px-12 lg:justify-between">
+				<header className="  sticky top-0 flex w-full items-center justify-between gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:justify-start md:px-12 lg:justify-between">
 					<button
 						className="flex h-8 w-8 items-center justify-center md:hidden"
 						onClick={() => setOpen(true)}
@@ -157,7 +154,7 @@ function Layout({ children }) {
 					</div>
 				</header>
 				{/* Main content of the dashboard */}
-				<main className="px-2 py-8 sm:px-3 md:px-6 lg:px-8 xl:px-12">
+				<main className="h-full px-2 py-8 sm:px-3 md:px-6 lg:px-8 xl:px-12">
 					{children}
 				</main>
 			</div>

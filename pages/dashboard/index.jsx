@@ -1,4 +1,5 @@
 import Link from "next/link";
+import moment from "moment";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import ProjectCard from "@/components/dashboard/projectCard";
@@ -7,6 +8,14 @@ import AddIcon from "@mui/icons-material/Add";
 import { useAuth, VIEWS } from "@/lib/auth";
 import { supabase } from "@/lib/client";
 // import { getServerSideProps } from "pages/profile";
+export function getProgress(startDate, Duration) {
+	var given = moment(startDate, "YYYY-MM-DD");
+	var current = moment().startOf("day");
+
+	//Difference in number of days
+	var diff = moment.duration(current.diff(given)).asDays();
+	return (diff * Duration) / 100;
+}
 
 export default function Index({ data }) {
 	const { user, view, signOut } = useAuth();
@@ -52,17 +61,23 @@ export default function Index({ data }) {
 					<div className="grid gap-2 ">
 						{data?.map((item) => {
 							return (
-								<Link href="/dashboard/project" key={item.id}>
+								<Link
+									href={`/dashboard/project/${item.id}`}
+									key={item.id}
+								>
 									<a>
 										<ProjectCard
-											percent={item.progress}
+											percent={getProgress(
+												item.created_at,
+												item.duree
+											)}
 											title={item.titre}
 										/>
 									</a>
 								</Link>
 							);
 						})}
-						{data.length == 0 && (
+						{data?.length == 0 && (
 							<div className="grid place-content-center gap-6  py-32 ">
 								<span className="text-2xl">
 									Vous n'avez pas de projet
