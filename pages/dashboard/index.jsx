@@ -21,10 +21,6 @@ export default function Index({ data }) {
 	const { user, view, signOut } = useAuth();
 	const router = useRouter();
 	// console.log(data);
-	useEffect(() => {
-		!user && router.push("/");
-		// console.log(user?.id);
-	}, [router, user]);
 
 	return (
 		<>
@@ -43,20 +39,22 @@ export default function Index({ data }) {
 								Complete
 							</BzButton>
 						</div>
-						<BzButton className="h-10 w-10  rounded-full bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 text-white hover:bg-blue-800 sm:w-auto">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="16"
-								height="16"
-								fill="currentColor"
-								className="h-6 w-6"
-								viewBox="0 0 16 16"
-								strokeWidth={4}
-							>
-								<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-							</svg>
-							<span className="hidden md:block">new</span>
-						</BzButton>
+						<Link href="/dashboard/project/edit">
+							<a className="h-10 w-10 flex px-4 py-2 items-center uppercase font-semibold text-lg rounded-full bg-cyan-600 text-white hover:bg-blue-800 sm:w-auto hover:scale-105 transition ease-in-out duration-75">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="16"
+									height="16"
+									fill="currentColor"
+									className="h-6 w-6"
+									viewBox="0 0 16 16"
+									strokeWidth={8}
+								>
+									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+								</svg>
+								<span className="hidden md:block">new</span>
+							</a>
+						</Link>
 					</div>
 					<div className="grid gap-2 ">
 						{data?.map((item) => {
@@ -105,9 +103,13 @@ export default function Index({ data }) {
 // export async function getServerSideProps() {
 
 // }
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req, res }) {
 	const { user } = await supabase.auth.api.getUserByCookie(req);
 
+	res.setHeader(
+		"Cache-Control",
+		"public, s-maxage=10, stale-while-revalidate=59"
+	);
 	let { data: projets, error } = await supabase
 		.from("projets")
 		.select("*")

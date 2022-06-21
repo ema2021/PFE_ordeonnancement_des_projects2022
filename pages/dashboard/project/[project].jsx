@@ -10,11 +10,12 @@ const ProjectPage = ({ projets, tache, error }) => {
 	const { user } = useAuth();
 	const router = useRouter();
 	const projectid = router.query.project;
+
 	useEffect(() => {
-		!user && router.push("/");
+		// if (!user) router.push("/");
 		// 	// alert(ctx.project);
 		// 	console.log(projectid);
-	}, [router, user]);
+	}, [user, router]);
 	return (
 		<div className="h-full space-y-4  ">
 			<Link href="/dashboard" passHref={true}>

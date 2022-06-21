@@ -6,6 +6,9 @@
     h2 {
         @apply py-4 text-gray-800 text-4xl font-black;
     }
+button {
+        @apply shadow-md ;
+    }
 
     .button {
         @apply custom-focus px-8 py-2 text-blue-500 hover:text-white focus:text-white font-bold focus:bg-blue-500 hover:bg-blue-500 bg-white border-2 border-blue-500 rounded !important;
