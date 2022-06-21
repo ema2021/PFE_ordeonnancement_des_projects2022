@@ -32,14 +32,13 @@ function Layout({ children }) {
 	const { user, view, signOut } = useAuth();
 	const router = useRouter();
 
-	// console.log(JSON.stringify(user));
 	return (
-		<div className={`flex ${user ? "" : "hidden"}`}>
+		<div className={`flex ${user ? "" : "hidden"} `}>
 			{/* The sidebar menu */}
 			<aside
 				className={` ${
 					!open && " hidden"
-				}   min-h-auto  z-100  absolute top-0 flex h-screen  max-h-screen  w-full flex-col items-center   justify-between gap-4 bg-black px-4 py-16 pt-16  pb-2 text-white  md:sticky md:z-0 md:flex md:w-auto lg:px-8`}
+				}      gap-4 bg-black px-4 py-16 pt-16  pb-2 text-white  z-10 md:w-auto lg:px-8 md:flex flex-col w-full h-screen sticky top-0`}
 			>
 				<button
 					className="absolute right-3 top-3 font-bold text-white  md:hidden"
@@ -60,14 +59,14 @@ function Layout({ children }) {
 						/>
 					</svg>
 				</button>
-				<div className="flex justify-center rounded-full rounded-br-none bg-gradient-to-r from-cyan-400 via-blue-900 pl-0.5 pb-0.5 pr-4 shadow-md shadow-purple-900">
+				<div className="flex justify-center rounded-l-full rounded-br-none p-0   shadow-purple-900">
 					<div className="flex  items-center rounded-full  bg-black to-purple-800 ">
-						<div className="relative h-16 w-16  text-white ">
+						<div className="relative  w-16 h-16">
 							<Image
 								src="/bezier.svg"
 								layout="fill"
 								alt=""
-								className="text-white"
+								className=""
 							/>
 						</div>
 						<h2 className="bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 bg-clip-text font-sans text-4xl font-bold text-white text-transparent md:text-5xl">
