@@ -106,14 +106,22 @@ export default function Index({ data }) {
 export async function getServerSideProps({ req, res }) {
 	const { user } = await supabase.auth.api.getUserByCookie(req);
 
-	res.setHeader(
-		"Cache-Control",
-		"public, s-maxage=10, stale-while-revalidate=59"
-	);
-	let { data: projets, error } = await supabase
-		.from("projets")
-		.select("*")
-		.eq("decideur_id", user?.id);
+	if (user) {
+		res.setHeader(
+			"Cache-Control",
+			"public, s-maxage=10, stale-while-revalidate=59"
+		);
+		let { data: projets, error } = await supabase
+			.from("projets")
+			.select("*")
+			.eq("decideur_id", user?.id);
 
-	return { props: { data: projets } };
+		return { props: { data: projets } };
+	}
+	return {
+		redirect: {
+			permanent: false,
+			destination: `/`,
+		},
+	};
 }
