@@ -57,24 +57,29 @@ export default function Index({ data }) {
 						</Link>
 					</div>
 					<div className="grid gap-2 ">
-						{data?.map((item) => {
-							return (
-								<Link
-									href={`/dashboard/project/${item.id}`}
-									key={item.id}
-								>
-									<a>
-										<ProjectCard
-											percent={getProgress(
-												item.created_at,
-												item.duree
-											)}
-											title={item.titre}
-										/>
-									</a>
-								</Link>
-							);
-						})}
+						{data
+							?.sort((a, b) => {
+								return a.id - b.id;
+							})
+							.reverse()
+							.map((item) => {
+								return (
+									<Link
+										href={`/dashboard/project/${item.id}`}
+										key={item.id}
+									>
+										<a>
+											<ProjectCard
+												percent={getProgress(
+													item.created_at,
+													item.duree
+												)}
+												title={item.titre}
+											/>
+										</a>
+									</Link>
+								);
+							})}
 						{data?.length == 0 && (
 							<div className="grid place-content-center gap-6  py-32 ">
 								<span className="text-2xl">

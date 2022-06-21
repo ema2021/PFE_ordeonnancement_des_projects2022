@@ -20,7 +20,7 @@ export default function Home() {
 	if (view == VIEWS.SIGN_UP) {
 		console.log("Sign Up");
 	}
-	user && router.push("/dashboard");
+	user && router.push("/");
 
 	return (
 		<>

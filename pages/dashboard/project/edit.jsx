@@ -2,7 +2,66 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import { useAuth } from "@/lib/auth";
+import { useEffect } from "react";
+import { supabase } from "@/lib/client";
+import enforceAuthenticated from "@/lib/auth";
 export default function Edit() {
+	const { user } = useAuth();
+	const {
+		register,
+		handleSubmit,
+		watch,
+		formState: { errors },
+	} = useForm({
+		mode: "onTouched",
+	});
+	async function onSubmit(formData) {
+		if (user) {
+			const { data, error } = await supabase.from("projets").insert([
+				{
+					titre: formData.projectname,
+					description: formData.description,
+					decideur_id: user?.id,
+					state: formData.state,
+					debut: formData.debut,
+				},
+			]);
+			if (error) console.log("errors" + error);
+			if (data) console.log("data" + error);
+			if (!error) router.push("/dashboard");
+			return true;
+		}
+		console.log("Please log in");
+		return false;
+	}
+	const handleError = (errors) => console.log(errors);
+
+	const registerOptions = {
+		projectname: {
+			required: "Nom est insdisponsible",
+			minLength: {
+				value: 20,
+				message: "Nom doit etre plus de 20 chracteres",
+			},
+		},
+		description: {
+			required: "description est insdisponsible",
+			minLength: {
+				value: 30,
+				message: "Description doit etre plus de 30 chracteres",
+			},
+		},
+		debut: {
+			required: "date de debut est indisponsable",
+		},
+	};
+	const router = useRouter();
+	// useEffect(() => {
+	// 	if (!user) router.push("/");
+	// }, [user, router]);
 	return (
 		<div className="lg:px-16">
 			<Head>title Edit project</Head>
@@ -26,7 +85,10 @@ export default function Edit() {
 						Back
 					</a>
 				</Link>
-				<form className="grid gap-6">
+				<form
+					className="grid gap-6"
+					onSubmit={handleSubmit(onSubmit, handleError)}
+				>
 					<div className="w-full space-y-2">
 						<label
 							htmlFor="projectname"
@@ -39,9 +101,18 @@ export default function Edit() {
 							type="text"
 							name="projectname"
 							id=""
-							className=" boreder-gray-400 w-full  border-0 border-b-[1px]    placeholder:text-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-0 caret-cyan-600 "
+							className={`boreder-gray-400 w-full  border-0 border-b-[1px]    placeholder:text-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-0 caret-cyan-600 ${
+								errors?.projectname && "focus:border-red-500"
+							}`}
 							placeholder="e.g Developper la platefome des inscription en ligne."
+							{...register(
+								"projectname",
+								registerOptions.projectname
+							)}
 						/>
+						<p className="text-red-400">
+							{errors?.projectname && errors.projectname.message}
+						</p>
 					</div>
 					<div className="w-full space-y-2">
 						<label
@@ -54,9 +125,17 @@ export default function Edit() {
 						<textarea
 							name="description"
 							id=""
-							className=" h-80 w-full rounded border border-gray-400 shadow ring-0 focus:border-0 focus:ring-cyan-500"
+							className={` h-80 w-full rounded border border-gray-400 shadow ring-0 focus:border-0 focus:ring-cyan-500
+							${errors?.description && "focus:ring-red-500"}`}
 							placeholder="e.g Developper la platefome des inscription en ligne."
+							{...register(
+								"description",
+								registerOptions.description
+							)}
 						/>
+						<p className="text-red-400">
+							{errors?.description && errors.description.message}
+						</p>
 					</div>{" "}
 					<div className="w-full space-y-2">
 						<label
@@ -68,14 +147,15 @@ export default function Edit() {
 						<div className=" relative">
 							<ExpandMoreIcon className="absolute right-2 top-2 h-6 w-6 text-gray-500 group-focus:hidden" />
 							<select
-								id="countries"
+								id="states"
 								className="focus:text-gray-400 group block w-full rounded-xl border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-transparent focus:outline-none focus:ring-cyan-500"
+								{...register("state")}
 							>
 								<option
 									selected
 									className="focus:text-gray-400"
 								>
-									Select option...
+									active
 								</option>
 								<option value="active">Active</option>
 								<option value="complete">Complete</option>
@@ -92,12 +172,15 @@ export default function Edit() {
 							<span className="flex text-red-700">*</span>
 						</label>
 						<div className="relative focus-within:text-gray-400 text-gray-500 ">
-							<CalendarMonthIcon className="absolute right-2 top-2 h-6 w-6 " />
+							<CalendarMonthIcon className="absolute right-2 top-2 h-6 w-6  " />
 							<input
 								type="date"
 								name="debut"
 								id=""
-								className="focus:text-gray-400 group block w-full rounded-xl border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-transparent focus:outline-none focus:ring-cyan-500"
+								className={`focus:text-gray-400 group block w-full rounded-xl border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-transparent focus:outline-none focus:ring-cyan-500 ${
+									errors?.debut && "focus:ring-red-500"
+								}`}
+								{...register("debut", { required: true })}
 							/>
 						</div>
 					</div>
@@ -116,4 +199,22 @@ export default function Edit() {
 			</section>
 		</div>
 	);
+}
+export async function getServerSideProps({ req, res }) {
+	const { user } = await supabase.auth.api.getUserByCookie(req);
+
+	if (user) {
+		res.setHeader(
+			"Cache-Control",
+			"public, s-maxage=10, stale-while-revalidate=59"
+		);
+
+		return { props: {} };
+	}
+	return {
+		redirect: {
+			// permanent: false,
+			destination: `/account`,
+		},
+	};
 }

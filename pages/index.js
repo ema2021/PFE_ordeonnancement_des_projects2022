@@ -52,12 +52,12 @@ export default function Home() {
 						<div className={`space-x-2 `}>
 							<Link href="account">
 								<a className="rounded  px-2  py-1 font-medium text-blue-600 hover:bg-gray-200">
-									Login
+									Connexion
 								</a>
 							</Link>
 							<Link className="" href="/account">
 								<a className="rounded border-2 border-[#1053EB]  bg-[#1053EB] px-2  py-1 font-semibold  text-white shadow-blue-500 transition  ease-in hover:border-2 hover:bg-white hover:text-[#1053EB] hover:shadow">
-									Sign Up
+									s'inscrire
 								</a>
 							</Link>
 						</div>

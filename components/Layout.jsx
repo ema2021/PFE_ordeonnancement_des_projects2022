@@ -33,12 +33,12 @@ function Layout({ children }) {
 	const router = useRouter();
 
 	return (
-		<div className={`flex ${user ? "" : "hidden"} `}>
+		<div className={`flex ${user ? "" : "hidden"}`}>
 			{/* The sidebar menu */}
 			<aside
 				className={` ${
 					!open && " hidden"
-				}      gap-4 bg-black px-4 py-16 pt-16  pb-2 text-white  z-10 md:w-auto lg:px-8 md:flex flex-col w-full h-screen sticky top-0`}
+				}      gap-4 bg-black px-4 py-16 pt-16  pb-2 text-white  z-10 md:w-auto lg:px-8 md:flex flex-col w-full h-screen sticky md:sticky top-0`}
 			>
 				<button
 					className="absolute right-3 top-3 font-bold text-white  md:hidden"
