@@ -173,13 +173,12 @@ export default function EditTask({ tache }) {
 							<select
 								id="states"
 								name="tache_anterieurs"
-								className="focus:text-gray-400 group block w-full rounded-xl border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-transparent focus:outline-none focus:ring-cyan-500"
+								className={`focus:text-gray-400 group block w-full rounded-xl border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-transparent focus:outline-none focus:ring-cyan-500 ${
+									tache?.length == 0 ? "h-10" : "h-auto"
+								}`}
 								{...register("taches_anterieurs")}
 								multiple
 							>
-								<option className="">
-									Select les taches predecesseurs ...
-								</option>
 								{tache
 									?.sort((a, b) => {
 										return a.id - b.id;
@@ -202,7 +201,7 @@ export default function EditTask({ tache }) {
 								htmlFor="tasktname"
 								className="flex items-start gap-1 text-lg font-semibold"
 							>
-								Titre de Projet :{" "}
+								Duree de Projet :{" "}
 								<span className="flex text-red-700">*</span>
 							</label>
 							<input
