@@ -1,5 +1,6 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,10 +9,11 @@ import { useAuth } from "@/lib/auth";
 import { useEffect } from "react";
 import { supabase } from "@/lib/client";
 import enforceAuthenticated from "@/lib/auth";
-export default function Edit() {
+export default function EditTask({ tache }) {
 	const { user, error } = useAuth();
 	const router = useRouter();
-	if (!user) router.push("/account");
+
+	const projectid = router.query?.addTask;
 	const {
 		register,
 		handleSubmit,
@@ -22,67 +24,62 @@ export default function Edit() {
 	});
 	async function onSubmit(formData) {
 		if (user) {
-			const { data, error } = await supabase.from("projets").insert([
+			const { data, error } = await supabase.from("tache").insert([
 				{
-					titre: formData.projectname,
+					titre: formData.taskname,
 					description: formData.description,
-					decideur_id: user?.id,
+					projectid: projectid,
 					state: formData.state,
-					debut: formData.debut,
+					taches_precedent_id: formData.taches_anterieurs,
+					duree: formData.duree,
 				},
 			]);
-			if (error) console.log("errors" + error);
-			if (data) console.log("data" + error);
-			if (!error) router.push("/dashboard");
+			if (error) console.log("error" + JSON.stringify(error));
+			if (data) console.log("data" + data);
+			if (!error) router.push("/dashboard/project/" + projectid);
+			console.log(formData.taches_anterieurs);
 			return true;
 		}
 		console.log("Please log in");
 		return false;
 	}
-	const handleError = (errors) => console.log(errors);
+	const handleError = (errors) => {
+		console.log(errors);
+	};
 
 	const registerOptions = {
-		projectname: {
-			required: "Nom est insdisponsible",
+		taskname: {
+			required: "Titre de tache est insdisponsible",
 			minLength: {
 				value: 20,
-				message: "Nom doit etre plus de 20 chracteres",
+				message: "Titre de tache doit etre plus de 20 chracteres",
 			},
 		},
 		description: {
-			required: "description est insdisponsible",
+			required: "description de tache est insdisponsible",
 			minLength: {
 				value: 30,
-				message: "Description doit etre plus de 30 chracteres",
+				message: "Description de tache doit etre plus de 30 chracteres",
 			},
 		},
-		debut: {
-			required: "date de debut est indisponsable",
+		duree: {
+			required: "Duree ne peut etre vide",
+			min: {
+				value: 0,
+				message: "Duree est olus que 0",
+			},
 		},
 	};
-	// useEffect(() => {
-	// 	if (!user) router.push("/");
-	// }, [user, router]);
+
 	return (
 		<div className="lg:px-16">
-			<Head>title Edit project</Head>
+			<Head>
+				<title>Add new task to project</title>
+			</Head>
 			<section className="grid gap-4 text-gray-700">
 				<Link href="/dashboard" passHref={true}>
 					<a className="flex w-24 items-center  gap-1  px-3 py-1 font-semibold text-gray-700 hover:bg-cyan-100 ">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							className="h-6 w-6"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-							strokeWidth={2}
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"
-							/>
-						</svg>
+						<ArrowBackIcon className="text-red-600" />
 						Back
 					</a>
 				</Link>
@@ -100,19 +97,19 @@ export default function Edit() {
 						</label>
 						<input
 							type="text"
-							name="projectname"
+							name="taskname"
 							id=""
 							className={`boreder-gray-400 w-full  border-0 border-b-[1px]    placeholder:text-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-0 caret-cyan-600 ${
-								errors?.projectname && "focus:border-red-500"
+								errors?.taskname && "focus:border-red-500"
 							}`}
-							placeholder="e.g Developper la platefome des inscription en ligne."
-							{...register(
-								"projectname",
-								registerOptions.projectname
-							)}
+							placeholder="Insérez le titre de la tache .."
+							{...register("taskname", registerOptions.taskname)}
 						/>
-						<p className="text-red-400">
-							{errors?.projectname && errors.projectname.message}
+						<p
+							className={`text-red-400 
+							}`}
+						>
+							{errors?.taskname && errors.taskname.message}
 						</p>
 					</div>
 					<div className="w-full space-y-2">
@@ -128,7 +125,7 @@ export default function Edit() {
 							id=""
 							className={` h-80 w-full rounded border border-gray-400 shadow ring-0 focus:border-0 focus:ring-cyan-500
 							${errors?.description && "focus:ring-red-500"}`}
-							placeholder="e.g Developper la platefome des inscription en ligne."
+							placeholder="Donnez une description détaillé sur la tache ..."
 							{...register(
 								"description",
 								registerOptions.description
@@ -149,13 +146,11 @@ export default function Edit() {
 							<ExpandMoreIcon className="absolute right-2 top-2 h-6 w-6 text-gray-500 group-focus:hidden" />
 							<select
 								id="states"
+								name="state"
 								className="focus:text-gray-400 group block w-full rounded-xl border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-transparent focus:outline-none focus:ring-cyan-500"
 								{...register("state")}
 							>
-								<option
-									selected
-									className="focus:text-gray-400"
-								>
+								<option className="focus:text-gray-400">
 									active
 								</option>
 								<option value="active">Active</option>
@@ -166,23 +161,64 @@ export default function Edit() {
 					</div>
 					<div>
 						<label
-							htmlFor="debut"
+							htmlFor="taches_anterierurs"
 							className="flex items-start gap-1 text-lg font-semibold"
 						>
-							Date de debut :
-							<span className="flex text-red-700">*</span>
+							Tâches antérieurs :
+							<span className="flex text-red-700"></span>
 						</label>
 						<div className="relative focus-within:text-gray-400 text-gray-500 ">
-							<CalendarMonthIcon className="absolute right-2 top-2 h-6 w-6  " />
+							<ExpandMoreIcon className="absolute right-2 top-2 h-6 w-6 text-gray-500 group-focus:hidden" />
+
+							<select
+								id="states"
+								name="tache_anterieurs"
+								className="focus:text-gray-400 group block w-full rounded-xl border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-transparent focus:outline-none focus:ring-cyan-500"
+								{...register("taches_anterieurs")}
+								multiple
+							>
+								<option className="">
+									Select les taches predecesseurs ...
+								</option>
+								{tache
+									?.sort((a, b) => {
+										return a.id - b.id;
+									})
+									.map((item) => {
+										return (
+											<option
+												className="text-gray-600"
+												key={item.id}
+												value={item.id}
+											>
+												{item?.id + " " + item?.titre}
+											</option>
+										);
+									})}
+							</select>
+						</div>
+						<div className="w-full space-y-2 mt-4">
+							<label
+								htmlFor="tasktname"
+								className="flex items-start gap-1 text-lg font-semibold"
+							>
+								Titre de Projet :{" "}
+								<span className="flex text-red-700">*</span>
+							</label>
 							<input
-								type="date"
-								name="debut"
+								type="number"
+								name="duree"
 								id=""
-								className={`focus:text-gray-400 group block w-full rounded-xl border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-transparent focus:outline-none focus:ring-cyan-500 ${
-									errors?.debut && "focus:ring-red-500"
+								className={`bg-white w-full  border-0    placeholder:text-gray-400 focus:outline-cyan-500 
+								outline outline-1 outline-gray-400 rounded focus:outline-none focus:ring-0 caret-cyan-600 ${
+									errors?.duree && "focus:outline-red-500"
 								}`}
-								{...register("debut", { required: true })}
+								placeholder="Insérez le titre de la tache .."
+								{...register("duree", registerOptions.duree)}
 							/>
+							<p className="text-red-400">
+								{errors?.duree && errors.duree.message}
+							</p>
 						</div>
 					</div>
 					<div className="flex items-center  gap-3 justify-center md:jsutify-start px-4">
@@ -201,20 +237,26 @@ export default function Edit() {
 		</div>
 	);
 }
-export async function getServerSideProps({ req, res }) {
+
+export async function getServerSideProps({ req, params }) {
 	const { user } = await supabase.auth.api.getUserByCookie(req);
-
+	const number = params.addTask;
+	console.log(number);
 	if (user) {
-		res.setHeader(
-			"Cache-Control",
-			"public, s-maxage=10, stale-while-revalidate=59"
-		);
-
-		return { props: {} };
+		let { data: tache, error_tache } = await supabase
+			.from("tache")
+			.select("*")
+			.eq("projectid", number);
+		return {
+			props: {
+				tache: tache,
+			},
+		};
 	}
+	console.log("Please login");
 	return {
 		redirect: {
-			// permanent: false,
+			permanent: false,
 			destination: `/account`,
 		},
 	};

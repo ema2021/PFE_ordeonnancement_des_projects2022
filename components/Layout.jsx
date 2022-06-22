@@ -75,35 +75,35 @@ function Layout({ children }) {
 					</div>
 				</div>
 				<div className="flex  h-full w-full flex-col justify-between  rounded-md bg-slate-400/10 px-2   py-16 ">
-					<div className="mx-auto grid gap-2 ">
+					<div className="mx-auto grid gap-2 w-full">
 						<Link href="/dashboard" alt="" passHref={true}>
-							<a className=" flex items-center gap-2 text-lg">
+							<a className=" flex items-center gap-2 text-lg hover:bg-slate-100/10 px-4 w-full py-1 rounded ">
 								<HomeIcon />
 								Projects
 							</a>
 						</Link>
 						<Link href="/dashboard" alt="" passHref={true}>
-							<a className=" flex items-center gap-2 text-lg">
+							<a className=" flex items-center gap-2 text-lg px-4 w-full py-1 rounded hover:bg-slate-100/10">
 								<GroupIcon />
 								Employes
 							</a>
 						</Link>
 						<Link href="/dashboard" alt="" passHref={true}>
-							<a className="flex items-center gap-2 text-lg">
+							<a className="flex items-center gap-2 text-lg px-4 w-full py-1 rounded hover:bg-slate-100/10">
 								<HomeIcon />
 								Projects
 							</a>
 						</Link>
 					</div>
-					<div className="mx-auto grid gap-2">
+					<div className="mx-auto grid gap-2 w-full">
 						<Link href="/settings" passHref={true} alt="">
-							<a className="flex items-center gap-2">
+							<a className="flex items-center gap-2 px-4 w-full py-1 rounded hover:bg-slate-100/10 ">
 								<SettingsIcon />
 								Settings
 							</a>
 						</Link>
 						<button
-							className="flex items-center gap-2 text-red-600"
+							className="flex items-center gap-2 text-red-600 px-4 w-full py-1 rounded hover:bg-slate-100/10"
 							onClick={signOut}
 						>
 							<PowerSettingsNewIcon />

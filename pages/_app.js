@@ -6,9 +6,9 @@ import { supabase } from "@/lib/client";
 
 function MyApp({ Component, pageProps }) {
 	const router = useRouter();
+
 	return (
-    <AuthProvider supabase={supabase}>
-		
+		<AuthProvider supabase={supabase}>
 			{router.pathname == "/" || router.pathname == "/account" ? (
 				<Component {...pageProps} />
 			) : (

@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import moment from "moment";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
@@ -7,7 +8,6 @@ import BzButton from "@/components/dashboard/BzButton";
 import AddIcon from "@mui/icons-material/Add";
 import { useAuth, VIEWS } from "@/lib/auth";
 import { supabase } from "@/lib/client";
-// import { getServerSideProps } from "pages/profile";
 export function getProgress(startDate, Duration) {
 	var given = moment(startDate, "YYYY-MM-DD");
 	var current = moment().startOf("day");
@@ -21,7 +21,9 @@ export default function Index({ data }) {
 	const { user, view, signOut } = useAuth();
 	const router = useRouter();
 	// console.log(data);
-
+	useEffect(() => {
+		if (!user) router.push("/");
+	}, [user, router]);
 	return (
 		<>
 			{user && (
@@ -39,21 +41,11 @@ export default function Index({ data }) {
 								Complete
 							</BzButton>
 						</div>
-						<Link href="/dashboard/project/edit">
-							<a className="h-10 w-10 flex px-4 py-2 items-center uppercase font-semibold text-lg rounded-full bg-cyan-600 text-white hover:bg-blue-800 sm:w-auto hover:scale-105 transition ease-in-out duration-75">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="16"
-									height="16"
-									fill="currentColor"
-									className="h-6 w-6"
-									viewBox="0 0 16 16"
-									strokeWidth={8}
-								>
-									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-								</svg>
+						<Link href="/dashboard/project/edit" passHref={true}>
+							<button className=" flex px-4 py-2 items-center justify-center uppercase font-semibold text-lg rounded-full bg-cyan-600 text-white hover:bg-blue-800 md:w-auto hover:scale-105 transition ease-in-out duration-75 w-10 sm">
+								<AddIcon />
 								<span className="hidden md:block">new</span>
-							</a>
+							</button>
 						</Link>
 					</div>
 					<div className="grid gap-2 ">

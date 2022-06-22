@@ -15,7 +15,7 @@ export default function Home() {
 	const router = useRouter();
 	const { user } = useAuth();
 
-	user && router.push("/dashboard");
+	if (user) router.push("/dashboard");
 	return (
 		<>
 			{!user && (

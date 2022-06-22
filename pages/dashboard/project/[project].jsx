@@ -6,6 +6,8 @@ import TaskComponent from "@/components/dashboard/taskComponent";
 import BzButton from "@/components/dashboard/BzButton";
 import { supabase } from "utils/supabaseClient";
 import { getProgress } from "@/lib/myfunctions";
+import moment from "moment";
+import AddIcon from "@mui/icons-material/Add";
 const ProjectPage = ({ projets, tache, error }) => {
 	const { user } = useAuth();
 	const router = useRouter();
@@ -47,13 +49,19 @@ const ProjectPage = ({ projets, tache, error }) => {
 							<span className="font-semibold text-cyan-600">
 								Starts :
 							</span>{" "}
-							{projets?.created_at}
+							{moment(projets?.created_at).format(
+								"MMMM DD, YYYY"
+							)}
 						</p>
 						<p>
 							<span className="font-semibold text-cyan-600">
 								Ends :
 							</span>{" "}
-							Monday, 12 January 2021
+							{moment(
+								projets?.created_at + projets?.duree
+									? projets?.duree
+									: 0
+							).format("MMMM DD, YYYY")}
 						</p>
 					</div>
 					<p className="px-4 py-2 leading-6 text-gray-800 md:px-2">
@@ -61,23 +69,17 @@ const ProjectPage = ({ projets, tache, error }) => {
 					</p>
 				</div>
 				<div className="flex h-full w-full items-center justify-center p-2  md:items-start">
-					<BzButton className="bg-blue-600 text-white">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							className="h-6 w-6"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-							strokeWidth={2}
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-							/>
-						</svg>
-						Add new Task
-					</BzButton>
+					<Link
+						href={`./task/${projets?.id}`}
+						passHref={true}
+					>
+						<a>
+							<BzButton className="bg-blue-600 text-white rounded-full ">
+								<AddIcon strokeWidth={8} />
+								Add new Task
+							</BzButton>
+						</a>
+					</Link>
 				</div>
 			</div>
 			<div
