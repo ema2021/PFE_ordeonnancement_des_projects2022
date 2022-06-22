@@ -33,12 +33,16 @@ function Layout({ children }) {
 	const router = useRouter();
 
 	return (
-		<div className={`flex ${user ? "" : "hidden"}`}>
+		<div
+			className={` ${
+				user ? "" : "hidden"
+			} md:grid grid-cols-[15rem_auto] h-screen`}
+		>
 			{/* The sidebar menu */}
 			<aside
 				className={` ${
 					!open && " hidden"
-				}      gap-4 bg-black px-4 py-16 pt-16  pb-2 text-white  z-10 md:w-auto lg:px-8 md:flex flex-col w-full h-screen sticky md:sticky top-0`}
+				}      gap-4 bg-black px-4 py-16 pt-16  pb-2 text-white  z-10 md:w-auto lg:px-8 md:flex flex-col  h-screen sticky`}
 			>
 				<button
 					className="absolute right-3 top-3 font-bold text-white  md:hidden"
@@ -75,7 +79,7 @@ function Layout({ children }) {
 					</div>
 				</div>
 				<div className="flex  h-full w-full flex-col justify-between  rounded-md bg-slate-400/10 px-2   py-16 ">
-					<div className="mx-auto grid gap-2 w-full">
+					<div className="mx-auto grid gap-2 w-full ">
 						<Link href="/dashboard" alt="" passHref={true}>
 							<a className=" flex items-center gap-2 text-lg hover:bg-slate-100/10 px-4 w-full py-1 rounded ">
 								<HomeIcon />
@@ -113,7 +117,7 @@ function Layout({ children }) {
 				</div>
 			</aside>
 			{/* main content */}
-			<div className="w-full">
+			<div className="w-full h-screen overflow-scroll">
 				{/* Header */}
 				<header className="  sticky top-0 flex w-full items-center justify-between gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:justify-start md:px-12 lg:justify-between">
 					<button
@@ -150,7 +154,7 @@ function Layout({ children }) {
 					</div>
 				</header>
 				{/* Main content of the dashboard */}
-				<main className="h-full  p-2  sm:p-4 md:p-6 lg:p-12 xl:p-16">
+				<main className="h-full  p-2  sm:p-4 md:p-6 lg:p-12 xl:p-16 ">
 					{children}
 				</main>
 			</div>

@@ -19,9 +19,9 @@ export default function Home() {
 	return (
 		<>
 			{!user && (
-				<div className="grid gap-16 py-8 sm:px-8 md:gap-32 lg:px-32 xl:px-64">
+				<div className="grid gap-16 py-8 sm:px-8 md:gap-32 lg:px-16 xl:px-40">
 					<Head>
-						<title>Ordonnancer votre projets|Bezier </title>
+						<title>Ordonnancer votre projets | Bezier </title>
 						<meta
 							httpEquiv="Content-Type"
 							content="text/html;charset=UTF-8"
@@ -36,7 +36,7 @@ export default function Home() {
 						<Link href="/" alt="Home" className="" passHref={true}>
 							<div className=" flex">
 								{" "}
-								<div className="relative h-12 w-28">
+								<div className="relative h-16 w-32">
 									<Image
 										src="/logo.png"
 										// height={200}
@@ -51,14 +51,14 @@ export default function Home() {
 						</Link>
 						<div className={`space-x-2 `}>
 							<Link href="account">
-								<a className="rounded  px-2  py-1 font-medium text-blue-600 hover:bg-gray-200">
+								<button className="rounded  px-2  py-1 font-medium text-blue-600 hover:border hover:border-blue-200 shadow-none">
 									Connexion
-								</a>
+								</button>
 							</Link>
 							<Link className="" href="/account">
-								<a className="rounded border-2 border-[#1053EB]  bg-[#1053EB] px-2  py-1 font-semibold  text-white shadow-blue-500 transition  ease-in hover:border-2 hover:bg-white hover:text-[#1053EB] hover:shadow">
-									s'inscrire
-								</a>
+								<button className="rounded border border-[#1053EB]  bg-[#1053EB] px-2  py-1 font-semibold  text-white  transition  ease-in hover:border hover:bg-white hover:text-[#1053EB] hover:shadow">
+									S'inscrire
+								</button>
 							</Link>
 						</div>
 					</nav>

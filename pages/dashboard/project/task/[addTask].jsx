@@ -72,7 +72,7 @@ export default function EditTask({ tache }) {
 	};
 
 	return (
-		<div className="lg:px-16">
+		<div className="lg:px-16 pb-8">
 			<Head>
 				<title>Add new task to project</title>
 			</Head>
@@ -80,7 +80,7 @@ export default function EditTask({ tache }) {
 				<Link href="/dashboard" passHref={true}>
 					<a className="flex w-24 items-center  gap-1  px-3 py-1 font-semibold text-gray-700 hover:bg-cyan-100 ">
 						<ArrowBackIcon className="text-red-600" />
-						Back
+						Retour
 					</a>
 				</Link>
 				<form
@@ -92,14 +92,14 @@ export default function EditTask({ tache }) {
 							htmlFor="projectname"
 							className="flex items-start gap-1 text-lg font-semibold"
 						>
-							Titre de Projet :{" "}
+							Titre de Tâche :{" "}
 							<span className="flex text-red-700">*</span>
 						</label>
 						<input
 							type="text"
 							name="taskname"
 							id=""
-							className={`boreder-gray-400 w-full  border-0 border-b-[1px]    placeholder:text-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-0 caret-cyan-600 ${
+							className={`border-gray-400 w-full  border-0 border-b-[2px]    placeholder:text-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-0 caret-cyan-600  ${
 								errors?.taskname && "focus:border-red-500"
 							}`}
 							placeholder="Insérez le titre de la tache .."
@@ -117,14 +117,17 @@ export default function EditTask({ tache }) {
 							htmlFor="description"
 							className="flex items-start gap-1 text-lg font-semibold"
 						>
-							Description de Projet :{" "}
+							Description de Tâche :{" "}
 							<span className="flex text-red-700">*</span>
 						</label>
 						<textarea
 							name="description"
 							id=""
-							className={` h-80 w-full rounded border border-gray-400 shadow ring-0 focus:border-0 focus:ring-cyan-500
-							${errors?.description && "focus:ring-red-500"}`}
+							className={`bg-white w-full  border-0    placeholder:text-gray-400 focus:outline-cyan-500 
+								outline outline-1 outline-gray-400 rounded focus:outline-none focus:ring-0 h-40 md:h-60 caret-cyan-600 ${
+									errors?.description &&
+									"focus:outline-red-500"
+								}`}
 							placeholder="Donnez une description détaillé sur la tache ..."
 							{...register(
 								"description",
@@ -147,7 +150,7 @@ export default function EditTask({ tache }) {
 							<select
 								id="states"
 								name="state"
-								className="focus:text-gray-400 group block w-full rounded-xl border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-transparent focus:outline-none focus:ring-cyan-500"
+								className="focus:text-gray-400 group block w-full rounded-xl border  focus:outline-cyan-500 border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900   focus:ring-0 focus:border-0"
 								{...register("state")}
 							>
 								<option className="focus:text-gray-400">
@@ -173,7 +176,8 @@ export default function EditTask({ tache }) {
 							<select
 								id="states"
 								name="tache_anterieurs"
-								className={`focus:text-gray-400 group block w-full rounded-xl border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-transparent focus:outline-none focus:ring-cyan-500 ${
+								className={`bg-white w-full  border-0    placeholder:text-gray-400 focus:outline-cyan-500 
+								outline outline-1 outline-gray-400 rounded-xl focus:outline-none focus:ring-0 caret-cyan-600 ${
 									tache?.length == 0 ? "h-10" : "h-auto"
 								}`}
 								{...register("taches_anterieurs")}
@@ -201,7 +205,7 @@ export default function EditTask({ tache }) {
 								htmlFor="tasktname"
 								className="flex items-start gap-1 text-lg font-semibold"
 							>
-								Duree de Projet :{" "}
+								Durée estimée de Tâche :{" "}
 								<span className="flex text-red-700">*</span>
 							</label>
 							<input
@@ -209,7 +213,7 @@ export default function EditTask({ tache }) {
 								name="duree"
 								id=""
 								className={`bg-white w-full  border-0    placeholder:text-gray-400 focus:outline-cyan-500 
-								outline outline-1 outline-gray-400 rounded focus:outline-none focus:ring-0 caret-cyan-600 ${
+								outline outline-1 outline-gray-400 rounded-xl focus:outline-none focus:ring-0 caret-cyan-600 ${
 									errors?.duree && "focus:outline-red-500"
 								}`}
 								placeholder="Insérez le titre de la tache .."
