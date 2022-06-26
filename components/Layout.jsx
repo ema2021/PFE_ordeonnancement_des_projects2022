@@ -42,7 +42,7 @@ function Layout({ children }) {
 			<aside
 				className={` ${
 					!open && " hidden"
-				}      gap-4 bg-black px-4 py-16 pt-16  pb-2 text-white  z-10 md:w-auto lg:px-8 md:flex flex-col  h-screen sticky`}
+				}      absolute top-0 w-full gap-4 bg-black px-4 py-16 pt-16  pb-2 text-white  z-10 md:w-auto lg:px-8 md:flex flex-col  md:sticky`}
 			>
 				<button
 					className="absolute right-3 top-3 font-bold text-white  md:hidden"
@@ -121,7 +121,7 @@ function Layout({ children }) {
 				{/* Header */}
 				<header className="  sticky top-0 flex w-full items-center justify-between gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:justify-start md:px-12 lg:justify-between">
 					<button
-						className="flex h-8 w-8 items-center justify-center md:hidden"
+						className="flex h-10 w-10 items-center justify-center md:hidden shadow-none "
 						onClick={() => setOpen(true)}
 					>
 						<MenuIcon />
@@ -154,7 +154,7 @@ function Layout({ children }) {
 					</div>
 				</header>
 				{/* Main content of the dashboard */}
-				<main className="h-full  p-2  sm:p-4 md:p-6 lg:p-12 xl:p-16 ">
+				<main className="h-full  p-2  sm:p-4 md:p-6 lg:p-12 xl:p-16 py-16">
 					{children}
 				</main>
 			</div>

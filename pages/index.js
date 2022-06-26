@@ -15,7 +15,9 @@ export default function Home() {
 	const router = useRouter();
 	const { user } = useAuth();
 
-	if (user) router.push("/dashboard");
+	useEffect(() => {
+		if (user) router.push("/dashboard");
+	}, [user, router]);
 	return (
 		<>
 			{!user && (
@@ -50,7 +52,7 @@ export default function Home() {
 							</div>
 						</Link>
 						<div className={`space-x-2 `}>
-							<Link href="account">
+							<Link href="account" alt="">
 								<button className="rounded  px-2  py-1 font-medium text-blue-600 hover:border hover:border-blue-200 shadow-none">
 									Connexion
 								</button>

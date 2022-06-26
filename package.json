@@ -9,6 +9,7 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@babel/helper-get-function-arity": "^7.16.7",
 		"@dhtmlx/trial-react-gantt": "^1.1.4",
 		"@emotion/react": "^11.9.0",
 		"@emotion/styled": "^11.8.1",
@@ -25,9 +26,11 @@
 		"bootstrap-icons": "^1.8.3",
 		"dhx": "^1.0.3",
 		"framer-motion": "^6.3.11",
+		"frappe-gantt-react": "^0.2.2",
 		"gojs": "^2.2.10",
 		"gojs-react": "^1.1.1",
 		"ibm-gantt-chart-react": "^0.5.22",
+		"js-pert": "^2.0.1",
 		"jshint-stylish": "^2.2.1",
 		"moment": "^2.29.3",
 		"next": "12.1.0",
@@ -38,7 +41,9 @@
 		"react-gantt": "^2.1.8",
 		"react-hook-form": "^7.27.1",
 		"react-icons": "^4.4.0",
-		"react-quill": "^1.3.5"
+		"react-quill": "^1.3.5",
+		"react-vis-force": "^0.3.1",
+		"swr": "^1.3.0"
 	},
 	"devDependencies": {
 		"@tailwindcss/aspect-ratio": "^0.4.0",

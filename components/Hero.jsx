@@ -4,7 +4,7 @@ export default function Hero() {
 	return (
 		<div className="space-y-12">
 			<section className="lg: grid gap-8  lg:grid-cols-2 ">
-				<div className=" relative drop-shadow-2xl lg:order-last m-4">
+				<div className=" relative drop-shadow-2xl lg:order-last  m-6  aspect-square md:auto  sm:mx-auto md:w-full h-96 w-full">
 					<Image
 						src="/2.png"
 						alt=" Bezier Ordonnancer projects"
@@ -33,7 +33,7 @@ export default function Hero() {
 				</div>
 			</section>
 			<section className="grid  gap-8  lg:grid-cols-2 ">
-				<div className="m-6   drop-shadow-2xl relative">
+				<div className="relative drop-shadow-2xl     m-6  aspect-square h-96  flex items-center justify-center">
 					<Image
 						src="/1.png"
 						alt="Log Bezier Ordonnancer projects"

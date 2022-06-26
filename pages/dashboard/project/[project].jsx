@@ -4,14 +4,16 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import TaskComponent from "@/components/dashboard/taskComponent";
 import BzButton from "@/components/dashboard/BzButton";
-import { supabase } from "utils/supabaseClient";
+import { supabase } from "@/lib/client";
 import { getProgress } from "@/lib/myfunctions";
 import moment from "moment";
 import AddIcon from "@mui/icons-material/Add";
+import PertChart from "./task/pert_chart/pert_chart";
 const ProjectPage = ({ projets, tache, error }) => {
 	const { user } = useAuth();
 	const router = useRouter();
 	const projectid = router.query.project;
+	//format taches to the specified format  by jsPERT
 
 	useEffect(() => {
 		// if (!user) router.push("/");
@@ -19,7 +21,7 @@ const ProjectPage = ({ projets, tache, error }) => {
 		// 	console.log(projectid);
 	}, [user, router]);
 	return (
-		<div className="h-full space-y-4  ">
+		<div className="h-full space-y-2 w-full ">
 			<Link href="/dashboard" passHref={true}>
 				<a className="flex w-24 items-center  gap-1  px-3 py-1 font-semibold text-gray-700 hover:bg-cyan-100 ">
 					<svg
@@ -44,7 +46,11 @@ const ProjectPage = ({ projets, tache, error }) => {
 					<h1 className="text-2xl capitalize sm:text-3xl md:text-4xl xl:text-5xl">
 						{projets?.titre}
 					</h1>
-					<div className=" flex w-full items-center gap-8   text-gray-700">
+					<div
+						className={` ${
+							!projets ? "hidden" : "flex"
+						} w-full items-center gap-8   text-gray-700`}
+					>
 						<p>
 							<span className="font-semibold text-cyan-600">
 								Starts :
@@ -68,11 +74,12 @@ const ProjectPage = ({ projets, tache, error }) => {
 						{projets?.description}
 					</p>
 				</div>
-				<div className="flex h-full w-full items-center justify-center p-2  md:items-start">
-					<Link
-						href={`./task/${projets?.id}`}
-						passHref={true}
-					>
+				<div
+					className={`${
+						!projets ? "hidden" : "flex"
+					} h-full w-full items-center justify-center p-2  md:items-start`}
+				>
+					<Link href={`./task/${projets?.id}`} passHref={true}>
 						<a>
 							<BzButton className="bg-blue-600 text-white rounded-full ">
 								<AddIcon strokeWidth={8} />
@@ -122,14 +129,17 @@ const ProjectPage = ({ projets, tache, error }) => {
 						</span>
 					</div>
 				</div>
+				<div className="col-span-3">
+					<PertChart project={4} />
+				</div>
 			</div>
-			<p className="grid h-2/3 place-content-center  ">
+			<p className="flex flex-col    h-full w-1/2 mx-auto ">
 				{!projets && (
-					<div className="m-12 grid gap-6">
-						<p className="text-center  text-xl text-gray-600">
+					<div className="m-12 grid gap-6 ">
+						<p className="text-center  text-4xl text-gray-600">
 							This project doesn't exist
 						</p>
-						<BzButton className="bg-blue-500 py-4 text-xl text-white">
+						<BzButton className="bg-blue-600  py-4 text-xl text-white hover:bg-transparent hover:text-blue-600 border-blue-600 hover:border ">
 							Create new project
 						</BzButton>
 					</div>
