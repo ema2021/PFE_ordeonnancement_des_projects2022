@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { useAuth } from "@/lib/auth";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import jsPERT from "js-pert";
+import { transformJson } from "@/lib/myfunctions";
 import TaskComponent from "@/components/dashboard/taskComponent";
 import BzButton from "@/components/dashboard/BzButton";
 import { supabase } from "@/lib/client";
@@ -11,7 +13,9 @@ import AddIcon from "@mui/icons-material/Add";
 import PertChart from "./task/pert_chart/pert_chart";
 const ProjectPage = ({ projets, tache, error }) => {
 	const { user } = useAuth();
+
 	const router = useRouter();
+	const pert = jsPERT(transformJson(tache));
 	const projectid = router.query.project;
 	//format taches to the specified format  by jsPERT
 
@@ -130,7 +134,7 @@ const ProjectPage = ({ projets, tache, error }) => {
 					</div>
 				</div>
 				<div className="col-span-3">
-					<PertChart project={4} />
+					<PertChart data={pert} />
 				</div>
 			</div>
 			<p className="flex flex-col    h-full w-1/2 mx-auto ">
@@ -180,6 +184,5 @@ export async function getServerSideProps({ req, params }) {
 		};
 	}
 	console.log("Please login");
-	const error = "not connected";
-	return { props: { error: error } };
+	return { props: {}, redirect: { destination: "/account" } };
 }

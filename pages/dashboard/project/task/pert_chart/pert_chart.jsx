@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
-
+import enforceAuthenticated from "@/lib/redirect";
 import React, { Component } from "react";
 import {
 	InteractiveForceGraph,
@@ -18,12 +18,12 @@ const getFillColor = (nodeKey, pert) => {
 	return pert.criticalPath.indexOf(nodeKey) > -1 ? "red" : "green";
 };
 
-export default function PertChart({ project }) {
+export default function PertChart({ data }) {
 	// const router = useRouter();
 	// const pert_chart = router.query.pert_chart;
-	const { data, error } = useSWR(`/api/pert/${project}`, fetcher);
+	// const { data, error } = useSWR(`/api/pert/${project}`, fetcher);
 	// const { pert } = data;
-	if (error) return <div>Failed to load</div>;
+	// if (error) return <div>Failed to load</div>;
 	if (!data) return <div>Loading...</div>;
 	const getFillColor = (nodeKey, pert) => {
 		// console.log(pert);
@@ -64,3 +64,4 @@ export default function PertChart({ project }) {
 		</div>
 	);
 }
+export const getServerSideProps = enforceAuthenticated();

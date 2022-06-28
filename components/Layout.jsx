@@ -119,7 +119,7 @@ function Layout({ children }) {
 			{/* main content */}
 			<div className="w-full h-screen overflow-scroll">
 				{/* Header */}
-				<header className="  sticky top-0 flex w-full items-center justify-between gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:justify-start md:px-12 lg:justify-between">
+				<header className="  sticky top-0 flex w-full items-center justify-between gap-2 bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 py-4 px-2 text-white md:justify-start md:px-12 lg:justify-between z-10">
 					<button
 						className="flex h-10 w-10 items-center justify-center md:hidden shadow-none "
 						onClick={() => setOpen(true)}

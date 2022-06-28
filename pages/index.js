@@ -3,10 +3,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router.js";
 import { Auth } from "@supabase/ui";
+import redirectifSigned from "@/lib/redirect";
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/client";
 import { useAuth, VIEWS } from "@/lib/auth";
+import enforceAuthenticated from "@/lib/redirect";
 
 import Hero from "../components/Hero.jsx";
 import BzButton from "../components/dashboard/BzButton.jsx";
@@ -71,3 +73,5 @@ export default function Home() {
 		</>
 	);
 }
+
+// export const getServerSideProps = redirectifSigned();
