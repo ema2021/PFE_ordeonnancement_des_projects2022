@@ -31,9 +31,6 @@ function Layout({ children }) {
 	const [open, setOpen] = useState(false);
 	const { user, view, signOut } = useAuth();
 	const router = useRouter();
-	useEffect(() => {
-		if (!user) router.push("/");
-	}, [user, router]);
 
 	return (
 		<div
@@ -111,7 +108,10 @@ function Layout({ children }) {
 						</Link>
 						<button
 							className="flex items-center gap-2 text-red-600 px-4 w-full py-1 rounded hover:bg-slate-100/10"
-							onClick={signOut}
+							onClick={() => {
+								signOut();
+								router.push("/");
+							}}
 						>
 							<PowerSettingsNewIcon />
 							Log Out

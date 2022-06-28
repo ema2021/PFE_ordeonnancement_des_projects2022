@@ -133,9 +133,9 @@ const ProjectPage = ({ projets, tache, error }) => {
 						</span>
 					</div>
 				</div>
-				<div className="col-span-3">
-					<PertChart data={pert} />
-				</div>
+			</div>
+			<div className="w-full h-full">
+				<PertChart data={pert} />
 			</div>
 			<p className="flex flex-col    h-full w-1/2 mx-auto ">
 				{!projets && (

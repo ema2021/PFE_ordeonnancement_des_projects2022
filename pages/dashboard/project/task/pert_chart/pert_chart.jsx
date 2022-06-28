@@ -39,13 +39,13 @@ export default function PertChart({ data }) {
 			<InteractiveForceGraph
 				zoom
 				simulationOptions={{
-					strength: { collide: 127, charge: 5 },
+					strength: { collide: 60, charge: 5 },
 				}}
-				className="border-2 my-auto w-full  p-4 bg-slate-300 rounded"
+				className="border-2 my-auto w-full h-full p-4 bg-slate-300 rounded "
 			>
 				{Object.keys(data.network).map((nodeKey) => (
 					<ForceGraphNode
-						node={{ id: nodeKey, radius: 20 }}
+						node={{ id: nodeKey, radius: 13 }}
 						showLabel
 						key={`node|${nodeKey}`}
 						fill={getFillColor(nodeKey, data)}
