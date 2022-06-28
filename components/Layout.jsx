@@ -31,6 +31,9 @@ function Layout({ children }) {
 	const [open, setOpen] = useState(false);
 	const { user, view, signOut } = useAuth();
 	const router = useRouter();
+	useEffect(() => {
+		if (!user) router.push("/");
+	}, [user, router]);
 
 	return (
 		<div

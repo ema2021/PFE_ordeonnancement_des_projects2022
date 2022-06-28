@@ -74,4 +74,4 @@ export default function Home() {
 	);
 }
 
-// export const getServerSideProps = redirectifSigned();
+export const getServerSideProps = redirectifSigned();
