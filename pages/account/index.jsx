@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
 import { useAuth, VIEWS } from "@/lib/auth";
 import { supabase } from "@/lib/client";
-import { useEffect } from "react";
 
 export default function Home() {
 	const { user, view } = useAuth();
@@ -21,9 +20,7 @@ export default function Home() {
 	if (view == VIEWS.SIGN_UP) {
 		console.log("Sign Up");
 	}
-	useEffect(() => {
-		if (user) router.push("/");
-	}, [user, router]);
+	if (user) router.push("/");
 
 	return (
 		<>
