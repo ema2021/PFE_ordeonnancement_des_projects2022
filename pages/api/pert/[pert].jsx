@@ -2,6 +2,7 @@ import jsPERT from "js-pert";
 import { supabase } from "@/lib/client";
 import { transform } from "framer-motion";
 import { NetworkCellSharp } from "@mui/icons-material";
+import { tasks } from "assets/data";
 
 export async function getTasks() {
 	let { data: tache, error } = await supabase.from("tache").select("*");
@@ -25,12 +26,12 @@ export default async function handler(req, res) {
 			latestStartTimes,
 			slack,
 			criticalPath,
-		} = jsPERT(transformJson(tache));
-		const pertData = jsPERT(transformJson(tache));
+		} = jsPERT(activities);
+		const pertData = jsPERT(activities);
 		const tasksOrdered = Object.keys(network);
 		error
 			? res.status(200).json({ errors: error, project: pert })
-			: res.status(200).json(pertData);
+			: res.status(200).json({ data: pertData, ordered: tasksOrdered });
 	}
 	res.status(200).json({ errors: "there are some issues" });
 }

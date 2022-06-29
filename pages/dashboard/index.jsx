@@ -44,7 +44,7 @@ export default function Index({ data }) {
 						<Link href="/dashboard/project/edit" passHref={true}>
 							<button className=" flex px-4 py-2 items-center justify-center uppercase font-semibold text-lg rounded-full bg-cyan-600 text-white hover:bg-blue-800 md:w-auto hover:scale-105 transition ease-in-out duration-75 w-10 sm">
 								<AddIcon />
-								<span className="hidden md:block">new</span>
+								<span className="hidden md:block">Nouveau</span>
 							</button>
 						</Link>
 					</div>
@@ -56,20 +56,16 @@ export default function Index({ data }) {
 							.reverse()
 							.map((item) => {
 								return (
-									<Link
-										href={`/dashboard/project/${item.id}`}
+									<ProjectCard
+										percent={getProgress(
+											item.created_at,
+											item.duree
+										)}
+										title={item.titre}
+										start={item.created_at}
+										id={item.id}
 										key={item.id}
-									>
-										<a>
-											<ProjectCard
-												percent={getProgress(
-													item.created_at,
-													item.duree
-												)}
-												title={item.titre}
-											/>
-										</a>
-									</Link>
+									/>
 								);
 							})}
 						{data?.length == 0 && (

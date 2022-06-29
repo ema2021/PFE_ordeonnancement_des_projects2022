@@ -13,24 +13,27 @@ import AddIcon from "@mui/icons-material/Add";
 import PertChart from "./task/pert_chart/pert_chart";
 const ProjectPage = ({ projets, tache, error }) => {
 	const { user } = useAuth();
-
+	const [pert, setPert] = useState(null);
 	const router = useRouter();
-	const pert = jsPERT(transformJson(tache));
+	if (tache?.length > 0) {
+		const pert = jsPERT(transformJson(tache));
+	}
 	const projectid = router.query.project;
 	//format taches to the specified format  by jsPERT
 
 	useEffect(() => {
-		// if (!user) router.push("/");
-		// 	// alert(ctx.project);
-		// 	console.log(projectid);
-	}, [user, router]);
+		if (tache?.length > 0) {
+			const pertdata = jsPERT(transformJson(tache));
+			setPert(pertdata);
+		}
+	}, [tache]);
 	return (
 		<div className="h-full space-y-2 w-full ">
 			<Link href="/dashboard" passHref={true}>
 				<a className="flex w-24 items-center  gap-1  px-3 py-1 font-semibold text-gray-700 hover:bg-cyan-100 ">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
-						className="h-6 w-6"
+						className="h-8 w-8"
 						fill="none"
 						viewBox="0 0 24 24"
 						stroke="currentColor"
@@ -42,7 +45,7 @@ const ProjectPage = ({ projets, tache, error }) => {
 							d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"
 						/>
 					</svg>
-					Back
+					Retour
 				</a>
 			</Link>
 			<div className="grid md:grid-cols-3  ">
@@ -57,7 +60,7 @@ const ProjectPage = ({ projets, tache, error }) => {
 					>
 						<p>
 							<span className="font-semibold text-cyan-600">
-								Starts :
+								Commence le :
 							</span>{" "}
 							{moment(projets?.created_at).format(
 								"MMMM DD, YYYY"
@@ -65,7 +68,7 @@ const ProjectPage = ({ projets, tache, error }) => {
 						</p>
 						<p>
 							<span className="font-semibold text-cyan-600">
-								Ends :
+								Termine :
 							</span>{" "}
 							{moment(
 								projets?.created_at + projets?.duree
@@ -87,7 +90,7 @@ const ProjectPage = ({ projets, tache, error }) => {
 						<a>
 							<BzButton className="bg-blue-600 text-white rounded-full ">
 								<AddIcon strokeWidth={8} />
-								Add new Task
+								Ajouter nouveau tache
 							</BzButton>
 						</a>
 					</Link>
@@ -134,9 +137,13 @@ const ProjectPage = ({ projets, tache, error }) => {
 					</div>
 				</div>
 			</div>
-			<div className="w-full h-full">
-				<PertChart data={pert} />
-			</div>
+			{pert ? (
+				<div className="flex justify-center ">
+					<PertChart data={pert} />
+				</div>
+			) : (
+				""
+			)}
 			<p className="flex flex-col    h-full w-1/2 mx-auto ">
 				{!projets && (
 					<div className="m-12 grid gap-6 ">

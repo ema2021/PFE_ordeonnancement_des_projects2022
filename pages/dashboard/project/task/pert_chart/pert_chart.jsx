@@ -19,11 +19,6 @@ const getFillColor = (nodeKey, pert) => {
 };
 
 export default function PertChart({ data }) {
-	// const router = useRouter();
-	// const pert_chart = router.query.pert_chart;
-	// const { data, error } = useSWR(`/api/pert/${project}`, fetcher);
-	// const { pert } = data;
-	// if (error) return <div>Failed to load</div>;
 	if (!data) return <div>Loading...</div>;
 	const getFillColor = (nodeKey, pert) => {
 		// console.log(pert);
@@ -34,18 +29,17 @@ export default function PertChart({ data }) {
 	};
 
 	return (
-		<div className="flex items-center h-full w-full justify-between">
-			{/* {JSON.stringify(data)} */}
+		<div className="flex items-center  justify-between">
 			<InteractiveForceGraph
 				zoom
 				simulationOptions={{
 					strength: { collide: 60, charge: 5 },
 				}}
-				className="border-2 my-auto w-full h-full p-4 bg-slate-300 rounded "
+				className=" my-auto  p-4  rounded "
 			>
 				{Object.keys(data.network).map((nodeKey) => (
 					<ForceGraphNode
-						node={{ id: nodeKey, radius: 13 }}
+						node={{ id: nodeKey, radius: 20 }}
 						showLabel
 						key={`node|${nodeKey}`}
 						fill={getFillColor(nodeKey, data)}

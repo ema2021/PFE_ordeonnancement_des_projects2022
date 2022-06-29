@@ -4,12 +4,13 @@ import { useRouter } from "next/router";
 import { useAuth, VIEWS } from "@/lib/auth";
 
 import { useState, useEffect } from "react";
-import { MenuIcon, SearchIcon } from "@heroicons/react/solid";
+import { MenuIcon } from "@heroicons/react/solid";
 import HomeIcon from "@mui/icons-material/Home";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import GroupIcon from "@mui/icons-material/Group";
 import Image from "next/image";
+import SearchComponent from "@/components/dashboard/searchComponent";
 const dashlinks = [
 	{
 		image: "1.png",
@@ -130,18 +131,9 @@ function Layout({ children }) {
 						<MenuIcon />
 					</button>
 					{/* Search bar */}
-					<form action="" className=" sm:w-3/4  lg:w-3/4 ">
-						<div className="  flex h-9 items-center rounded-xl border-[0.5px] border-cyan-400 bg-white px-2 ring-cyan-700 focus-within:border-none focus-within:ring-2">
-							<input
-								type="text"
-								className="h-8 w-full border-none bg-transparent text-cyan-700 placeholder:text-cyan-700 focus:border-none focus:outline-none focus:ring-0"
-								placeholder="Search projects,tasks here ..."
-							/>
-							<button className="flex h-6 w-6 items-center justify-center bg-transparent text-cyan-600">
-								<SearchIcon />
-							</button>
-						</div>
-					</form>
+					<div className="w-full lg:w-4/5">
+						<SearchComponent />
+					</div>
 					{/* User Icon */}
 					<div className="w-auto">
 						<div className="flex  w-full items-center gap-1">
