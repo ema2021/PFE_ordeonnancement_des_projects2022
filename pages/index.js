@@ -36,7 +36,7 @@ export default function Home() {
 						/>
 						<meta name="description" content="" />
 					</Head>
-					<nav className="flex items-center justify-between px-2">
+					<nav className="flex items-center justify-between px-2 sticky top-0 z-10 bg-white border-b py-2">
 						<Link href="/" alt="Home" className="" passHref={true}>
 							<div className=" flex">
 								{" "}

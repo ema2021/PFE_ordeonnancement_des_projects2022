@@ -11,6 +11,7 @@ import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import GroupIcon from "@mui/icons-material/Group";
 import Image from "next/image";
 import SearchComponent from "@/components/dashboard/searchComponent";
+import Avatar from "react-avatar";
 const dashlinks = [
 	{
 		image: "1.png",
@@ -82,27 +83,27 @@ function Layout({ children }) {
 				<div className="flex  h-full w-full flex-col justify-between  rounded-md bg-slate-400/10 px-2   py-16 ">
 					<div className="mx-auto grid gap-2 w-full ">
 						<Link href="/dashboard" alt="" passHref={true}>
-							<a className=" flex items-center gap-2 text-lg hover:bg-slate-100/10 px-4 w-full py-1 rounded ">
+							<a className=" flex items-center gap-2 text-lg hover:bg-slate-100/10 px-4 w-full py-1 rounded focus:bg-slate-100/10">
 								<HomeIcon />
 								Projects
 							</a>
 						</Link>
-						<Link href="/dashboard" alt="" passHref={true}>
-							<a className=" flex items-center gap-2 text-lg px-4 w-full py-1 rounded hover:bg-slate-100/10">
+						<Link href="/dashboard/employes" alt="" passHref={true}>
+							<a className=" flex items-center gap-2 text-lg px-4 w-full py-1 rounded hover:bg-slate-100/10 focus:bg-slate-100/10">
 								<GroupIcon />
 								Employes
 							</a>
 						</Link>
-						<Link href="/dashboard" alt="" passHref={true}>
+						{/* <Link href="/dashboard" alt="" passHref={true}>
 							<a className="flex items-center gap-2 text-lg px-4 w-full py-1 rounded hover:bg-slate-100/10">
 								<HomeIcon />
 								Projects
 							</a>
-						</Link>
+						</Link> */}
 					</div>
 					<div className="mx-auto grid gap-2 w-full">
 						<Link href="/settings" passHref={true} alt="">
-							<a className="flex items-center gap-2 px-4 w-full py-1 rounded hover:bg-slate-100/10 ">
+							<a className="flex items-center gap-2 px-4 w-full py-1 rounded hover:bg-slate-100/10 focus:bg-slate-100/10">
 								<SettingsIcon />
 								Settings
 							</a>
@@ -137,10 +138,14 @@ function Layout({ children }) {
 					{/* User Icon */}
 					<div className="w-auto">
 						<div className="flex  w-full items-center gap-1">
-							<div className="relative h-[40px] w-[60px] rounded-full bg-white">
-								<Image src="/bezier.svg" layout="fill" alt="" />
-							</div>
-							<span className="w-full text-xs md:text-sm">
+							<Avatar
+								name={user?.email
+									.replace(".", " ")
+									.replace("@gmail.com", "")}
+								round={true}
+								size={55}
+							/>
+							<span className="w-full  ">
 								{user?.email
 									.replace(".", " ")
 									.replace("@gmail.com", "")}

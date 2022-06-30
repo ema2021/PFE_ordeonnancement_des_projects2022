@@ -199,6 +199,9 @@ export default function EditTask({ tache }) {
 										);
 									})}
 							</select>
+							<p className="py-2 px-4 text-sm text-green-900/70">
+								Maintenir CTRL et séléctioner les tâches
+							</p>
 						</div>
 						<div className="w-full space-y-2 mt-4">
 							<label
@@ -225,11 +228,8 @@ export default function EditTask({ tache }) {
 						</div>
 					</div>
 					<div className="flex items-center  gap-3 justify-center md:jsutify-start px-4">
-						<button className="px-3 py-2 text-blue-600 border-blue-600  font-semibold border rounded hover:scale-105 transition-transform ease-in-out duration-50">
-							Ajouter Tache
-						</button>
 						<button
-							className="px-3 py-2  bg-blue-600 border border-blue-600 text-white font-semibold  rounded hover:bg-blue-700 hover:scale-105 transition-transform ease-in-out duration-50 "
+							className="px-3 py-2  bg-blue-600 border border-blue-600 text-white font-semibold  rounded hover:bg-blue-700 hover:scale-105 transition-transform ease-in-out duration-50 w-4/5"
 							type="submit "
 						>
 							Enregistrer

@@ -11,6 +11,8 @@ import { getProgress } from "@/lib/myfunctions";
 import moment from "moment";
 import AddIcon from "@mui/icons-material/Add";
 import PertChart from "./task/pert_chart/pert_chart";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 const ProjectPage = ({ projets, tache, error }) => {
 	const { user } = useAuth();
 	const [pert, setPert] = useState(null);
@@ -31,20 +33,7 @@ const ProjectPage = ({ projets, tache, error }) => {
 		<div className="h-full space-y-2 w-full ">
 			<Link href="/dashboard" passHref={true}>
 				<a className="flex w-24 items-center  gap-1  px-3 py-1 font-semibold text-gray-700 hover:bg-cyan-100 ">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						className="h-8 w-8"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						strokeWidth={2}
-					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"
-						/>
-					</svg>
+					<ArrowBackIcon />
 					Retour
 				</a>
 			</Link>
