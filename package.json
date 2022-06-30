@@ -27,6 +27,7 @@
 		"dhx": "^1.0.3",
 		"framer-motion": "^6.3.11",
 		"frappe-gantt-react": "^0.2.2",
+		"gantt-task-react": "^0.3.8",
 		"gojs": "^2.2.10",
 		"gojs-react": "^1.1.1",
 		"ibm-gantt-chart-react": "^0.5.22",

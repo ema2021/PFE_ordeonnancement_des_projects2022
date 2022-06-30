@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useAuth } from "@/lib/auth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import jsPERT from "js-pert";
+import jsPERT, { START, END } from "js-pert";
 import { transformJson } from "@/lib/myfunctions";
 import TaskComponent from "@/components/dashboard/taskComponent";
 import BzButton from "@/components/dashboard/BzButton";
@@ -12,11 +12,56 @@ import moment from "moment";
 import AddIcon from "@mui/icons-material/Add";
 import PertChart from "./task/pert_chart/pert_chart";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import {
+	Gantt,
+	Task,
+	EventOption,
+	StylingOption,
+	ViewMode,
+	DisplayOption,
+} from "gantt-task-react";
+import "gantt-task-react/dist/index.css";
+
+export function pertToGantt(arryJson) {
+	var json = [];
+	Object.keys(arryJson).map((item) => {
+		if (item != START && item != END) {
+			const task = {
+				start: new Date(2020, 1, 1),
+				end: new Date(2020, 1, 2),
+				name: "idea",
+				id: item,
+				progress: 45,
+				isDisabled: false,
+				styles: {
+					progressColor: "#ffbb54",
+					progressSelectedColor: "#ff9e0d",
+				},
+			};
+			json.push(task);
+		}
+	});
+	return json;
+}
+
+let tasks = [
+	{
+		start: new Date(2020, 1, 1),
+		end: new Date(2020, 1, 2),
+		name: "Idea",
+		id: "Task_0",
+		type: "task",
+		progress: 45,
+		isDisabled: false,
+		styles: { progressColor: "#ffbb54", progressSelectedColor: "#ff9e0d" },
+	},
+];
 
 const ProjectPage = ({ projets, tache, error }) => {
 	const { user } = useAuth();
 	const [pert, setPert] = useState(null);
 	const router = useRouter();
+	const { network } = jsPERT(transformJson(tache));
 	if (tache?.length > 0) {
 		const pert = jsPERT(transformJson(tache));
 	}
@@ -29,6 +74,7 @@ const ProjectPage = ({ projets, tache, error }) => {
 			setPert(pertdata);
 		}
 	}, [tache]);
+	console.log(JSON.stringify(network, null, 2));
 	return (
 		<div className="h-full space-y-2 w-full ">
 			<Link href="/dashboard" passHref={true}>
@@ -133,6 +179,8 @@ const ProjectPage = ({ projets, tache, error }) => {
 			) : (
 				""
 			)}
+			<Gantt tasks={pertToGantt(network)} />
+			<div>{JSON.stringify(pert)}</div>
 			<p className="flex flex-col    h-full w-1/2 mx-auto ">
 				{!projets && (
 					<div className="m-12 grid gap-6 ">
