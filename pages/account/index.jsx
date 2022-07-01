@@ -10,6 +10,10 @@ import { useEffect } from "react";
 export default function Home() {
 	const { user, view } = useAuth();
 	const router = useRouter();
+	useEffect(() => {
+		if (user) router.push("/dashboard");
+		// else router.push("/");
+	}, [user, router]);
 
 	if (view === VIEWS.UPDATE_PASSWORD) {
 		return (
@@ -21,10 +25,7 @@ export default function Home() {
 	if (view == VIEWS.SIGN_UP) {
 		console.log("Sign Up");
 	}
-	useEffect(() => {
-		if (user) router.push("/dashboard");
-		// else router.push("/");
-	}, [user, router]);
+
 	return (
 		<>
 			{!user && (
