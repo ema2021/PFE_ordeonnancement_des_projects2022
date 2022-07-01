@@ -38,7 +38,7 @@ function Layout({ children }) {
 		<div
 			className={` ${
 				user ? "" : "hidden"
-			} md:grid grid-cols-[15rem_auto] h-screen`}
+			} md:grid grid-cols-[22rem_auto] h-screen`}
 		>
 			{/* The sidebar menu */}
 			<aside
@@ -66,7 +66,7 @@ function Layout({ children }) {
 					</svg>
 				</button>
 				<div className="flex justify-center rounded-l-full rounded-br-none p-0   shadow-purple-900">
-					<div className="flex  items-center rounded-full  bg-black to-purple-800 ">
+					<div className="flex  items-center rounded-full  bg-black to-purple-800 w-full">
 						<div className="relative  w-16 h-16">
 							<Image
 								src="/bezier.svg"
@@ -76,7 +76,7 @@ function Layout({ children }) {
 							/>
 						</div>
 						<h2 className="bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 bg-clip-text font-sans text-4xl font-bold text-white text-transparent md:text-5xl">
-							Bezier
+							OR team
 						</h2>
 					</div>
 				</div>
@@ -117,6 +117,7 @@ function Layout({ children }) {
 							onClick={() => {
 								signOut();
 								router.push("/");
+								// router.reload("/dashboard");
 							}}
 						>
 							<PowerSettingsNewIcon />

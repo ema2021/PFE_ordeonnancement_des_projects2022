@@ -22,17 +22,21 @@ import {
 } from "gantt-task-react";
 import "gantt-task-react/dist/index.css";
 
-export function pertToGantt(arryJson) {
+export function pertToGantt(arryJson, tasksdata) {
 	var json = [];
 	Object.keys(arryJson).map((item) => {
 		if (item != START && item != END) {
+			const id_num = Number(item.replace("Task_", ""));
+			const taskfiltered = tasksdata.filter((el) => el.id == id_num)[0];
+			const task_name = taskfiltered.titre;
 			const task = {
 				start: new Date(2020, 1, 1),
-				end: new Date(2020, 1, 2),
-				name: "idea",
+				end: new Date(2020, 1 + taskfiltered.duree, 2),
+				name: task_name,
 				id: item,
 				progress: 45,
 				isDisabled: false,
+				dependencies: arryJson[item].predecessors,
 				styles: {
 					progressColor: "#ffbb54",
 					progressSelectedColor: "#ff9e0d",
@@ -55,31 +59,50 @@ let tasks = [
 		isDisabled: false,
 		styles: { progressColor: "#ffbb54", progressSelectedColor: "#ff9e0d" },
 	},
+	{
+		start: new Date(2020, 1, 4),
+		end: new Date(2020, 1, 1),
+		name: "Create",
+		id: "Task_1",
+		type: "task",
+		progress: 5,
+		dependencies: ["Task_0"],
+		isDisabled: false,
+		styles: { progressColor: "#ffbb54", progressSelectedColor: "#ff9e0d" },
+	},
 ];
 
-const ProjectPage = ({ projets, tache, error }) => {
+const ProjectPage = ({ projets, tache, error, data_pert }) => {
 	const { user } = useAuth();
-	const [pert, setPert] = useState(null);
-	const [graph, setGraph] = useState(null);
 	const router = useRouter();
+	const {
+		network,
+		activitiesPrams,
+		earliestStartTimes,
+		earliestFinishTimes,
+		latestStartTimes,
+		latestFinishTimes,
+		slack,
+		criticalPath,
+	} = data_pert;
 	// const { network } = jsPERT(transformJson(tache));
 
 	const projectid = router.query.project;
 	//format taches to the specified format  by jsPERT
 
-	useEffect(() => {
-		if (tache?.length > 0) {
-			try {
-				const { network } = jsPERT(transformJson(tache));
-				const pertdata = jsPERT(transformJson(tache));
-				setPert(pertdata);
-				setGraph(network);
-			} catch (er) {
-				console.log(er);
-			}
-		}
-	}, [tache]);
-	// console.log(JSON.stringify(network, null, 2));
+	// useEffect(() => {
+	// 	if (tache?.length > 0) {
+	// 		try {
+	// 			const { network } = jsPERT(transformJson(tache));
+	// 			const pertdata = jsPERT(transformJson(tache));
+	// 			setPert(pertdata);
+	// 			setGraph(network);
+	// 		} catch (er) {
+	// 			console.log(er);
+	// 		}
+	// 	}
+	// }, [tache]);
+	// console.log(JSON.stringify(graph, null, 2));
 	return (
 		<div className="h-full space-y-2 w-full ">
 			<Link href="/dashboard" passHref={true}>
@@ -177,15 +200,18 @@ const ProjectPage = ({ projets, tache, error }) => {
 					</div>
 				</div>
 			</div>
-			{pert ? (
+			{data_pert ? (
 				<div className="flex justify-center ">
-					<PertChart data={pert} />
+					<PertChart data={data_pert} />
 				</div>
 			) : (
 				""
 			)}
-			{graph ? <Gantt tasks={pertToGantt(graph)} /> : ""}
-			{/* <div>{JSON.stringify(pert)}</div> */}
+			{network ? <Gantt tasks={pertToGantt(network, tache)} /> : ""}
+			{/* <div>{JSON.stringify(data_pert)}</div> */}
+			{/* <p className="text-lg">{JSON.stringify(network)}</p> */}
+			{/* <p className="text-lg bg-red-200">{JSON.stringify(tache)}</p> */}
+
 			<p className="flex flex-col    h-full w-1/2 mx-auto ">
 				{!projets && (
 					<div className="m-12 grid gap-6 ">
@@ -224,10 +250,13 @@ export async function getServerSideProps({ req, params }) {
 			.from("tache")
 			.select("*")
 			.eq("projectid", number?.toString());
+
+		const pertData = jsPERT(transformJson(tache));
 		return {
 			props: {
 				projets: projets,
 				tache: tache,
+				data_pert: pertData,
 				// errors: { taches: JSON.stringify(error_tache) },
 			},
 		};

@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import Head from "next/head";
 import moment from "moment";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
@@ -22,12 +22,15 @@ export default function Index({ data }) {
 	const router = useRouter();
 	// console.log(data);
 	useEffect(() => {
-		if (!user) router.push("/");
+		// if (!user) router.push("/");
 	}, [user, router]);
 	return (
 		<>
 			{user && (
 				<div className="  items-center justify-center space-y-8 py-8 px-2 lg:px-10 xl:px-12">
+					<Head>
+						<title>Dashboard</title>
+					</Head>
 					<div className="flex justify-between gap-2">
 						<div className="grid h-10  grid-cols-3 divide-x-2 divide-cyan-500 rounded-md border-[1px] border-cyan-500 shadow-xl ">
 							<BzButton className="rounded-r-none hover:bg-cyan-500 hover:text-white">
@@ -73,10 +76,12 @@ export default function Index({ data }) {
 								<span className="text-2xl">
 									Vous n'avez pas de projet
 								</span>
-								<button className="flex items-center justify-center gap-1 rounded bg-blue-600 py-2 px-4 font-semibold uppercase text-white">
-									<AddIcon />
-									Creer projet
-								</button>
+								<Link href="/dashboard/project/edit">
+									<button className="flex items-center justify-center gap-1 rounded bg-blue-600 py-2 px-4 font-semibold uppercase text-white">
+										<AddIcon />
+										Creer projet
+									</button>
+								</Link>
 							</div>
 						)}
 						{!data && (
@@ -102,7 +107,7 @@ export async function getServerSideProps({ req, res }) {
 	if (user) {
 		res.setHeader(
 			"Cache-Control",
-			"public, s-maxage=10, stale-while-revalidate=59"
+			"public, s-maxage=2, stale-while-revalidate=59"
 		);
 		let { data: projets, error } = await supabase
 			.from("projets")

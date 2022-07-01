@@ -33,7 +33,10 @@ export default function Edit() {
 			]);
 			if (error) console.log("errors" + error);
 			if (data) console.log("data" + error);
-			if (!error) router.push("/dashboard");
+			if (!error) {
+				router.reload("/dashboard");
+				router.replace("/dashboard");
+			}
 			return true;
 		}
 		console.log("Please log in");

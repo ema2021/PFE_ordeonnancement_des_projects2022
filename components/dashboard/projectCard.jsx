@@ -28,7 +28,7 @@ const ProjectCard = ({
 		if (error_projets) {
 			console.log(error_projets);
 		}
-		router.push("/dashboard");
+		router.reload("/dashboard");
 	}
 	return (
 		<div className="flex  justify-between  rounded-lg border  border-cyan-500 py-1 px-2 text-gray-700 hover:bg-cyan-100 shadow-md">

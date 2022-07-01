@@ -44,7 +44,8 @@ export async function getServerSideProps({ req, res }) {
 		// Extraires les ressources
 		let { data: ressources, error } = await supabase
 			.from("ressources")
-			.select("*");
+			.select("*")
+			.eq("decideur_id", user?.id);
 		return { props: { data: ressources, error: error } };
 	}
 

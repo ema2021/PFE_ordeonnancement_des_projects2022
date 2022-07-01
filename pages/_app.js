@@ -3,11 +3,17 @@ import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
 import { AuthProvider } from "@/lib/auth";
 import { supabase } from "@/lib/client";
-import Head from "next/head";
 
 function MyApp({ Component, pageProps }) {
 	const router = useRouter();
-
+	supabase.auth.onAuthStateChange((event, session) => {
+		fetch("/api/auth", {
+			method: "POST",
+			headers: new Headers({ "Content-Type": "application/json" }),
+			credentials: "same-origin",
+			body: JSON.stringify({ event, session }),
+		});
+	});
 	return (
 		<AuthProvider supabase={supabase}>
 			{router.pathname == "/" || router.pathname == "/account" ? (

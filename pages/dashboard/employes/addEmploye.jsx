@@ -33,7 +33,7 @@ export default function Edit() {
 			]);
 			if (error) console.log("errors" + error);
 			if (data) console.log("data" + error);
-			if (!error) router.push("/dashboard/employes");
+			if (!error) router.replace("/dashboard/employes");
 			return true;
 		}
 		console.log("Please log in");

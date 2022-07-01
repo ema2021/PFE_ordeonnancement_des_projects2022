@@ -31,7 +31,7 @@ export default async function handler(req, res) {
 		const tasksOrdered = Object.keys(network);
 		error
 			? res.status(200).json({ errors: error, project: pert })
-			: res.status(200).json({ data: pertData, ordered: tasksOrdered });
+			: res.status(200).json(pertData.network["A"]);
 	}
 	res.status(200).json({ errors: "there are some issues" });
 }
