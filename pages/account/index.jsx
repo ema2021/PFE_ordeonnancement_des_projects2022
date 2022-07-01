@@ -5,7 +5,8 @@ import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
 import { useAuth, VIEWS } from "@/lib/auth";
 import { supabase } from "@/lib/client";
-
+import { redirectifSigned } from "@/lib/redirect";
+import { useEffect } from "react";
 export default function Home() {
 	const { user, view } = useAuth();
 	const router = useRouter();
@@ -20,8 +21,10 @@ export default function Home() {
 	if (view == VIEWS.SIGN_UP) {
 		console.log("Sign Up");
 	}
-	if (user) router.push("/");
-
+	useEffect(() => {
+		if (user) router.push("/dashboard");
+		// else router.push("/");
+	}, [user, router]);
 	return (
 		<>
 			{!user && (
@@ -42,3 +45,4 @@ export default function Home() {
 		</>
 	);
 }
+// export const getServerSideProps = redirectifSigned();

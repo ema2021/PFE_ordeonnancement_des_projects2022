@@ -60,21 +60,26 @@ let tasks = [
 const ProjectPage = ({ projets, tache, error }) => {
 	const { user } = useAuth();
 	const [pert, setPert] = useState(null);
+	const [graph, setGraph] = useState(null);
 	const router = useRouter();
-	const { network } = jsPERT(transformJson(tache));
-	if (tache?.length > 0) {
-		const pert = jsPERT(transformJson(tache));
-	}
+	// const { network } = jsPERT(transformJson(tache));
+
 	const projectid = router.query.project;
 	//format taches to the specified format  by jsPERT
 
 	useEffect(() => {
 		if (tache?.length > 0) {
-			const pertdata = jsPERT(transformJson(tache));
-			setPert(pertdata);
+			try {
+				const { network } = jsPERT(transformJson(tache));
+				const pertdata = jsPERT(transformJson(tache));
+				setPert(pertdata);
+				setGraph(network);
+			} catch (er) {
+				console.log(er);
+			}
 		}
 	}, [tache]);
-	console.log(JSON.stringify(network, null, 2));
+	// console.log(JSON.stringify(network, null, 2));
 	return (
 		<div className="h-full space-y-2 w-full ">
 			<Link href="/dashboard" passHref={true}>
@@ -179,8 +184,8 @@ const ProjectPage = ({ projets, tache, error }) => {
 			) : (
 				""
 			)}
-			<Gantt tasks={pertToGantt(network)} />
-			<div>{JSON.stringify(pert)}</div>
+			{graph ? <Gantt tasks={pertToGantt(graph)} /> : ""}
+			{/* <div>{JSON.stringify(pert)}</div> */}
 			<p className="flex flex-col    h-full w-1/2 mx-auto ">
 				{!projets && (
 					<div className="m-12 grid gap-6 ">

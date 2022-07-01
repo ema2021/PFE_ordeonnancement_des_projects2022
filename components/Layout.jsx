@@ -44,7 +44,7 @@ function Layout({ children }) {
 			<aside
 				className={` ${
 					!open && " hidden"
-				}      absolute top-0 w-full gap-4 bg-black px-4 py-16 pt-16  pb-2 text-white  z-10 md:w-auto lg:px-8 md:flex flex-col  md:sticky`}
+				}      absolute top-0 w-full gap-4 bg-black px-4 py-16 pt-16  pb-2 text-white  z-[100] md:w-auto lg:px-8 md:flex flex-col  md:sticky`}
 			>
 				<button
 					className="absolute right-3 top-3 font-bold text-white  md:hidden"
@@ -88,7 +88,11 @@ function Layout({ children }) {
 								Projects
 							</a>
 						</Link>
-						<Link href="/dashboard/employes" alt="" passHref={true}>
+						<Link
+							href="/dashboard/employes/"
+							alt=""
+							passHref={true}
+						>
 							<a className=" flex items-center gap-2 text-lg px-4 w-full py-1 rounded hover:bg-slate-100/10 focus:bg-slate-100/10">
 								<GroupIcon />
 								Employes
@@ -140,15 +144,15 @@ function Layout({ children }) {
 						<div className="flex  w-full items-center gap-1">
 							<Avatar
 								name={user?.email
-									.replace(".", " ")
-									.replace("@gmail.com", "")}
+									.replace("@gmail.com", " ")
+									.replace(".", " ")}
 								round={true}
 								size={55}
 							/>
 							<span className="w-full  ">
 								{user?.email
-									.replace(".", " ")
-									.replace("@gmail.com", "")}
+									.replace("@gmail.com", "")
+									.replace(".", " ")}
 							</span>
 						</div>
 					</div>

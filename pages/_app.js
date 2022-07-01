@@ -10,9 +10,6 @@ function MyApp({ Component, pageProps }) {
 
 	return (
 		<AuthProvider supabase={supabase}>
-			<Head>
-				<link rel="icon" type="image/svg+xml" href="favicon.svg" />
-			</Head>
 			{router.pathname == "/" || router.pathname == "/account" ? (
 				<Component {...pageProps} />
 			) : (

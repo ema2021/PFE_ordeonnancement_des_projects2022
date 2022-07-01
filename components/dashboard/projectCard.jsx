@@ -56,9 +56,14 @@ const ProjectCard = ({
 			</div>
 			<div className="flex items-center gap-2">
 				{" "}
-				<button className="text-cyan-600 shadow-none">
-					<EditIcon className="text-green-600" />
-				</button>
+				<Link
+					href={`/dashboard/project/update_project/${id}`}
+					className="text-cyan-600 shadow-none"
+				>
+					<a>
+						<EditIcon className="text-green-600" />
+					</a>
+				</Link>
 				<button className="shadow-none" onClick={removeProject}>
 					<DeleteIcon className="text-red-600" />
 				</button>

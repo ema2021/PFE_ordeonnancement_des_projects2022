@@ -19,7 +19,7 @@ export default function Employes({ data }) {
 			</Link>
 			<div className="p-4 flex items-center justify-between ">
 				<h1 className="text-4xl font-bold">Employes :</h1>
-				<Link href="#">
+				<Link href="/dashboard/employes/addEmploye">
 					<button className="bg-blue-600 py-2 px-2 md:px-3 font-semibold text-white md:rounded flex items-center rounded-full">
 						<AddIcon />
 						<span className="hidden md:block">Ajouter Employe</span>
@@ -27,39 +27,41 @@ export default function Employes({ data }) {
 				</Link>
 			</div>
 			<div className="grid gap-2">
-				{data?.map((item, i) => {
-					return (
-						<div
-							key={item.id}
-							className="border  border-blue-200 rounded py-4 px-4 flex items-center  shadow justify-between "
-						>
-							<div className="flex items-center gap-1">
-								<Avatar
-									name={`${item.nom} ${item.prenom} `}
-									round={true}
-									size={60}
-								/>
-								<div>
-									<p className="font-semibold">
-										{item.nom + " " + item.prenom}
-									</p>
-									<p className="text-gray-600 text-xs">
-										Job Title
-									</p>
+				{data
+					?.sort((a, b) => b.id - a.id)
+					.map((item, i) => {
+						return (
+							<div
+								key={item.id}
+								className="border  border-blue-200 rounded py-4 px-4 flex items-center  shadow justify-between "
+							>
+								<div className="flex items-center gap-1">
+									<Avatar
+										name={`${item.nom} ${item.prenom} `}
+										round={true}
+										size={60}
+									/>
+									<div>
+										<p className="font-semibold">
+											{item.nom + " " + item.prenom}
+										</p>
+										<p className="text-gray-600 text-xs">
+											Job Title
+										</p>
+									</div>
+								</div>
+								<div className="flex items-center gap-2">
+									{" "}
+									<button className="text-cyan-600 shadow-none">
+										<EditIcon className="text-green-600" />
+									</button>
+									<button className="shadow-none">
+										<DeleteIcon className="text-red-600" />
+									</button>
 								</div>
 							</div>
-							<div className="flex items-center gap-2">
-								{" "}
-								<button className="text-cyan-600 shadow-none">
-									<EditIcon className="text-green-600" />
-								</button>
-								<button className="shadow-none">
-									<DeleteIcon className="text-red-600" />
-								</button>
-							</div>
-						</div>
-					);
-				})}
+						);
+					})}
 			</div>
 		</div>
 	);
