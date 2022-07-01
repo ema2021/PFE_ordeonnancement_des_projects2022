@@ -8,9 +8,10 @@ import { useAuth } from "@/lib/auth";
 import { useEffect } from "react";
 import { supabase } from "@/lib/client";
 import enforceAuthenticated from "@/lib/auth";
-export default function Edit() {
+function UpdateEmploye({ ressource }) {
 	const { user, error } = useAuth();
 	const router = useRouter();
+	const query = router.query?.employeid;
 	// if (!user) router.push("/account");
 	const {
 		register,
@@ -22,15 +23,16 @@ export default function Edit() {
 	});
 	async function onSubmit(formData) {
 		if (user) {
-			const { data, error } = await supabase.from("ressources").insert([
-				{
+			const { data, error } = await supabase
+				.from("ressources")
+				.update({
 					nom: formData.name,
 					prenom: formData.surname,
 					decideur_id: user?.id,
 					email: formData.email,
 					poste: formData.poste,
-				},
-			]);
+				})
+				.match({ id: ressource.id });
 			if (error) console.log("errors" + error);
 			if (data) console.log("data" + error);
 			if (!error) router.push("/dashboard/employes");
@@ -77,7 +79,7 @@ export default function Edit() {
 	return (
 		<div className="lg:px-16">
 			<Head>
-				<title>Ajouter Nouveau Employé</title>
+				<title>Update Employé {query}</title>
 				<link rel="icon" type="image/svg+xml" href="favicon.svg" />
 			</Head>
 			<section className="grid gap-4 text-gray-700">
@@ -113,6 +115,7 @@ export default function Edit() {
 							<span className="flex text-red-700">*</span>
 						</label>
 						<input
+							defaultValue={ressource.nom || ""}
 							type="text"
 							name="name"
 							id=""
@@ -135,6 +138,7 @@ export default function Edit() {
 							<span className="flex text-red-700">*</span>
 						</label>
 						<input
+							defaultValue={ressource.prenom || ""}
 							name="surname"
 							type="text"
 							id=""
@@ -156,6 +160,7 @@ export default function Edit() {
 							<span className="flex text-red-700">*</span>
 						</label>
 						<input
+							defaultValue={ressource.email || ""}
 							name="email"
 							htmlFor="email"
 							type="email"
@@ -178,6 +183,7 @@ export default function Edit() {
 							<span className="flex text-red-700">*</span>
 						</label>
 						<input
+							defaultValue={ressource.poste || ""}
 							name="poste"
 							type="text"
 							id=""
@@ -203,21 +209,26 @@ export default function Edit() {
 		</div>
 	);
 }
-export async function getServerSideProps({ req, res }) {
+export async function getServerSideProps({ req, params }) {
 	const { user } = await supabase.auth.api.getUserByCookie(req);
-
+	const number = params.employeid;
+	console.log(number);
 	if (user) {
-		res.setHeader(
-			"Cache-Control",
-			"public, s-maxage=10, stale-while-revalidate=59"
-		);
+		let { data: ressource, error } = await supabase
+			.from("ressources")
+			.select("*")
+			.eq("id", number)
+			.single();
+		// console.log(project);
 
-		return { props: {} };
+		return {
+			props: {
+				ressource: ressource,
+				// errors: { taches: JSON.stringify(error_tache) },
+			},
+		};
 	}
-	return {
-		redirect: {
-			// permanent: false,
-			destination: `/account`,
-		},
-	};
+	console.log("Please login");
+	return { props: {}, redirect: { destination: "/account" } };
 }
+export default UpdateEmploye;

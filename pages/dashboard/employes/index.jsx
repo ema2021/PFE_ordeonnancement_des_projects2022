@@ -3,10 +3,9 @@ import Avatar from "react-avatar";
 import Link from "next/link";
 import Head from "next/head";
 import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-export default function Employes({ data }) {
+import EmployeCard from "@/components/dashboard/employeCard";
+export default function Employes({ data, error }) {
 	return (
 		<div className="text-gray-700">
 			<Head>
@@ -30,38 +29,9 @@ export default function Employes({ data }) {
 				{data
 					?.sort((a, b) => b.id - a.id)
 					.map((item, i) => {
-						return (
-							<div
-								key={item.id}
-								className="border  border-blue-200 rounded py-4 px-4 flex items-center  shadow justify-between "
-							>
-								<div className="flex items-center gap-1">
-									<Avatar
-										name={`${item.nom} ${item.prenom} `}
-										round={true}
-										size={60}
-									/>
-									<div>
-										<p className="font-semibold">
-											{item.nom + " " + item.prenom}
-										</p>
-										<p className="text-gray-600 text-xs">
-											Job Title
-										</p>
-									</div>
-								</div>
-								<div className="flex items-center gap-2">
-									{" "}
-									<button className="text-cyan-600 shadow-none">
-										<EditIcon className="text-green-600" />
-									</button>
-									<button className="shadow-none">
-										<DeleteIcon className="text-red-600" />
-									</button>
-								</div>
-							</div>
-						);
+						return <EmployeCard {...item} key={item.id} />;
 					})}
+				{/* {JSON.stringify(error)} */}
 			</div>
 		</div>
 	);
@@ -75,7 +45,7 @@ export async function getServerSideProps({ req, res }) {
 		let { data: ressources, error } = await supabase
 			.from("ressources")
 			.select("*");
-		return { props: { data: ressources } };
+		return { props: { data: ressources, error: error } };
 	}
 
 	// ** rediriger luser vers lacceuil (page :/)
