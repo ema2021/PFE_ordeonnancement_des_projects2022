@@ -16,6 +16,10 @@ const nextConfig = withPWA({
 	experimental: {
 		urlImports: ["https://unpkg.com/gojs@2.2.10/release/"],
 	},
+	i18n: {
+		locales: ["fr"],
+		defaultLocale: "fr",
+	},
 });
 
 module.exports = nextConfig;

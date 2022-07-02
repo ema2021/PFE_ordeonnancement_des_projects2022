@@ -5,13 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import moment from "moment";
 import { supabase } from "@/lib/client";
 import { useAuth } from "@/lib/auth";
-const ProjectCard = ({
-	percent = 35,
-	title = "",
-	description = "",
-	start = "",
-	id,
-}) => {
+const ProjectCard = ({ percent = 35, title = "", start = "", id }) => {
 	const router = useRouter(router);
 	async function removeProject() {
 		const { error_tache } = await supabase

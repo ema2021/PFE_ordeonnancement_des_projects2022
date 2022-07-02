@@ -82,8 +82,19 @@ function Layout({ children }) {
 				</div>
 				<div className="flex  h-full w-full flex-col justify-between  rounded-md bg-slate-400/10 px-2   py-16 ">
 					<div className="mx-auto grid gap-2 w-full ">
-						<Link href="/dashboard" alt="" passHref={true}>
-							<a className=" flex items-center gap-2 text-lg hover:bg-slate-100/10 px-4 w-full py-1 rounded focus:bg-slate-100/10">
+						<Link
+							href="/dashboard"
+							alt=""
+							passHref={true}
+							className=""
+						>
+							<a
+								className={` flex items-center gap-2 text-lg hover:bg-slate-100/10 px-4 w-full py-1 rounded focus:bg-slate-100/10 ${
+									router.pathname == "/dashboard"
+										? "bg-slate-100/10"
+										: ""
+								}`}
+							>
 								<HomeIcon />
 								Projects
 							</a>
@@ -92,8 +103,15 @@ function Layout({ children }) {
 							href="/dashboard/employes/"
 							alt=""
 							passHref={true}
+							className="active:bg-slate-100/10"
 						>
-							<a className=" flex items-center gap-2 text-lg px-4 w-full py-1 rounded hover:bg-slate-100/10 focus:bg-slate-100/10">
+							<a
+								className={` flex items-center gap-2 text-lg px-4 w-full py-1 rounded hover:bg-slate-100/10 ${
+									router.pathname == "/dashboard/employes"
+										? "bg-slate-100/10"
+										: ""
+								}`}
+							>
 								<GroupIcon />
 								Employes
 							</a>

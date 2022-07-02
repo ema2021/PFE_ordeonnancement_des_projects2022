@@ -65,7 +65,7 @@ export default function Index({ data }) {
 											item.duree
 										)}
 										title={item.titre}
-										start={item.created_at}
+										start={item.debut || item.created_at}
 										id={item.id}
 										key={item.id}
 									/>

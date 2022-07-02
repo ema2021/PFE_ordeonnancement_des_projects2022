@@ -9,6 +9,7 @@ import BzButton from "@/components/dashboard/BzButton";
 import { supabase } from "@/lib/client";
 import { getProgress } from "@/lib/myfunctions";
 import moment from "moment";
+import "moment/locale/fr"; // without this line it didn't work
 import AddIcon from "@mui/icons-material/Add";
 import PertChart from "./task/pert_chart/pert_chart";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -21,6 +22,7 @@ import {
 	DisplayOption,
 } from "gantt-task-react";
 import "gantt-task-react/dist/index.css";
+moment.locale("fr");
 Date.prototype.addDays = function (days) {
 	const date = new Date(this.valueOf());
 	date.setDate(date.getDate() + days);
@@ -29,40 +31,47 @@ Date.prototype.addDays = function (days) {
 
 export function pertToGantt(projet, arryJson, tasksdata, es, lf, cpath) {
 	var json = [];
-	Object.keys(arryJson).map((item) => {
-		if (item != START && item != END) {
-			const id_num = Number(item.replace("Task_", ""));
-			const taskfiltered = tasksdata.filter((el) => el.id == id_num)[0];
-			const task_name = taskfiltered.titre;
-			const debut = new Date(projet.debut);
-			const earliestStart = Math.trunc(es[item]);
-			const latestFinish = Math.trunc(taskfiltered.duree);
-			const task = {
-				start: debut.addDays(earliestStart),
-				end: debut.addDays(latestFinish),
-				name: task_name,
-				id: item,
-				progress: 45,
-				isDisabled: false,
-				dependencies: arryJson[item].predecessors,
-				styles: {
-					progressColor:
-						cpath.indexOf(item) < 0 ? "#355691" : "#A40606",
-					progressSelectedColor:
-						cpath.indexOf(item) < 0 ? "#355691" : "#A40606",
-					barBackgroundColor:
-						cpath.indexOf(item) < 0 ? "#AEB8FE" : "#F15156",
-				},
-			};
-			json.push(task);
-		}
-	});
+	Object.keys(arryJson)
+		.sort((a, b) => es[a] - es[b])
+		.map((item) => {
+			if (item != START && item != END) {
+				const id_num = Number(item.replace("Task_", ""));
+				const taskfiltered = tasksdata.filter(
+					(el) => el.id == id_num
+				)[0];
+				const task_name = taskfiltered.titre;
+				const debut = new Date(projet.debut || projet.created_at);
+				console.log("start:" + projet.debut);
+				console.log("start:" + debut);
+				const earliestStart = Math.trunc(es[item]);
+				const latestFinish = Math.trunc(taskfiltered.duree);
+				const task = {
+					start: debut.addDays(earliestStart),
+					end: debut.addDays(latestFinish),
+					name: task_name,
+					id: item,
+					progress: 45,
+					isDisabled: false,
+					dependencies: arryJson[item].predecessors,
+					styles: {
+						progressColor:
+							cpath.indexOf(item) < 0 ? "#355691" : "#A40606",
+						progressSelectedColor:
+							cpath.indexOf(item) < 0 ? "#355691" : "#A40606",
+						barBackgroundColor:
+							cpath.indexOf(item) < 0 ? "#AEB8FE" : "#F15156",
+					},
+				};
+				json.push(task);
+			}
+		});
 	return json;
 }
 
 const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 	const { user } = useAuth();
 	const router = useRouter();
+	let FinishTimes = [];
 	const {
 		network,
 		activitiesPrams,
@@ -73,6 +82,11 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 		slack,
 		criticalPath,
 	} = data_pert;
+	if (latestFinishTimes) {
+		FinishTimes = Object.keys(latestFinishTimes).map(
+			(item) => latestFinishTimes[item]
+		);
+	}
 	// const { network } = jsPERT(transformJson(tache));
 
 	const projectid = router.query.project;
@@ -113,7 +127,7 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 							<span className="font-semibold text-cyan-600">
 								Commence le :
 							</span>{" "}
-							{moment(projets?.created_at).format(
+							{moment(projets.debut || projets.created_at).format(
 								"MMMM DD, YYYY"
 							)}
 						</p>
@@ -121,11 +135,13 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 							<span className="font-semibold text-cyan-600">
 								Termine :
 							</span>{" "}
-							{moment(
-								projets?.created_at + projets?.duree
-									? projets?.duree
-									: 0
-							).format("MMMM DD, YYYY")}
+							{moment(projets.debut || projets.created_at)
+								.add(
+									projets.duree ||
+										Math.trunc(Math.max(...FinishTimes)),
+									"d"
+								)
+								.format("MMMM DD, YYYY")}
 						</p>
 					</div>
 					<p className="px-4 py-2 leading-6 text-gray-800 md:px-2">
@@ -215,7 +231,9 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 			)}
 			{network ? (
 				<Gantt
+					viewMode={ViewMode.Week}
 					arrowColor="#02A9EA"
+					locale="fr"
 					tasks={pertToGantt(
 						projets,
 						network,
