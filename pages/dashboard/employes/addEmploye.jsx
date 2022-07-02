@@ -81,7 +81,7 @@ export default function Edit() {
 				<link rel="icon" type="image/svg+xml" href="favicon.svg" />
 			</Head>
 			<section className="grid gap-4 text-gray-700">
-				<Link href="/dashboard" passHref={true}>
+				<Link href="/dashboard/employes" passHref={true}>
 					<a className="flex w-24 items-center  gap-1  px-3 py-1 font-semibold text-gray-700 hover:bg-cyan-100 ">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +97,7 @@ export default function Edit() {
 								d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"
 							/>
 						</svg>
-						Back
+						Retour
 					</a>
 				</Link>
 				<form

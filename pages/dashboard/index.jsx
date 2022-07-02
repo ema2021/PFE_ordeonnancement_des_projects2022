@@ -38,10 +38,10 @@ export default function Index({ data }) {
 							</BzButton>
 							<BzButton className="rounded-none hover:bg-cyan-500 hover:text-white">
 								{" "}
-								hold
+								attente
 							</BzButton>
 							<BzButton className="rounded-r-md rounded-l-none hover:bg-cyan-500 hover:text-white">
-								Complete
+								Complet
 							</BzButton>
 						</div>
 						<Link href="/dashboard/project/edit" passHref={true}>

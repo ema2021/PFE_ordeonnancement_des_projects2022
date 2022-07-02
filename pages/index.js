@@ -36,7 +36,7 @@ export default function Home() {
 						/>
 						<meta name="description" content="" />
 					</Head>
-					<nav className="flex items-center justify-between px-2 sticky top-0 z-10 bg-white border-b py-2">
+					<nav className="flex items-center flex-wrap w-full sm:justify-between px-2 sticky top-0 z-10 bg-white border-b py-2">
 						<Link href="/" alt="Home" className="" passHref={true}>
 							<div className=" flex">
 								{" "}
@@ -53,7 +53,7 @@ export default function Home() {
 								</div>
 							</div>
 						</Link>
-						<div className={`space-x-2 `}>
+						<div className={`space-x-2 flex  `}>
 							<Link href="account" alt="">
 								<button className="rounded  px-2  py-1 font-medium text-blue-600 hover:border hover:border-blue-200 shadow-none">
 									Connexion

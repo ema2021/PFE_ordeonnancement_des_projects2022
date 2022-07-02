@@ -108,7 +108,7 @@ export default function Edit() {
 							className={`boreder-gray-400 w-full  border-0 border-b-[1px]    placeholder:text-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-0 caret-cyan-600 ${
 								errors?.projectname && "focus:border-red-500"
 							}`}
-							placeholder="e.g Developper la platefome des inscription en ligne."
+							placeholder="Saisir Le Titre de Projet ..."
 							{...register(
 								"projectname",
 								registerOptions.projectname
@@ -131,7 +131,7 @@ export default function Edit() {
 							id=""
 							className={` h-80 w-full rounded border border-gray-400 shadow ring-0 focus:border-0 focus:ring-cyan-500
 							${errors?.description && "focus:ring-red-500"}`}
-							placeholder="e.g Developper la platefome des inscription en ligne."
+							placeholder="Décriver Le Projet en quleques mots ..."
 							{...register(
 								"description",
 								registerOptions.description

@@ -74,7 +74,7 @@ export default function EditTask({ tache }) {
 	return (
 		<div className="lg:px-16 pb-8">
 			<Head>
-				<title>Add new task to project</title>
+				<title>AJouter une autre Tache au Projet {projectid}</title>
 			</Head>
 			<section className="grid gap-4 text-gray-700">
 				<Link href="/dashboard" passHref={true}>

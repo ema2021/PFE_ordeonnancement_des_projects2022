@@ -21,25 +21,37 @@ import {
 	DisplayOption,
 } from "gantt-task-react";
 import "gantt-task-react/dist/index.css";
+Date.prototype.addDays = function (days) {
+	const date = new Date(this.valueOf());
+	date.setDate(date.getDate() + days);
+	return date;
+};
 
-export function pertToGantt(arryJson, tasksdata) {
+export function pertToGantt(projet, arryJson, tasksdata, es, lf, cpath) {
 	var json = [];
 	Object.keys(arryJson).map((item) => {
 		if (item != START && item != END) {
 			const id_num = Number(item.replace("Task_", ""));
 			const taskfiltered = tasksdata.filter((el) => el.id == id_num)[0];
 			const task_name = taskfiltered.titre;
+			const debut = new Date(projet.debut);
+			const earliestStart = Math.trunc(es[item]);
+			const latestFinish = Math.trunc(taskfiltered.duree);
 			const task = {
-				start: new Date(2020, 1, 1),
-				end: new Date(2020, 1 + taskfiltered.duree, 2),
+				start: debut.addDays(earliestStart),
+				end: debut.addDays(latestFinish),
 				name: task_name,
 				id: item,
 				progress: 45,
 				isDisabled: false,
 				dependencies: arryJson[item].predecessors,
 				styles: {
-					progressColor: "#ffbb54",
-					progressSelectedColor: "#ff9e0d",
+					progressColor:
+						cpath.indexOf(item) < 0 ? "#355691" : "#A40606",
+					progressSelectedColor:
+						cpath.indexOf(item) < 0 ? "#355691" : "#A40606",
+					barBackgroundColor:
+						cpath.indexOf(item) < 0 ? "#AEB8FE" : "#F15156",
 				},
 			};
 			json.push(task);
@@ -47,30 +59,6 @@ export function pertToGantt(arryJson, tasksdata) {
 	});
 	return json;
 }
-
-let tasks = [
-	{
-		start: new Date(2020, 1, 1),
-		end: new Date(2020, 1, 2),
-		name: "Idea",
-		id: "Task_0",
-		type: "task",
-		progress: 45,
-		isDisabled: false,
-		styles: { progressColor: "#ffbb54", progressSelectedColor: "#ff9e0d" },
-	},
-	{
-		start: new Date(2020, 1, 4),
-		end: new Date(2020, 1, 1),
-		name: "Create",
-		id: "Task_1",
-		type: "task",
-		progress: 5,
-		dependencies: ["Task_0"],
-		isDisabled: false,
-		styles: { progressColor: "#ffbb54", progressSelectedColor: "#ff9e0d" },
-	},
-];
 
 const ProjectPage = ({ projets, tache, error, data_pert }) => {
 	const { user } = useAuth();
@@ -153,7 +141,7 @@ const ProjectPage = ({ projets, tache, error, data_pert }) => {
 						<a>
 							<BzButton className="bg-blue-600 text-white rounded-full ">
 								<AddIcon strokeWidth={8} />
-								Ajouter nouveau tache
+								Ajouter tâche
 							</BzButton>
 						</a>
 					</Link>
@@ -182,44 +170,60 @@ const ProjectPage = ({ projets, tache, error, data_pert }) => {
 								projets || tache ? "" : "hidden"
 							}`}
 						>
-							{tache?.length == 0 ? "No tasks available" : ""}
+							{tache?.length == 0
+								? "Aucune tâche dasn ce projet"
+								: ""}
 						</p>
 					}
 				</div>
 				<div className="flex  items-center justify-center ">
 					<div className="  flex h-full w-full flex-col items-center justify-between  gap-4    bg-blue-50 py-12   ">
 						<span className="font-semibold text-gray-500">
-							Completed
+							Complete
 						</span>
 						<span className="bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 bg-clip-text text-7xl font-bold text-transparent">
 							{getProgress(projets?.created_at, projets?.duree)} %
 						</span>
 						<span className="text-2xl font-bold text-purple-800">
-							Progress
+							Progres
 						</span>
 					</div>
 				</div>
 			</div>
-			{data_pert ? (
+			{Object.keys(data_pert).length > 0 ? (
 				<div className="flex justify-center ">
 					<PertChart data={data_pert} />
 				</div>
 			) : (
 				""
 			)}
-			{network ? <Gantt tasks={pertToGantt(network, tache)} /> : ""}
-			{/* <div>{JSON.stringify(data_pert)}</div> */}
-			{/* <p className="text-lg">{JSON.stringify(network)}</p> */}
+			{network ? (
+				<Gantt
+					arrowColor="#02A9EA"
+					tasks={pertToGantt(
+						projets,
+						network,
+						tache,
+						earliestStartTimes,
+						latestFinishTimes,
+						criticalPath
+					)}
+				/>
+			) : (
+				""
+			)}
+			{/* <div>{JSON.stringify(earliestStartTimes)}</div> */}
+			{/* <p className="text-lg">{JSON.stringify(latestFinishTimes)}</p> */}
 			{/* <p className="text-lg bg-red-200">{JSON.stringify(tache)}</p> */}
 
 			<p className="flex flex-col    h-full w-1/2 mx-auto ">
 				{!projets && (
 					<div className="m-12 grid gap-6 ">
 						<p className="text-center  text-4xl text-gray-600">
-							This project doesn't exist
+							Ce projet n'existe pas
 						</p>
 						<BzButton className="bg-blue-600  py-4 text-xl text-white hover:bg-transparent hover:text-blue-600 border-blue-600 hover:border ">
-							Create new project
+							Créer une projet
 						</BzButton>
 					</div>
 				)}
@@ -250,8 +254,9 @@ export async function getServerSideProps({ req, params }) {
 			.from("tache")
 			.select("*")
 			.eq("projectid", number?.toString());
+		var pertData = [];
 
-		const pertData = jsPERT(transformJson(tache));
+		if (tache?.length > 0) pertData = jsPERT(transformJson(tache));
 		return {
 			props: {
 				projets: projets,
@@ -262,5 +267,5 @@ export async function getServerSideProps({ req, params }) {
 		};
 	}
 	console.log("Please login");
-	return { props: {}, redirect: { destination: "/account" } };
+	return { props: {}, redirect: { destination: "/" } };
 }

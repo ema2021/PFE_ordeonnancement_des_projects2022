@@ -3,8 +3,8 @@ import Link from "next/link";
 export default function Hero() {
 	return (
 		<div className="space-y-12">
-			<section className="lg: grid gap-8  lg:grid-cols-2 ">
-				<div className=" relative drop-shadow-2xl lg:order-last  m-6  aspect-square md:auto  sm:mx-auto md:w-full h-96 w-full">
+			<section className="px-2 lg: grid gap-8  lg:grid-cols-2 ">
+				<div className="  relative drop-shadow-2xl lg:order-last  m-6  aspect-square md:auto  sm:mx-auto md:w-full h-96  w-96 ">
 					<Image
 						src="/2.png"
 						alt=" Bezier Ordonnancer projects"

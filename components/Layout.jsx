@@ -38,13 +38,13 @@ function Layout({ children }) {
 		<div
 			className={` ${
 				user ? "" : "hidden"
-			} md:grid grid-cols-[22rem_auto] h-screen`}
+			} md:grid grid-cols-[16rem_auto] h-screen`}
 		>
 			{/* The sidebar menu */}
 			<aside
 				className={` ${
 					!open && " hidden"
-				}      absolute top-0 w-full gap-4 bg-black px-4 py-16 pt-16  pb-2 text-white  z-[100] md:w-auto lg:px-8 md:flex flex-col  md:sticky`}
+				}      absolute top-0 w-full gap-4 bg-black px-2 py-16 pt-16  pb-2 text-white  z-[100]  lg:px-4 md:flex flex-col  md:sticky`}
 			>
 				<button
 					className="absolute right-3 top-3 font-bold text-white  md:hidden"
@@ -75,7 +75,7 @@ function Layout({ children }) {
 								className=""
 							/>
 						</div>
-						<h2 className="bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 bg-clip-text font-sans text-4xl font-bold text-white text-transparent md:text-5xl">
+						<h2 className="bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 bg-clip-text font-sans text-4xl font-bold text-white text-transparent md:text-3xl">
 							OR team
 						</h2>
 					</div>
@@ -148,7 +148,8 @@ function Layout({ children }) {
 									.replace("@gmail.com", " ")
 									.replace(".", " ")}
 								round={true}
-								size={55}
+								size={50}
+								color="#32908F"
 							/>
 							<span className="w-full  ">
 								{user?.email
@@ -159,7 +160,7 @@ function Layout({ children }) {
 					</div>
 				</header>
 				{/* Main content of the dashboard */}
-				<main className="h-full  p-2  sm:p-4 md:p-6 lg:p-12 xl:p-16 py-16">
+				<main className="h-full  p-2   lg:px-8 xl:p-12 py-16">
 					{children}
 				</main>
 			</div>
