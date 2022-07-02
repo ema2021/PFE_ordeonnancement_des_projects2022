@@ -16,8 +16,11 @@ const TaskComponent = ({ children, number = "01", state = "active" }) => {
 				 flex  items-center justify-start gap-3  `}
 			>
 				<span className="text-lg font-semibold">{number}</span>
-				<span className="md:text-md  text-sm ">{children}</span>
+				<span className="md:text-md  text-sm flex  gap-4">
+					{children}
+				</span>
 			</div>
+
 			<div>
 				{" "}
 				{state == "complete" ? (

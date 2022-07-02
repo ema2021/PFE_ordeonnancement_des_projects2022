@@ -60,7 +60,7 @@ export function pertToGantt(projet, arryJson, tasksdata, es, lf, cpath) {
 	return json;
 }
 
-const ProjectPage = ({ projets, tache, error, data_pert }) => {
+const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 	const { user } = useAuth();
 	const router = useRouter();
 	const {
@@ -161,6 +161,22 @@ const ProjectPage = ({ projets, tache, error, data_pert }) => {
 								number={index + 1}
 							>
 								{item.titre}
+
+								<div className="flex gap-4">
+									{employes
+										.filter((emp) =>
+											item.employe_id?.includes(emp.id)
+										)
+										.map((responsable) => {
+											return (
+												<p key={responsable.id}>
+													{responsable.nom +
+														"  " +
+														responsable.prenom}
+												</p>
+											);
+										})}
+								</div>
 							</TaskComponent>
 						);
 					})}
@@ -254,6 +270,10 @@ export async function getServerSideProps({ req, params }) {
 			.from("tache")
 			.select("*")
 			.eq("projectid", number?.toString());
+		let { data: ressources, error } = await supabase
+			.from("ressources")
+			.select("*")
+			.eq("decideur_id", user?.id);
 		var pertData = [];
 
 		if (tache?.length > 0) pertData = jsPERT(transformJson(tache));
@@ -262,6 +282,7 @@ export async function getServerSideProps({ req, params }) {
 				projets: projets,
 				tache: tache,
 				data_pert: pertData,
+				employes: ressources,
 				// errors: { taches: JSON.stringify(error_tache) },
 			},
 		};

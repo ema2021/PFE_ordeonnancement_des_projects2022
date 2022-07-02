@@ -9,7 +9,7 @@ import { useAuth } from "@/lib/auth";
 import { useEffect } from "react";
 import { supabase } from "@/lib/client";
 import enforceAuthenticated from "@/lib/auth";
-export default function EditTask({ tache }) {
+export default function EditTask({ tache, employes }) {
 	const { user, error } = useAuth();
 	const router = useRouter();
 
@@ -32,6 +32,7 @@ export default function EditTask({ tache }) {
 					state: formData.state,
 					taches_precedent_id: formData.taches_anterieurs,
 					duree: formData.duree,
+					employe_id: formData.employes,
 				},
 			]);
 			if (error) console.log("error" + JSON.stringify(error));
@@ -203,6 +204,43 @@ export default function EditTask({ tache }) {
 								Maintenir CTRL et séléctioner les tâches
 							</p>
 						</div>
+						<div className="relative focus-within:text-gray-400 text-gray-500 ">
+							<ExpandMoreIcon className="absolute right-2 top-2 h-6 w-6 text-gray-500 group-focus:hidden" />
+
+							<select
+								id="states"
+								name="tache_anterieurs"
+								className={`bg-white w-full  border-0    placeholder:text-gray-400 focus:outline-cyan-500 
+								outline outline-1 outline-gray-400 rounded-xl focus:outline-none focus:ring-0 caret-cyan-600 ${
+									employes?.length == 0 ? "h-10" : "h-auto"
+								}`}
+								{...register("employes")}
+								multiple
+							>
+								{employes
+									?.sort((a, b) => {
+										return a.id - b.id;
+									})
+									.map((item) => {
+										return (
+											<option
+												className="text-gray-600"
+												key={item.id}
+												value={item.id}
+											>
+												{item?.id +
+													" " +
+													item?.nom +
+													" " +
+													item?.prenom}
+											</option>
+										);
+									})}
+							</select>
+							<p className="py-2 px-4 text-sm text-green-900/70">
+								Maintenir CTRL et sélectioner les tâches
+							</p>
+						</div>
 						<div className="w-full space-y-2 mt-4">
 							<label
 								htmlFor="tasktname"
@@ -250,9 +288,14 @@ export async function getServerSideProps({ req, params }) {
 			.from("tache")
 			.select("*")
 			.eq("projectid", number);
+		let { data: ressources, error } = await supabase
+			.from("ressources")
+			.select("*")
+			.eq("decideur_id", user?.id);
 		return {
 			props: {
 				tache: tache,
+				employes: ressources,
 			},
 		};
 	}
