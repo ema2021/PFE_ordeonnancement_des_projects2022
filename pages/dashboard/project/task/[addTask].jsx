@@ -51,22 +51,22 @@ export default function EditTask({ tache, employes }) {
 		taskname: {
 			required: "Titre de tache est insdisponsible",
 			minLength: {
-				value: 20,
-				message: "Titre de tache doit etre plus de 20 chracteres",
+				value: 13,
+				message: "Titre de tache doit etre plus de 13 chracteres",
 			},
 		},
 		description: {
 			required: "description de tache est insdisponsible",
 			minLength: {
-				value: 30,
-				message: "Description de tache doit etre plus de 30 chracteres",
+				value: 20,
+				message: "Description de tache doit etre plus de 20 chracteres",
 			},
 		},
 		duree: {
 			required: "Duree ne peut etre vide",
 			min: {
-				value: 0,
-				message: "Duree est olus que 0",
+				value: 1,
+				message: "Duree est plus que 0",
 			},
 		},
 	};

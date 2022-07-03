@@ -67,9 +67,11 @@ export default function Index({ data }) {
 											)
 										)}
 										title={item.titre}
-										start={item.debut || item.created_at}
+										debut={item.debut || item.created_at}
 										id={item.id}
+										duree={item.duree || 0}
 										key={item.id}
+										created_at={item.created_at}
 									/>
 								);
 							})}

@@ -59,6 +59,7 @@ export function pertToGantt(projet, arryJson, tasksdata, es, lf, cpath) {
 				console.log("start:" + debut);
 				const earliestStart = Math.trunc(es[item]);
 				const latestFinish = Math.trunc(taskfiltered.duree);
+				console.log("End:" + debut.addDays(latestFinish));
 				const task = {
 					start: debut.addDays(earliestStart),
 					end: debut.addDays(latestFinish),
@@ -197,7 +198,7 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 				}`}
 			>
 				<div
-					className={`grid gap-2  sm:col-span-3 ${
+					className={`flex flex-col gap-2  sm:col-span-3 ${
 						tache?.length > 0 ? "" : "place-content-center h-96"
 					}`}
 				>

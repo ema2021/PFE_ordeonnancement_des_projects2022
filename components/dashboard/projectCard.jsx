@@ -5,7 +5,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import moment from "moment";
 import { supabase } from "@/lib/client";
 import { useAuth } from "@/lib/auth";
-const ProjectCard = ({ percent = 35, title = "", start = "", id }) => {
+const ProjectCard = ({
+	percent = 35,
+	title = "",
+	debut = "",
+	id,
+	duree,
+	created_at,
+}) => {
 	const router = useRouter(router);
 	async function removeProject() {
 		const { error_tache } = await supabase
@@ -28,12 +35,12 @@ const ProjectCard = ({ percent = 35, title = "", start = "", id }) => {
 		<div className="flex  justify-between  rounded-lg border  border-cyan-500 py-1 px-2 text-gray-700 hover:bg-cyan-100 shadow-md">
 			<p className=" md:w-full p-1 lg:text-xl">
 				<Link href={`/dashboard/project/${id}`}>
-					<a>{title}</a>
+					<a className="capitalize">{title}</a>
 				</Link>
 			</p>
 			<div className="  hidden w-full  items-center space-x-2 px-2  pt-1 sm:flex lg:text-lg ">
 				<span className="w-48">
-					{moment(start).format("MMMM DD, YYYY")}
+					{moment(debut || created_at).format("MMMM DD, YYYY")}
 				</span>
 
 				<div className=" w-full rounded-full bg-gray-300 ">
@@ -46,7 +53,11 @@ const ProjectCard = ({ percent = 35, title = "", start = "", id }) => {
 					</div>
 				</div>
 
-				<span>11/01/23</span>
+				<span>
+					{moment(debut || create_at)
+						.add(duree || 0, "d")
+						.format("MMMM DD, YYYY")}
+				</span>
 			</div>
 			<div className="flex items-center gap-2">
 				{" "}

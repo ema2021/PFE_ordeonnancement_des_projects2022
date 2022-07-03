@@ -27,8 +27,12 @@ export default function EmployeCard({ id, nom, prenom, email, poste }) {
 			<div className="flex items-center gap-2 text-lg">
 				<Avatar name={`${nom} ${prenom} `} round={true} size={60} />
 				<div>
-					<p className="font-semibold">{nom + " " + prenom}</p>
-					<p className="text-gray-600 font-light">{poste}</p>
+					<p className="font-semibold capitalize">
+						{nom + " " + prenom}
+					</p>
+					<p className="text-gray-600 font-light capitalize">
+						{poste}
+					</p>
 					<Link href={`mailto:${email}`}>
 						<a className="text-xs text-cyan-600">{email}</a>
 					</Link>

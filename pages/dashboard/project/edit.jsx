@@ -34,7 +34,7 @@ export default function Edit() {
 			if (error) console.log("errors" + error);
 			if (data) console.log("data" + error);
 			if (!error) {
-				router.reload("/dashboard");
+				// router.reload("/dashboard");
 				router.replace("/dashboard");
 			}
 			return true;
@@ -48,15 +48,15 @@ export default function Edit() {
 		projectname: {
 			required: "Nom est insdisponsible",
 			minLength: {
-				value: 20,
-				message: "Nom doit etre plus de 20 chracteres",
+				value: 10,
+				message: "Nom doit etre plus de 10 chracteres",
 			},
 		},
 		description: {
 			required: "description est insdisponsible",
 			minLength: {
-				value: 30,
-				message: "Description doit etre plus de 30 chracteres",
+				value: 20,
+				message: "Description doit etre plus de 10 chracteres",
 			},
 		},
 		debut: {
