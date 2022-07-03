@@ -5,7 +5,7 @@ export default function Document() {
 			<Head>
 				<link rel="manifest" href="/manifest.json" />
 				<link rel="apple-touch-icon" href="/Personnal Logo.png" />
-				<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+				<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 			</Head>
 			<body className="">
 				<Main className="" />

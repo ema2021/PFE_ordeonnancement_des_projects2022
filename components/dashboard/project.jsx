@@ -53,6 +53,7 @@ export default function Project({ projects, taches }) {
 						return (
 							<TaskComponent state="active" key={tache.id}>
 								{taches.titre}
+								{...tache}
 							</TaskComponent>
 						);
 					})}

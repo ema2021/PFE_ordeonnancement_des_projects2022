@@ -18,7 +18,7 @@ export default function Home() {
 	const { user } = useAuth();
 
 	useEffect(() => {
-		if (user) router.push("/dashboard");
+		if (user) router.replace("/dashboard");
 	}, [user, router]);
 	return (
 		<>

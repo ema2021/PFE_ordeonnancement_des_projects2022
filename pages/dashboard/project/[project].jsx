@@ -69,6 +69,7 @@ export function pertToGantt(projet, arryJson, tasksdata, es, lf, cpath) {
 }
 
 const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
+	const [view, setView] = useState(ViewMode.days);
 	const { user } = useAuth();
 	const router = useRouter();
 	let FinishTimes = [];
@@ -127,18 +128,19 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 							<span className="font-semibold text-cyan-600">
 								Commence le :
 							</span>{" "}
-							{moment(projets.debut || projets.created_at).format(
-								"MMMM DD, YYYY"
-							)}
+							{moment(
+								projets?.debut || projets.created_at
+							).format("MMMM DD, YYYY")}
 						</p>
 						<p>
 							<span className="font-semibold text-cyan-600">
 								Termine :
 							</span>{" "}
-							{moment(projets.debut || projets.created_at)
+							{moment(projets?.debut || projets.created_at)
 								.add(
-									projets.duree ||
-										Math.trunc(Math.max(...FinishTimes)),
+									Math.max.apply(null, FinishTimes) ||
+										projets?.duree ||
+										10,
 									"d"
 								)
 								.format("MMMM DD, YYYY")}
@@ -146,6 +148,7 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 					</div>
 					<p className="px-4 py-2 leading-6 text-gray-800 md:px-2">
 						{projets?.description}
+						{JSON.stringify(Math.max.apply(null, FinishTimes))}
 					</p>
 				</div>
 				<div
@@ -169,33 +172,22 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 				}`}
 			>
 				<div className="flex flex-col justify-center space-y-2 sm:col-span-2">
-					{tache?.map((item, index) => {
-						return (
-							<TaskComponent
-								key={item.id}
-								state={item.state}
-								number={index + 1}
-							>
-								{item.titre}
-
-								<div className="flex gap-4">
-									{employes
-										.filter((emp) =>
-											item.employe_id?.includes(emp.id)
-										)
-										.map((responsable) => {
-											return (
-												<p key={responsable.id}>
-													{responsable.nom +
-														"  " +
-														responsable.prenom}
-												</p>
-											);
-										})}
-								</div>
-							</TaskComponent>
-						);
-					})}
+					{tache
+						?.sort((a, b) => a.id - b.id)
+						.map((item, index) => {
+							return (
+								<TaskComponent
+									key={item.id}
+									{...item}
+									number={index + 1}
+									employes={employes.filter((emp) =>
+										item.employe_id?.includes(emp.id)
+									)}
+								>
+									{item.titre}
+								</TaskComponent>
+							);
+						})}
 					{
 						<p
 							className={`${projets} ${
@@ -203,18 +195,24 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 							}`}
 						>
 							{tache?.length == 0
-								? "Aucune tâche dasn ce projet"
+								? "Aucune tâche dans ce projet"
 								: ""}
 						</p>
 					}
 				</div>
 				<div className="flex  items-center justify-center ">
-					<div className="  flex h-full w-full flex-col items-center justify-between  gap-4    bg-blue-50 py-12   ">
+					<div className="  flex px-8 flex-col items-center justify-between  gap-4     py-12   ">
 						<span className="font-semibold text-gray-500">
 							Complete
 						</span>
 						<span className="bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 bg-clip-text text-7xl font-bold text-transparent">
-							{getProgress(projets?.created_at, projets?.duree)} %
+							{getProgress(
+								projets?.debut || projets?.created_at,
+								Math.max.apply(null, FinishTimes) ||
+									projets?.duree ||
+									10
+							)}{" "}
+							%
 						</span>
 						<span className="text-2xl font-bold text-purple-800">
 							Progres
@@ -230,19 +228,21 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 				""
 			)}
 			{network ? (
-				<Gantt
-					viewMode={ViewMode.Week}
-					arrowColor="#02A9EA"
-					locale="fr"
-					tasks={pertToGantt(
-						projets,
-						network,
-						tache,
-						earliestStartTimes,
-						latestFinishTimes,
-						criticalPath
-					)}
-				/>
+				<div>
+					<Gantt
+						viewMode={view}
+						arrowColor="#02A9EA"
+						locale="fr"
+						tasks={pertToGantt(
+							projets,
+							network,
+							tache,
+							earliestStartTimes,
+							latestFinishTimes,
+							criticalPath
+						)}
+					/>
+				</div>
 			) : (
 				""
 			)}

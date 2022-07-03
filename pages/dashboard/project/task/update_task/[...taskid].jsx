@@ -13,7 +13,10 @@ export default function EditTask({ tache, employes }) {
 	const { user, error } = useAuth();
 	const router = useRouter();
 
-	const projectid = router.query?.addTask;
+	const projectid = router.query?.taskid[0];
+	const taskid = router.query?.taskid[1];
+	const tachefiltered = tache.filter((el) => el.id == taskid)[0];
+	console.log(tachefiltered);
 	const {
 		register,
 		handleSubmit,
@@ -24,17 +27,18 @@ export default function EditTask({ tache, employes }) {
 	});
 	async function onSubmit(formData) {
 		if (user) {
-			const { data, error } = await supabase.from("tache").insert([
-				{
+			const { data, error } = await supabase
+				.from("tache")
+				.update({
 					titre: formData.taskname,
 					description: formData.description,
 					projectid: projectid,
 					state: formData.state,
-					taches_precedent_id: formData.taches_anterieurs,
+					taches_precedent_id: formData.taches_anterieurs || [],
 					duree: formData.duree,
 					employe_id: formData.employes,
-				},
-			]);
+				})
+				.eq("id", taskid);
 			if (error) console.log("error" + JSON.stringify(error));
 			if (data) console.log("data" + data);
 			if (!error) router.push("/dashboard/project/" + projectid);
@@ -75,7 +79,8 @@ export default function EditTask({ tache, employes }) {
 	return (
 		<div className="lg:px-16 pb-8">
 			<Head>
-				<title>AJouter une autre Tache au Projet {projectid}</title>
+				<title>Mettre a jour la tache {taskid}</title>
+				<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 			</Head>
 			<section className="grid gap-4 text-gray-700">
 				<Link href={`/dashboard/project/${projectid}`} passHref={true}>
@@ -97,6 +102,7 @@ export default function EditTask({ tache, employes }) {
 							<span className="flex text-red-700">*</span>
 						</label>
 						<input
+							defaultValue={tachefiltered.titre}
 							type="text"
 							name="taskname"
 							id=""
@@ -122,6 +128,7 @@ export default function EditTask({ tache, employes }) {
 							<span className="flex text-red-700">*</span>
 						</label>
 						<textarea
+							defaultValue={tachefiltered.description}
 							name="description"
 							id=""
 							className={`bg-white w-full  border-0    placeholder:text-gray-400 focus:outline-cyan-500 
@@ -150,6 +157,7 @@ export default function EditTask({ tache, employes }) {
 							<ExpandMoreIcon className="absolute right-2 top-2 h-6 w-6 text-gray-500 group-focus:hidden" />
 							<select
 								id="states"
+								defaultValue={tachefiltered.state}
 								name="state"
 								className="focus:text-gray-400 group block w-full rounded-xl border  focus:outline-cyan-500 border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900   focus:ring-0 focus:border-0"
 								{...register("state")}
@@ -194,6 +202,11 @@ export default function EditTask({ tache, employes }) {
 												className="text-gray-600"
 												key={item.id}
 												value={item.id}
+												selected={
+													tachefiltered.taches_precedent_id?.indexOf(
+														item.id
+													) > -1
+												}
 											>
 												{item?.id + " " + item?.titre}
 											</option>
@@ -227,6 +240,11 @@ export default function EditTask({ tache, employes }) {
 												className="text-gray-600"
 												key={item.id}
 												value={item.id}
+												selected={
+													tachefiltered.employe_id?.indexOf(
+														item.id
+													) > -1
+												}
 											>
 												{item?.id +
 													" " +
@@ -250,6 +268,7 @@ export default function EditTask({ tache, employes }) {
 								<span className="flex text-red-700">*</span>
 							</label>
 							<input
+								defaultValue={tachefiltered.duree}
 								type="number"
 								name="duree"
 								id=""
@@ -281,13 +300,13 @@ export default function EditTask({ tache, employes }) {
 
 export async function getServerSideProps({ req, params }) {
 	const { user } = await supabase.auth.api.getUserByCookie(req);
-	const number = params.addTask;
+	const number = params.taskid[0];
 	console.log(number);
 	if (user) {
 		let { data: tache, error_tache } = await supabase
 			.from("tache")
 			.select("*")
-			.eq("projectid", number);
+			.eq("projectid", 43);
 		let { data: ressources, error } = await supabase
 			.from("ressources")
 			.select("*")
