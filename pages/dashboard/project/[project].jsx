@@ -69,7 +69,7 @@ export function pertToGantt(projet, arryJson, tasksdata, es, lf, cpath) {
 }
 
 const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
-	const [view, setView] = useState(ViewMode.week);
+	const [view, setView] = useState(ViewMode.Week);
 	const { user } = useAuth();
 	const router = useRouter();
 	let FinishTimes = [];
