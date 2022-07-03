@@ -79,7 +79,6 @@ export default function EditTask({ tache, employes }) {
 		<div className="lg:px-16 pb-8">
 			<Head>
 				<title>Mettre a jour la tache {taskid}</title>
-				<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 			</Head>
 			<section className="grid gap-4 text-gray-700">
 				<Link href={`/dashboard/project/${projectid}`} passHref={true}>

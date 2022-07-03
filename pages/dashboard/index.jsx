@@ -29,7 +29,7 @@ export default function Index({ data }) {
 			{user && (
 				<div className="  items-center justify-center space-y-8 py-8 px-2  xl:px-12">
 					<Head>
-						<title>Dashboard</title>
+						<title>Dashboard des projets</title>
 					</Head>
 					<div className="flex justify-between gap-2">
 						<div className="grid h-10  grid-cols-3 divide-x-2 divide-cyan-500 rounded-md border-[1px] border-cyan-500 shadow-xl ">
@@ -45,7 +45,7 @@ export default function Index({ data }) {
 							</BzButton>
 						</div>
 						<Link href="/dashboard/project/edit" passHref={true}>
-							<button className=" flex px-4 py-2 items-center justify-center uppercase font-semibold text-lg rounded-full bg-cyan-600 text-white hover:bg-blue-800 md:w-auto hover:scale-105 transition ease-in-out duration-75 w-10 sm">
+							<button className=" flex px-4 py-2 items-center justify-center uppercase font-semibold text-lg  bg-cyan-600 text-white hover:bg-blue-800 md:w-auto hover:scale-105 transition ease-in-out duration-75 w-10 rounded">
 								<AddIcon />
 								<span className="hidden md:block">Nouveau</span>
 							</button>
@@ -60,9 +60,11 @@ export default function Index({ data }) {
 							.map((item) => {
 								return (
 									<ProjectCard
-										percent={getProgress(
-											item.created_at,
-											item.duree
+										percent={Math.trunc(
+											getProgress(
+												item.debut || item.created_at,
+												item.duree || 0
+											)
 										)}
 										title={item.titre}
 										start={item.debut || item.created_at}

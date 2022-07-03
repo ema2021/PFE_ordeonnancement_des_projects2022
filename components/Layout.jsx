@@ -167,7 +167,7 @@ function Layout({ children }) {
 									.replace(".", " ")}
 								round={true}
 								size={50}
-								color="#32908F"
+								color="#723D46"
 							/>
 							<span className="w-full  ">
 								{user?.email

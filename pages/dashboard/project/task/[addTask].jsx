@@ -74,7 +74,7 @@ export default function EditTask({ tache, employes }) {
 	return (
 		<div className="lg:px-16 pb-8">
 			<Head>
-				<title>AJouter une autre Tache au Projet {projectid}</title>
+				<title>Ajouter une autre Tache au Projet {projectid}</title>
 			</Head>
 			<section className="grid gap-4 text-gray-700">
 				<Link href={`/dashboard/project/${projectid}`} passHref={true}>
@@ -138,30 +138,6 @@ export default function EditTask({ tache, employes }) {
 							{errors?.description && errors.description.message}
 						</p>
 					</div>{" "}
-					{/* <div className="w-full space-y-2">
-						<label
-							htmlFor="state"
-							className="flex items-start gap-1 text-lg font-semibold"
-						>
-							State :<span className="flex text-red-700"></span>
-						</label> */}
-					{/* <div className=" relative">
-							<ExpandMoreIcon className="absolute right-2 top-2 h-6 w-6 text-gray-500 group-focus:hidden" />
-							<select
-								id="states"
-								name="state"
-								className="focus:text-gray-400 group block w-full rounded-xl border  focus:outline-cyan-500 border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900   focus:ring-0 focus:border-0"
-								{...register("state")}
-							>
-								<option className="focus:text-gray-400">
-									active
-								</option>
-								<option value="active">Active</option>
-								<option value="complete">Complete</option>
-								<option value="hold">Hold</option>
-							</select>
-						</div> */}
-					{/* </div> */}
 					<div>
 						<label
 							htmlFor="taches_anterierurs"

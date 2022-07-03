@@ -71,14 +71,10 @@ export default function Edit() {
 			},
 		},
 	};
-	// useEffect(() => {
-	// 	if (!user) router.push("/");
-	// }, [user, router]);
 	return (
 		<div className="lg:px-16">
 			<Head>
 				<title>Ajouter Nouveau Employé</title>
-				<link rel="icon" type="image/svg+xml" href="favicon.svg" />
 			</Head>
 			<section className="grid gap-4 text-gray-700">
 				<Link href="/dashboard/employes" passHref={true}>
@@ -119,7 +115,7 @@ export default function Edit() {
 							className={`boreder-gray-400 w-full   border   rounded  border-gray-400 placeholder:text-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-0 caret-cyan-600 ${
 								errors?.name && "focus:border-red-500"
 							}`}
-							placeholder="Saisir le nom ... e.g Khalid"
+							placeholder="Saisir le nom ... "
 							{...register("name", registerOptions.name)}
 						/>
 						<p className="text-red-400">
@@ -140,7 +136,7 @@ export default function Edit() {
 							id=""
 							className={` w-full rounded border border-gray-400 shadow ring-0 focus:border-cyan-500 outline-none focus:outline-none focus:ring-0
 							${errors?.surname && "focus:border-red-500"}`}
-							placeholder="Saisir le prénom ...e.g Elmouatassim."
+							placeholder="Saisir le prénom ..."
 							{...register("surname", registerOptions.surname)}
 						/>
 						<p className="text-red-400">
@@ -183,7 +179,7 @@ export default function Edit() {
 							id=""
 							className={` w-full rounded border border-gray-400 shadow ring-0 focus:border-cyan-500 outline-none focus:outline-none focus:ring-0
 							${errors?.poste && "focus:border-red-500"}`}
-							placeholder="Saisir le poste de l'employé... e.g Developeur"
+							placeholder="Saisir le poste de l'employé..."
 							{...register("poste", registerOptions.poste)}
 						/>
 						<p className="text-red-400">

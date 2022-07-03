@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import Head from "next/head";
 import { useAuth } from "@/lib/auth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -63,14 +64,19 @@ export function pertToGantt(projet, arryJson, tasksdata, es, lf, cpath) {
 					end: debut.addDays(latestFinish),
 					name: task_name,
 					id: item,
-					progress: 45,
+					progress: Math.round(
+						getProgress(
+							debut.addDays(earliestStart),
+							debut.addDays(latestFinish)
+						)
+					),
 					isDisabled: false,
 					dependencies: arryJson[item].predecessors,
 					styles: {
 						progressColor:
-							cpath.indexOf(item) < 0 ? "#355691" : "#A40606",
+							cpath.indexOf(item) < 0 ? "#99B2DD" : "#D5896F",
 						progressSelectedColor:
-							cpath.indexOf(item) < 0 ? "#355691" : "#A40606",
+							cpath.indexOf(item) < 0 ? "#355691" : "#D5896F",
 						barBackgroundColor:
 							cpath.indexOf(item) < 0 ? "#AEB8FE" : "#F15156",
 					},
@@ -117,6 +123,9 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 
 	return (
 		<div className="h-full space-y-2 w-full ">
+			<Head>
+				<title>Affichage de Projet {projectid}</title>
+			</Head>
 			<Link href="/dashboard" passHref={true}>
 				<a className="flex w-24 items-center  gap-1  px-3 py-1 font-semibold text-gray-700 hover:bg-cyan-100 ">
 					<ArrowBackIcon />
@@ -174,7 +183,7 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 						className="w-full"
 					>
 						<a className="px-4">
-							<BzButton className="bg-blue-600 text-white rounded-full px-4">
+							<BzButton className="bg-blue-600 text-white rounded hover:bg-blue-700 hover:scale-105 px-4">
 								<AddIcon strokeWidth={8} />
 								Ajouter tâche
 							</BzButton>
@@ -287,8 +296,9 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 				""
 			)}
 			{network ? (
-				<div>
+				<div className="flex justify-center overflow-x-scroll">
 					<Gantt
+						todayColor="#FFD3BA"
 						viewMode={view}
 						arrowColor="#02A9EA"
 						locale="fr"
@@ -300,6 +310,7 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 							latestFinishTimes,
 							criticalPath
 						)}
+						className="mx-auto"
 					/>
 				</div>
 			) : (
