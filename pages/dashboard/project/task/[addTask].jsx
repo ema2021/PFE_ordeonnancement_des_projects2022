@@ -29,7 +29,6 @@ export default function EditTask({ tache, employes }) {
 					titre: formData.taskname,
 					description: formData.description,
 					projectid: projectid,
-					state: formData.state,
 					taches_precedent_id: formData.taches_anterieurs,
 					duree: formData.duree,
 					employe_id: formData.employes,
@@ -139,14 +138,14 @@ export default function EditTask({ tache, employes }) {
 							{errors?.description && errors.description.message}
 						</p>
 					</div>{" "}
-					<div className="w-full space-y-2">
+					{/* <div className="w-full space-y-2">
 						<label
 							htmlFor="state"
 							className="flex items-start gap-1 text-lg font-semibold"
 						>
 							State :<span className="flex text-red-700"></span>
-						</label>
-						<div className=" relative">
+						</label> */}
+					{/* <div className=" relative">
 							<ExpandMoreIcon className="absolute right-2 top-2 h-6 w-6 text-gray-500 group-focus:hidden" />
 							<select
 								id="states"
@@ -161,8 +160,8 @@ export default function EditTask({ tache, employes }) {
 								<option value="complete">Complete</option>
 								<option value="hold">Hold</option>
 							</select>
-						</div>
-					</div>
+						</div> */}
+					{/* </div> */}
 					<div>
 						<label
 							htmlFor="taches_anterierurs"
