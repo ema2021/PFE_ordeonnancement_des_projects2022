@@ -27,7 +27,7 @@ export default function Index({ data }) {
 	return (
 		<>
 			{user && (
-				<div className="  items-center justify-center space-y-8 py-8 px-2 lg:px-10 xl:px-12">
+				<div className="  items-center justify-center space-y-8 py-8 px-2  xl:px-12">
 					<Head>
 						<title>Dashboard</title>
 					</Head>

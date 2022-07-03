@@ -178,7 +178,7 @@ function Layout({ children }) {
 					</div>
 				</header>
 				{/* Main content of the dashboard */}
-				<main className="h-full  p-2   lg:px-8 xl:p-12 py-16">
+				<main className="h-full  p-2   lg:px-5 xl:p-8 py-16">
 					{children}
 				</main>
 			</div>

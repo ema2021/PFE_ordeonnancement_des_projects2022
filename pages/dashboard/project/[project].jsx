@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useAuth } from "@/lib/auth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -28,6 +29,18 @@ Date.prototype.addDays = function (days) {
 	date.setDate(date.getDate() + days);
 	return date;
 };
+export async function addProjectDuration(projectid, duration) {
+	if (projectid && duration) {
+		try {
+			const { data, error } = await supabase
+				.from("projets")
+				.update({ duree: duration })
+				.eq("id", projectid);
+		} catch (e) {
+			alert("Error updating	duree" + e.message);
+		}
+	}
+}
 
 export function pertToGantt(projet, arryJson, tasksdata, es, lf, cpath) {
 	var json = [];
@@ -73,6 +86,7 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 	const { user } = useAuth();
 	const router = useRouter();
 	let FinishTimes = [];
+	var project_duree_par_pert = 0;
 	const {
 		network,
 		activitiesPrams,
@@ -88,24 +102,19 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 			(item) => latestFinishTimes[item]
 		);
 	}
-	// const { network } = jsPERT(transformJson(tache));
+	if (earliestStartTimes && criticalPath) {
+		project_duree_par_pert = Object.keys(earliestStartTimes)
+			.map((item) =>
+				criticalPath.indexOf(item) > -1 ? earliestStartTimes[item] : 0
+			)
+			.reduce((total, value) => total + value);
+	}
 
 	const projectid = router.query.project;
-	//format taches to the specified format  by jsPERT
+	useEffect(() => {
+		addProjectDuration(projectid, project_duree_par_pert);
+	}, []);
 
-	// useEffect(() => {
-	// 	if (tache?.length > 0) {
-	// 		try {
-	// 			const { network } = jsPERT(transformJson(tache));
-	// 			const pertdata = jsPERT(transformJson(tache));
-	// 			setPert(pertdata);
-	// 			setGraph(network);
-	// 		} catch (er) {
-	// 			console.log(er);
-	// 		}
-	// 	}
-	// }, [tache]);
-	// console.log(JSON.stringify(graph, null, 2));
 	return (
 		<div className="h-full space-y-2 w-full ">
 			<Link href="/dashboard" passHref={true}>
@@ -124,21 +133,25 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 							!projets ? "hidden" : "flex"
 						} w-full items-center gap-8   text-gray-700`}
 					>
-						<p>
-							<span className="font-semibold text-cyan-600">
+						<p className="capitalize">
+							<span className="font-semibold text-cyan-600 ">
 								Commence le :
 							</span>{" "}
 							{moment(
 								projets?.debut || projets.created_at
 							).format("MMMM DD, YYYY")}
 						</p>
-						<p>
+						<p
+							className={`${
+								tache?.length > 0 ? "" : "hidden"
+							} capitalize`}
+						>
 							<span className="font-semibold text-cyan-600">
 								Termine :
 							</span>{" "}
 							{moment(projets?.debut || projets.created_at)
 								.add(
-									Math.max.apply(null, FinishTimes) ||
+									Math.trunc(project_duree_par_pert) ||
 										projets?.duree ||
 										10,
 									"d"
@@ -146,19 +159,22 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 								.format("MMMM DD, YYYY")}
 						</p>
 					</div>
-					<p className="px-4 py-2 leading-6 text-gray-800 md:px-2">
+					<p className="px-4 py-2 leading-6 text-gray-800 md:px-2 capitalize ">
 						{projets?.description}
-						{JSON.stringify(Math.max.apply(null, FinishTimes))}
 					</p>
 				</div>
 				<div
 					className={`${
 						!projets ? "hidden" : "flex"
-					} h-full w-full items-center justify-center p-2  md:items-start`}
+					} h-full  items-center justify-center p-2  md:items-start w-full`}
 				>
-					<Link href={`./task/${projets?.id}`} passHref={true}>
-						<a>
-							<BzButton className="bg-blue-600 text-white rounded-full ">
+					<Link
+						href={`./task/${projets?.id}`}
+						passHref={true}
+						className="w-full"
+					>
+						<a className="px-4">
+							<BzButton className="bg-blue-600 text-white rounded-full px-4">
 								<AddIcon strokeWidth={8} />
 								Ajouter tâche
 							</BzButton>
@@ -167,11 +183,15 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 				</div>
 			</div>
 			<div
-				className={`grid gap-2 sm:grid-cols-3 ${
+				className={`grid gap-2 sm:grid-cols-4 ${
 					projets ? "" : "hidden"
 				}`}
 			>
-				<div className="flex flex-col justify-center space-y-2 sm:col-span-2">
+				<div
+					className={`grid gap-2  sm:col-span-3 ${
+						tache?.length > 0 ? "" : "place-content-center h-96"
+					}`}
+				>
 					{tache
 						?.sort((a, b) => a.id - b.id)
 						.map((item, index) => {
@@ -192,31 +212,70 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 						<p
 							className={`${projets} ${
 								projets || tache ? "" : "hidden"
-							}`}
+							} `}
 						>
-							{tache?.length == 0
-								? "Aucune tâche dans ce projet"
-								: ""}
+							{tache?.length == 0 ? (
+								<div className="grid gap-4 justify-center">
+									<div className=" h-56 w-56">
+										<Image
+											src="/undraw_joyride_re_968t.svg"
+											className=""
+											alt="Joyride"
+											height={120}
+											width={120}
+											layout="responsive"
+										/>
+									</div>
+									<p className="text-lg relative text-gray-400 text-center">
+										Il n'y a pas de tâches dans ce projet{" "}
+									</p>
+									<Link
+										href={`./task/${projets?.id}`}
+										passHref={true}
+									>
+										<a>
+											<BzButton className="bg-blue-600 text-white rounded px-4 w-full ">
+												<AddIcon strokeWidth={8} />
+												Ajouter tâche
+											</BzButton>
+										</a>
+									</Link>
+								</div>
+							) : (
+								""
+							)}
 						</p>
 					}
 				</div>
-				<div className="flex  items-center justify-center ">
-					<div className="  flex px-8 flex-col items-center justify-between  gap-4     py-12   ">
+				<div
+					className={`flex  items-center justify-center ${
+						tache?.length > 0 ? "" : "hidden"
+					}`}
+				>
+					<div className=" w-full  flex px-2 flex-col items-center justify-between  gap-4     py-12   ">
 						<span className="font-semibold text-gray-500">
 							Complete
 						</span>
-						<span className="bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 bg-clip-text text-7xl font-bold text-transparent">
-							{getProgress(
-								projets?.debut || projets?.created_at,
-								Math.max.apply(null, FinishTimes) ||
-									projets?.duree ||
-									10
+						<span className="bg-gradient-to-r from-cyan-400 via-blue-900 to-purple-800 bg-clip-text text-5xl lg:text-5xl  font-bold text-transparent">
+							{Math.round(
+								getProgress(
+									projets?.debut || projets?.created_at,
+									Math.trunc(project_duree_par_pert) ||
+										projets?.duree ||
+										10
+								)
 							)}{" "}
 							%
 						</span>
 						<span className="text-2xl font-bold text-purple-800">
 							Progres
 						</span>
+						<p className="text-gray-600">
+							Durée Complet de Projet:{" "}
+							<span className="text-green-700">
+								{Math.trunc(project_duree_par_pert)}
+							</span>{" "}
+						</p>
 					</div>
 				</div>
 			</div>
@@ -294,7 +353,11 @@ export async function getServerSideProps({ req, params }) {
 			.eq("decideur_id", user?.id);
 		var pertData = [];
 
-		if (tache?.length > 0) pertData = jsPERT(transformJson(tache));
+		try {
+			pertData = jsPERT(transformJson(tache));
+		} catch (e) {
+			console.log(e);
+		}
 		return {
 			props: {
 				projets: projets,
