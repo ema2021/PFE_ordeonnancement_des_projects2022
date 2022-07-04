@@ -100,7 +100,7 @@ export default function EditTask({ tache, employes }) {
 							<span className="flex text-red-700">*</span>
 						</label>
 						<input
-							defaultValue={tachefiltered.titre}
+							defaultValue={tachefiltered?.titre}
 							type="text"
 							name="taskname"
 							id=""
@@ -126,7 +126,7 @@ export default function EditTask({ tache, employes }) {
 							<span className="flex text-red-700">*</span>
 						</label>
 						<textarea
-							defaultValue={tachefiltered.description}
+							defaultValue={tachefiltered?.description}
 							name="description"
 							id=""
 							className={`bg-white w-full  border-0    placeholder:text-gray-400 focus:outline-cyan-500 
@@ -214,7 +214,7 @@ export default function EditTask({ tache, employes }) {
 												key={item.id}
 												value={item.id}
 												selected={
-													tachefiltered.employe_id?.indexOf(
+													tachefiltered?.employe_id?.indexOf(
 														item.id
 													) > -1
 												}
@@ -241,7 +241,7 @@ export default function EditTask({ tache, employes }) {
 								<span className="flex text-red-700">*</span>
 							</label>
 							<input
-								defaultValue={tachefiltered.duree}
+								defaultValue={tachefiltered?.duree}
 								type="number"
 								name="duree"
 								id=""
@@ -273,13 +273,14 @@ export default function EditTask({ tache, employes }) {
 
 export async function getServerSideProps({ req, params }) {
 	const { user } = await supabase.auth.api.getUserByCookie(req);
-	const number = params.taskid[0];
+	const number = params.taskid[1];
+	const projectid = params.taskid[0];
 	console.log(number);
 	if (user) {
 		let { data: tache, error_tache } = await supabase
 			.from("tache")
 			.select("*")
-			.eq("projectid", 43);
+			.eq("projectid", projectid);
 		let { data: ressources, error } = await supabase
 			.from("ressources")
 			.select("*")
