@@ -235,7 +235,18 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 						tache?.length > 0 ? "" : "hidden"
 					}`}
 				>
-					<div className=" w-full  flex px-2 flex-col items-center justify-between  gap-4     py-12   ">
+					<div
+						className={` w-full  flex px-2 flex-col items-center justify-between  gap-4     py-12   ${
+							getProgress(
+								projets?.debut || projets?.created_at,
+								Math.trunc(project_duree_par_pert) ||
+									projets?.duree ||
+									10
+							)
+								? ""
+								: "hidden"
+						}`}
+					>
 						<span className="font-semibold text-gray-500">
 							Complete
 						</span>
@@ -253,12 +264,12 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 						<span className="text-2xl font-bold text-purple-800">
 							Progres
 						</span>
-						<p className="text-gray-600">
+						{/* <p className="text-gray-600">
 							Durée Complet de Projet:{" "}
 							<span className="text-green-700">
 								{Math.trunc(project_duree_par_pert)}
 							</span>{" "}
-						</p>
+						</p> */}
 					</div>
 				</div>
 			</div>

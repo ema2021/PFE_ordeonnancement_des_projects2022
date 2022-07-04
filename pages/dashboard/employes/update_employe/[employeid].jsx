@@ -35,7 +35,12 @@ function UpdateEmploye({ ressource }) {
 				.match({ id: ressource.id });
 			if (error) console.log("errors" + error);
 			if (data) console.log("data" + error);
-			if (!error) router.replace("/dashboard/employes");
+			if (!error) {
+				// router.reload("/dashboard/employes");
+				router.replace("/dashboard/employes");
+			}
+			router.replace("/dashboard/employes");
+
 			return true;
 		}
 		console.log("Please log in");
