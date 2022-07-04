@@ -1,3 +1,11 @@
+/**
+ * Carte pour afficher l'employe.
+ * @param {number} id  id de  l' employee.
+ * @param {string}  nom Le nom de l' employee.
+ * @param {string}  prenom Le prenom de l' employee.
+ * @param {string}  email L'email de l' employee.
+ * @param {string}  Poste Poste de l' employee.
+ */
 import Link from "next/link";
 import Avatar from "react-avatar";
 import EditIcon from "@mui/icons-material/Edit";
@@ -10,17 +18,20 @@ export default function EmployeCard({ id, nom, prenom, email, poste }) {
 	const router = useRouter();
 	const query = router.query?.employeid;
 	async function removeEmploye() {
+		/**
+		 * Remove l'employe de id.
+		 */
 		if (user) {
 			const { data, error } = await supabase
 				.from("ressources")
-				.delete()
+				.delete()// delete avec supabase
 				.eq("id", id);
 			if (error) {
 				console.log(error);
 			}
 		}
 
-		router.push("/dashboard/employes");
+		router.push("/dashboard/employes");//retour vers la meme  page
 	}
 	return (
 		<div className="border  border-blue-200 rounded py-4 px-4 flex items-center  shadow justify-between ">

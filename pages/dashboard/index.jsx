@@ -99,12 +99,6 @@ export default function Index({ data }) {
 		</>
 	);
 }
-// const user = supabase.auth.api.getUserByCookie();
-
-// // console.log(user);
-// export async function getServerSideProps() {
-
-// }
 export async function getServerSideProps({ req, res }) {
 	const { user } = await supabase.auth.api.getUserByCookie(req);
 

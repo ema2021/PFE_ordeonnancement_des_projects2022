@@ -1,3 +1,12 @@
+/**
+ * Affiche les informations de projet.
+ * @param projets,Le projet
+ * @param tache, les taches de ce projets
+ * @param error, erreurs d'extraction des projets
+ * @param  data_pert, le resultat de calcul pert
+ * @param employes, les employes
+ */
+
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
@@ -9,9 +18,9 @@ import { transformJson } from "@/lib/myfunctions";
 import TaskComponent from "@/components/dashboard/taskComponent";
 import BzButton from "@/components/dashboard/BzButton";
 import { supabase } from "@/lib/client";
-import { getProgress } from "@/lib/myfunctions";
+import { getProgress, pertToGantt } from "@/lib/myfunctions";
 import moment from "moment";
-import "moment/locale/fr"; // without this line it didn't work
+import "moment/locale/fr";
 import AddIcon from "@mui/icons-material/Add";
 import PertChart from "./task/pert_chart/pert_chart";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -25,11 +34,19 @@ import {
 } from "gantt-task-react";
 import "gantt-task-react/dist/index.css";
 moment.locale("fr");
+
+/**
+ * Fonction pour ajouter les jours a une date @param days nombre de jours a ajouter */
 Date.prototype.addDays = function (days) {
 	const date = new Date(this.valueOf());
 	date.setDate(date.getDate() + days);
 	return date;
 };
+/**
+ *
+ * @param {int} projectid le projet id
+ * @param {int} duration la duree calcule par pert
+ */
 export async function addProjectDuration(projectid, duration) {
 	if (projectid && duration) {
 		try {
@@ -41,51 +58,6 @@ export async function addProjectDuration(projectid, duration) {
 			alert("Error updating	duree" + e.message);
 		}
 	}
-}
-
-export function pertToGantt(projet, arryJson, tasksdata, es, lf, cpath) {
-	var json = [];
-	Object.keys(arryJson)
-		.sort((a, b) => es[a] - es[b])
-		.map((item) => {
-			if (item != START && item != END) {
-				const id_num = Number(item.replace("Task_", ""));
-				const taskfiltered = tasksdata.filter(
-					(el) => el.id == id_num
-				)[0];
-				const task_name = taskfiltered.titre;
-				const debut = new Date(projet.debut || projet.created_at);
-				console.log("start:" + projet.debut);
-				console.log("start:" + debut);
-				const earliestStart = Math.trunc(es[item]);
-				const latestFinish = Math.trunc(taskfiltered.duree);
-				console.log("End:" + debut.addDays(latestFinish));
-				const task = {
-					start: debut.addDays(earliestStart),
-					end: debut.addDays(latestFinish),
-					name: task_name,
-					id: item,
-					progress: Math.round(
-						getProgress(
-							debut.addDays(earliestStart),
-							debut.addDays(latestFinish)
-						)
-					),
-					isDisabled: false,
-					dependencies: arryJson[item].predecessors,
-					styles: {
-						progressColor:
-							cpath.indexOf(item) < 0 ? "#99B2DD" : "#D5896F",
-						progressSelectedColor:
-							cpath.indexOf(item) < 0 ? "#355691" : "#D5896F",
-						barBackgroundColor:
-							cpath.indexOf(item) < 0 ? "#AEB8FE" : "#F15156",
-					},
-				};
-				json.push(task);
-			}
-		});
-	return json;
 }
 
 const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
@@ -206,6 +178,7 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 						?.sort((a, b) => a.id - b.id)
 						.map((item, index) => {
 							return (
+								// carte de tache
 								<TaskComponent
 									key={item.id}
 									{...item}
@@ -291,6 +264,7 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 			</div>
 			{Object.keys(data_pert).length > 0 ? (
 				<div className="flex justify-center ">
+					{/* Afficher reseu pert */}
 					<PertChart data={data_pert} />
 				</div>
 			) : (
@@ -298,6 +272,7 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 			)}
 			{network ? (
 				<div className="flex justify-center overflow-x-scroll">
+					{/* afficher gant s'il des taches dans le projet */}
 					<Gantt
 						todayColor="#FFD3BA"
 						viewMode={view}
@@ -317,9 +292,6 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 			) : (
 				""
 			)}
-			{/* <div>{JSON.stringify(earliestStartTimes)}</div> */}
-			{/* <p className="text-lg">{JSON.stringify(latestFinishTimes)}</p> */}
-			{/* <p className="text-lg bg-red-200">{JSON.stringify(tache)}</p> */}
 
 			<p className="flex flex-col    h-full w-1/2 mx-auto ">
 				{!projets && (
@@ -334,14 +306,15 @@ const ProjectPage = ({ projets, tache, error, data_pert, employes }) => {
 				)}
 				<p className="bg-yellow-300">{error?.tache}</p>
 			</p>
-
-			{/* {error_project} */}
-			{/* {error} */}
 		</div>
 	);
 };
 
 export default ProjectPage;
+
+/**	Extracter les donnees a partir de supabase  et envoyer au frontend
+ * @param  {int} projectid
+ */
 
 export async function getServerSideProps({ req, params }) {
 	const { user } = await supabase.auth.api.getUserByCookie(req);
@@ -359,7 +332,7 @@ export async function getServerSideProps({ req, params }) {
 			.from("tache")
 			.select("*")
 			.eq("projectid", number?.toString());
-		let { data: ressources, error } = await supabase
+		let { data: ressources, error_ressources } = await supabase
 			.from("ressources")
 			.select("*")
 			.eq("decideur_id", user?.id);
@@ -376,7 +349,6 @@ export async function getServerSideProps({ req, params }) {
 				tache: tache,
 				data_pert: pertData,
 				employes: ressources,
-				// errors: { taches: JSON.stringify(error_tache) },
 			},
 		};
 	}
